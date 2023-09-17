@@ -95,12 +95,26 @@
             }
         }
 
+        // the lowest value in the graph's scale
+        $min = intval($lowest / 3);
+        $min = $min - $min % 10;
+
         // Horrible! But, we put the script here to be loaded by HTMX when a new graph is required.
         echo "
             <canvas id='globalPlayersChart' style='width: 100%'></canvas>
             <script>
-                new Chart(document.getElementById('globalPlayersChart'), {
-                    type: 'line', options: { responsive: false }, data: {
+                new Chart(document.getElementById('globalPlayersChart'),
+                {
+                    type: 'line', 
+                    options: { 
+                        responsive: false,
+                        scales: {
+                            y: {
+                                min: {$min}
+                            }
+                        }
+                    },
+                    data: {
                         labels: [{$timeSet}],
                         datasets: [
                             {
