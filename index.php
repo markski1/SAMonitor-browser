@@ -2,9 +2,11 @@
     include 'logic/layout.php';
     PageHeader("San Andreas Multiplayer server monitor, for SA-MP and open.mp");
 
-    $online_servers = file_get_contents("http://gateway.markski.ar:42069/api/GetAmountServers");
-    $total_servers = file_get_contents("http://gateway.markski.ar:42069/api/GetAmountServers?include_dead=1");
-    $total_players = file_get_contents("http://gateway.markski.ar:42069/api/GetTotalPlayers");
+    $globalStats = json_decode(file_get_contents("http://gateway.markski.ar:42069/api/GetGlobalStats"), true);
+
+    $total_servers = $globalStats['serversTracked'];
+    $online_servers = $globalStats['serversOnline'];
+    $total_players = $globalStats['playersOnline'];
 ?>
 
 <div class="filterContainer">

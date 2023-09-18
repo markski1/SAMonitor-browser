@@ -1,94 +1,6 @@
 <?php
     include 'logic/layout.php';
-
-    // if this is set, ONLY LOAD THE GRAPH.
-    if (isset($_GET['load_graph'])) {
-        if (isset($_GET['hours'])) {
-            $hours = $_GET['hours'];
-        }
-        else $hours = 24;
-
-        $metrics = json_decode(file_get_contents("http://gateway.markski.ar:42069/api/GetServerMetrics?hours={$hours}&ip_addr=".urlencode($_GET['ip_addr'])), true);
-
-        if (count($metrics) < 3) {
-            exit("<p>Not enough data for the activity graph, please check later.</p>");
-        }
-
-        $playerSet = "";
-        $timeSet = "";
-        $first = true;
-
-        // API provides data in descendent order, but we'd want to show it ascendant since we're using a graph.
-        $metrics = array_reverse($metrics);
-
-        $lowest = 69420;
-        $lowest_time = null;
-        $highest = -1;
-        $highest_time = null;
-
-        $skip = true;
-
-        foreach ($metrics as $instant) {
-            $humanTime = strtotime($instant['time']);
-            
-            // only specify the day if we're listing more than 24 hours.
-            if ($hours > 24) {
-                $humanTime = date("j/m H:i", $humanTime);
-            }
-            else $humanTime = date("H:i", $humanTime);
-
-            if ($instant['players'] < 0) $instant['players'] = 0;
-
-            if ($instant['players'] > $highest) {
-                $highest = $instant['players'];
-                $highest_time = $humanTime;
-            }
-            if ($instant['players'] < $lowest) {
-                $lowest = $instant['players'];
-                $lowest_time = $humanTime;
-            }
-
-            if ($first) {
-                $playerSet .= $instant['players'];
-                $timeSet .= "'".$humanTime."'";
-                $first = false;
-            } 
-            else {
-                $playerSet .= ", ".$instant['players'];
-                $timeSet .= ", '".$humanTime."'";
-            }
-        }
-
-        echo "
-            <canvas id='globalPlayersChart' style='width: 100%'></canvas>
-            <p>The highest player count was <span style='color: green'>{$highest}</span> at {$highest_time}, and the lowest was <span style='color: red'>{$lowest}</span> at {$lowest_time}</p>
-        
-            <script>
-                new Chart(document.getElementById('globalPlayersChart'), {
-                    type: 'line',
-                    options: {
-                        responsive: false,
-                        scales: {
-                            y: {
-                                min: 0
-                            }
-                        }
-                    },
-                    data: {
-                        labels: [{$timeSet}],
-                        datasets: [
-                            {
-                                label: 'Players online',
-                                data: [{$playerSet}],
-                                borderWidth: 1
-                            }
-                        ]
-                    }
-                });
-            </script>
-        ";
-        exit; // NOTE THE EXIT HERE. IF GRAPH IS REQUESTED, WE STOP HERE.
-    }
+    include 'view/bits/fragments.php';
 
     // calculate week's uptime
     $metrics = json_decode(file_get_contents("http://gateway.markski.ar:42069/api/GetServerMetrics?hours=168&include_misses=1&ip_addr=".urlencode($_GET['ip_addr'])), true);
@@ -186,14 +98,14 @@
         </div>
         <div class="innerContent flexBox">
             <h3>Activity graph | 
-                <select hx-target="#graph-cnt" name="hours" hx-get="server.php?load_graph&ip_addr=<?=$server['ipAddr']?>" hx-get="server.php?load_graph&ip_addr=<?=$server['ipAddr']?> hx-get="server.php?load_graph&ip_addr=<?=$server['ipAddr']?>>
+                <select hx-target="#graph-cnt" name="hours" hx-get="view/bits/fragments.php?type=serverGraph&ip_addr=<?=$server['ipAddr']?>">
                     <option value=24>Last 24 hours</option>
                     <option value=72>Last 72 hours</option>
                     <option value=168>Last week</option>
                 </select>
             </h3>
-            <div style='width: 100% !important' id="graph-cnt" hx-get="server.php?load_graph&ip_addr=<?=$server['ipAddr']?>" hx-trigger="load">
-                
+            <div style='width: 100% !important' id="graph-cnt">
+                <?=DrawServerGraph($_GET['ip_addr'], 24)?>
             </div>
             <p>
                 <small>
@@ -214,24 +126,4 @@
 
 <?php
     PageBottom();
-
-    function timeSince($time) {
-        $time = time() - $time; // to get the time since that moment
-        $time = ($time<1)? 1 : $time;
-        $tokens = array (
-            31536000 => 'year',
-            2592000 => 'month',
-            604800 => 'week',
-            86400 => 'day',
-            3600 => 'hour',
-            60 => 'minute',
-            1 => 'second'
-        );
-
-        foreach ($tokens as $unit => $text) {
-            if ($time < $unit) continue;
-            $numberOfUnits = floor($time / $unit);
-            return $numberOfUnits.' '.$text.(($numberOfUnits>1)?'s':'');
-        }
-    }
 ?>

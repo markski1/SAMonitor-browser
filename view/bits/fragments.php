@@ -1,5 +1,42 @@
 <?php
 
+/*
+ *
+ *  FRAGMENT REQUEST HANDLING
+ *
+ */
+
+if (isset($_GET['type'])) {
+    if ($_GET['type'] == 'details') {
+        $server = json_decode(file_get_contents("http://gateway.markski.ar:42069/api/GetServerByIP?ip_addr=".urlencode($_GET['ip_addr'])), true);
+
+        DrawServer($server, true);
+    }
+
+    if ($_GET['type'] == 'listing') {
+        $server = json_decode(file_get_contents("http://gateway.markski.ar:42069/api/GetServerByIP?ip_addr=".urlencode($_GET['ip_addr'])), true);
+
+        DrawServer($server, false);
+    }
+
+    if ($_GET['type'] == 'serverGraph') {
+        DrawServerGraph($_GET['ip_addr'], $_GET['hours']);
+    }
+
+    if ($_GET['type'] == 'metricsGraph') {
+        $dataType = $_GET['dataType'] ?? 0;
+        DrawMetricsGraphs($dataType, $_GET['hours']);
+    }
+}
+
+
+/*
+ *
+ *  START FRAGMENTS
+ *
+ */
+
+
 function DrawServer($server, $details = false) {
     $server = array_map('htmlspecialchars', $server);
 
@@ -65,15 +102,193 @@ function DrawServer($server, $details = false) {
 <?php
 }
 
-if (isset($_GET['type'])) {
-    if ($_GET['type'] == 'details') {
-        $server = json_decode(file_get_contents("http://gateway.markski.ar:42069/api/GetServerByIP?ip_addr=".urlencode($_GET['ip_addr'])), true);
+function DrawServerGraph($serverIP, $hours) {
+    $metrics = json_decode(file_get_contents("http://gateway.markski.ar:42069/api/GetServerMetrics?hours={$hours}&ip_addr=".urlencode($serverIP)), true);
 
-        DrawServer($server, true);
+    if (count($metrics) < 3) {
+        exit("<p>Not enough data for the activity graph, please check later.</p>");
     }
 
-    //..
+    $playerSet = "";
+    $timeSet = "";
+    $first = true;
+
+    // API provides data in descendent order, but we'd want to show it ascendant since we're using a graph.
+    $metrics = array_reverse($metrics);
+
+    $lowest = 69420;
+    $lowest_time = null;
+    $highest = -1;
+    $highest_time = null;
+
+    $skip = true;
+
+    foreach ($metrics as $instant) {
+        $humanTime = strtotime($instant['time']);
+        
+        // only specify the day if we're listing more than 24 hours.
+        if ($hours > 24) {
+            $humanTime = date("j/m H:i", $humanTime);
+        }
+        else $humanTime = date("H:i", $humanTime);
+
+        if ($instant['players'] < 0) $instant['players'] = 0;
+
+        if ($instant['players'] > $highest) {
+            $highest = $instant['players'];
+            $highest_time = $humanTime;
+        }
+        if ($instant['players'] < $lowest) {
+            $lowest = $instant['players'];
+            $lowest_time = $humanTime;
+        }
+
+        if ($first) {
+            $playerSet .= $instant['players'];
+            $timeSet .= "'".$humanTime."'";
+            $first = false;
+        } 
+        else {
+            $playerSet .= ", ".$instant['players'];
+            $timeSet .= ", '".$humanTime."'";
+        }
+    }
+
+    echo "
+        <canvas id='globalPlayersChart' style='width: 100%'></canvas>
+        <p>The highest player count was <span style='color: green'>{$highest}</span> at {$highest_time}, and the lowest was <span style='color: red'>{$lowest}</span> at {$lowest_time}</p>
+    
+        <script>
+            new Chart(document.getElementById('globalPlayersChart'), {
+                type: 'line',
+                options: {
+                    responsive: false,
+                    scales: {
+                        y: {
+                            min: 0
+                        }
+                    }
+                },
+                data: {
+                    labels: [{$timeSet}],
+                    datasets: [
+                        {
+                            label: 'Players online',
+                            data: [{$playerSet}],
+                            borderWidth: 1
+                        }
+                    ]
+                }
+            });
+        </script>
+    ";
 }
+
+
+function DrawMetricsGraphs($dataType, $hours) {
+    $dataSet = "";
+    $timeSet = "";
+    $first = true;
+
+    $metrics = json_decode(file_get_contents("http://gateway.markski.ar:42069/api/GetGlobalMetrics?hours=".$hours), true);
+    // API provides data in descendent order, but we'd want to show it as a graph, so it should be ascending.
+    $metrics = array_reverse($metrics);
+
+    $lowest = 69420;
+    $lowest_time = null;
+    $highest = -1;
+    $highest_time = null;
+
+    $skip = true;
+
+    switch ($dataType) {
+        case 0:
+            $getField = 'players';
+            $datasetName = 'Players online';
+            break;
+        case 1:
+            $getField = 'servers';
+            $datasetName = 'Servers online';
+            break;
+        case 2:
+            $getField = 'apiHits';
+            $datasetName = 'API hits';
+            break;
+        default:
+            $getField = 'players';
+            $datasetName = 'Players online';
+            break;
+    }
+
+    foreach ($metrics as $instant) {
+        $humanTime = strtotime($instant['time']);
+
+        // only specify the day if we're listing more than 24 hours.
+        if ($hours > 24) {
+            $humanTime = date("j/m H:i", $humanTime);
+        }
+        else $humanTime = date("H:i", $humanTime);
+
+        if ($instant[$getField] > $highest) {
+            $highest = $instant[$getField];
+            $highest_time = $humanTime;
+        }
+        if ($instant[$getField] < $lowest) {
+            $lowest = $instant[$getField];
+            $lowest_time = $humanTime;
+        }
+
+        if ($first) {
+            $dataSet .= $instant[$getField];
+            $timeSet .= "'".$humanTime."'";
+            $first = false;
+        } 
+        else {
+            $dataSet .= ", ".$instant[$getField];
+            $timeSet .= ", '".$humanTime."'";
+        }
+    }
+
+    // the lowest value in the graph's scale
+    $min = intval($lowest / 3);
+    $min = $min - $min % 10;
+
+    echo "
+        <canvas id='globalPlayersChart' style='width: 100%'></canvas>
+        <script>
+            new Chart(document.getElementById('globalPlayersChart'),
+            {
+                type: 'line', 
+                options: { 
+                    responsive: false,
+                    scales: {
+                        y: {
+                            min: {$min}
+                        }
+                    }
+                },
+                data: {
+                    labels: [{$timeSet}],
+                    datasets: [
+                        {
+                            label: '{$datasetName}',
+                            data: [{$dataSet}],
+                            borderWidth: 1
+                        }
+                    ]
+                }
+            });
+        </script>
+        <p>The highest count was <span style='color: green'>{$highest}</span> at {$highest_time}, and the lowest was <span style='color: red'>{$lowest}</span> at {$lowest_time}</p>
+    ";
+}
+
+
+/*
+ *
+ * DEPS
+ *
+ */
 
 function timeSince($time) {
     $time = time() - $time; // to get the time since that moment
