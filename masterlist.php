@@ -49,7 +49,7 @@
             Once SA-MP is installed, proceed to download the latest version of SA-MP Masterlist Mod. <a target="_blank" href="https://github.com/spmn/sa-mp_masterlist_fix/releases/latest">Download here</a>.
         </p>
         <p>
-            <b>Be advised:</b>It is possible you get a "malicious software" alert. This is a false positive, <a href="https://github.com/spmn/sa-mp_masterlist_fix/issues/9">and we have contacted Microsoft in hopes of having it fixed</a>. If you don't trust us, you may check it yourself with a tool like <a href="https://virustotal.com">VirusTotal</a>, or build it from source.</p>
+            <b>Be advised:</b> It is possible you get a "malicious software" alert. This is a false positive, <a href="https://github.com/spmn/sa-mp_masterlist_fix/issues/9">and the developer has contacted Microsoft in hopes of having it resolved</a>. If you don't trust us, you may check it yourself with a tool like <a href="https://virustotal.com">VirusTotal</a>, or build it from source.</p>
         </p>
         <h4>3. Install the mod</h4>
         <p>
@@ -124,7 +124,7 @@
            Una vez que tenemos SA-MP instalado, procedemos a descargar el mod. <a target="_blank" href="https://github.com/spmn/sa-mp_masterlist_fix/releases/latest">Descargar de acá</a>.
         </p>
         <p>
-            <b>Atención:</b> Es posible que recibas una alerta de "software malicioso". Esto es falso, <a href="https://github.com/spmn/sa-mp_masterlist_fix/issues/9">y ya contactamos a Microsoft para intentar tenerlo solucionado</a>. Si no nos crees, podes chequearlo por tu cuenta en <a href="https://virustotal.com">VirusTotal</a>, o compilarlo.</p>
+            <b>Atención:</b> Es posible que recibas una alerta de "software malicioso". Esto es falso, <a href="https://github.com/spmn/sa-mp_masterlist_fix/issues/9">y se ha contactado a Microsoft para intentar solucionarlo</a>. Si no nos crees, podes chequearlo por tu cuenta en <a href="https://virustotal.com">VirusTotal</a>, o compilarlo.</p>
         </p>
         <h4>3. Instalar el mod</h4>
         <ol type="1" style="line-height: 1.7rem">
