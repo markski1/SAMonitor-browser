@@ -32,9 +32,20 @@
                 <h3 style="margin-bottom: 0.33rem">Options</h3>
                 <label><input type="checkbox" name="show_empty"> Show empty servers</label><br />
                 <label><input type="checkbox" name="hide_roleplay"> No roleplay servers</label><br />
-                <label><input type="radio" name="order" value="none"> Don't order</label><br />
-                <label><input type="radio" name="order" value="players"> Order by players</label><br />
-                <label><input type="radio" name="order" checked value="ratio"> Order by players/max ratio</label>
+                <table style="width: 100%; margin-top: 1rem">
+                    <tr>
+                        <td>
+                            <label for="order">Order by:</label>
+                        </td>
+                        <td style="text-align: right">
+                            <select style="width: 100%" name="order" id="order">
+                                <option value="none">Don't order</option>
+                                <option value="players">Player count</option>
+                                <option value="ratio" selected>Players/max ratio</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
             </fieldset>
             <div style="margin-top: 1rem; margin-bottom: 0; width: 10rem">
                 <input type="submit" value="Apply filter" hx-indicator="#filter-indicator" />

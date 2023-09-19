@@ -49,7 +49,7 @@
             Once SA-MP is installed, proceed to download the latest version of SA-MP Masterlist Mod. <a target="_blank" href="https://github.com/spmn/sa-mp_masterlist_fix/releases/latest">Download here</a>.
         </p>
         <p>
-            <b>Be advised:</b> It is possible you get a "malicious software" alert. This is a false positive, <a href="https://github.com/spmn/sa-mp_masterlist_fix/issues/9">and the developer has contacted Microsoft in hopes of having it resolved</a>. If you don't trust us, you may check it yourself with a tool like <a href="https://virustotal.com">VirusTotal</a>, or build it from source.</p>
+            <b>Be advised:</b> It is possible you get a "malicious software" alert. This is a false positive, <a href="https://github.com/spmn/sa-mp_masterlist_fix/issues/9">and the developer has contacted Microsoft in hopes of having it resolved</a>. If you don't trust us, you may check it yourself with a tool like <a href="https://virustotal.com">VirusTotal</a>, or build it from source.
         </p>
         <h4>3. Install the mod</h4>
         <p>

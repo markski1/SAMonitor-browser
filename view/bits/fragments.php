@@ -254,13 +254,13 @@ function DrawMetricsGraphs($dataType, $hours) {
     $min = $min - $min % 10;
 
     echo "
-        <canvas id='globalPlayersChart' style='width: 100%'></canvas>
+        <canvas id='globalPlayersChart' style='width: 60rem; max-width: 100%'></canvas>
         <script>
             new Chart(document.getElementById('globalPlayersChart'),
             {
                 type: 'line', 
                 options: { 
-                    responsive: false,
+                    responsive: true,
                     scales: {
                         y: {
                             min: {$min}
