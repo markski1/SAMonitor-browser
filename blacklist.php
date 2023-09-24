@@ -24,32 +24,9 @@
     <p>Email: me@markski.ar<br/>Discord: markski.ar (yes, that's a username)</p>
 
     <div class="innerContent">
-        <h3>List of blocked servers</h3>
-        <table style="width: 100%">
-            <tr>
-                <th>Name</th><th>Reason</th><th>Note</th>
-            </tr>
-            <tr>
-                <td>LS.CITY</td>
-                <td>Fake player count</td>
-                <td style="max-width: 400px">Permanently reporting a 2000/2000 figure which is not real.</td>
-            </tr>
-            <tr>
-                <td>Golden State RP</td>
-                <td>Fake player count</td>
-                <td style="max-width: 400px">Reporting anywhere from 19 to 22 players online at all times<br>The server was empty <b>every time</b> it was checked.</td>
-            </tr>
-            <tr>
-                <td>VEGAS RolePlay</td>
-                <td>Fake player count</td>
-                <td style="max-width: 400px">Reporting counts in the neighbourhood of ~823 players online at all times.<br>While the server did reflect this amount in-game, they were obviously fake.<br>By our testing, there only seemed to be around ~15 actual players in-game.</td>
-            </tr>
-            <tr>
-                <td>MyArena</td>
-                <td>Fake player count</td>
-                <td style="max-width: 400px">Servers which cannot be accessed, used to promote their website with faked queries.</td>
-            </tr>
-        </table>
+        <h3>Blocked servers</h3>
+        <p>While not a live number, there's currently around ~20 servers blacklisted for differing reasons (mostly faking player counts).</p>
+        <p>Here used to show a public list of every blocked server, but because it used to cause confusion and general drama I've decided to retire the public list. You can still figure out if your server is blacklisted simply by trying to add it.</p>
     </div>
     <div class="innerContent">
         <h3>IP Blocking regardless of server</h3>

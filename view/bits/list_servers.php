@@ -5,7 +5,7 @@
 
     $filters = "?";
 
-    if (isset($_GET['show_empty'])) {
+    if (!isset($_GET['hide_empty'])) {
         $filters .= "show_empty=1";
     }
     else {
@@ -14,6 +14,10 @@
 
     if (isset($_GET['hide_roleplay'])) {
         $filters .= "&hide_roleplay=1";
+    }
+
+    if (isset($_GET['hide_russian'])) {
+        $filters .= "&hide_russian=1";
     }
 
     if (isset($_GET['require_sampcac'])) {

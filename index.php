@@ -29,8 +29,9 @@
             </fieldset>
             <fieldset style="margin-top: 1rem">
                 <h3 style="margin-bottom: 0.33rem">Options</h3>
-                <label><input type="checkbox" name="show_empty"> Show empty servers</label><br />
+                <label><input type="checkbox" name="hide_empty" checked> No empty servers</label><br />
                 <label><input type="checkbox" name="hide_roleplay"> No roleplay servers</label><br />
+                <label><input type="checkbox" name="hide_russian"> No russian servers</label><br />
                 <label><input type="checkbox" name="require_sampcac"> SAMPCAC Required</label><br />
             </fieldset>
             <table style="width: 100%; margin-top: .75rem">
@@ -57,7 +58,7 @@
     <?=$online_servers?> servers currently online.</br>
     <?=$total_players?> people playing right now.</p>
 </div>
-<div id="server-list" class="pageContent" hx-get="view/bits/list_servers.php" hx-trigger="load">
+<div id="server-list" class="pageContent" hx-get="view/bits/list_servers.php?hide_empty" hx-trigger="load">
     <h1>Loading servers!</h1>
     <p>Please wait. If servers don't load in, SAMonitor might be having issues, please check in later!. Alternatively, if you're using NoScript, you'll need to disable it.</p>
 </div>
