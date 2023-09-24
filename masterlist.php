@@ -9,7 +9,7 @@
     <h2>Masterlist mod</h2>
     <p>Integrate SAMonitor's listings right in your SA-MP client. | <a href="masterlist.php?spanish" hx-get="masterlist.php?spanish" hx-push-url="true" hx-target="#main"">Leer en Español</a>.</p>
     <div class="innerContent">
-        <h3>Preface, regarding SA-MP.com's end of operations.</h3>
+        <h3>Regarding SA-MP.com's end of operations.</h3>
         <p>In the morning of August 21st, 2023, GAME-MP's customer panel added the following announcement:</p>
 
         <fieldset style="color: #CCCCCC; padding: 1rem">
@@ -21,8 +21,6 @@
         <p>The motive for this decision is unknown. I don't know Kalcor <small>(and neither do most people speculating on this)</small> so I will not try to take a guess at it.</p>
         
         <p>What is known, is that the number of servers in the Hosted tab dwindles by the day, and considering listings have a duration of 1 month, it's safe to say the Hosted tab will empty soon.</p>
-
-        <p>As such, this mod was updated.</p>
     </div>
 
     <div class="innerContent">
@@ -96,8 +94,6 @@
         <p>El motivo es desconocido. No conosco a Kalcor <small>(ni tampoco la mayoria de quienes lo andan especulando)</small> asi que no voy a intentar adivinarlo.</p>
         
         <p>Lo que si se sabe es que el numero de servidores en Hosted baja cada dia, y pronto ya no habra ninguno.</p>
-
-        <p>Por lo tanto, este mod fue actualizado.</p>
     </div>
     
     <div class="innerContent">

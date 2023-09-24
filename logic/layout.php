@@ -34,7 +34,7 @@ function PageHeader($title, $description = null) {
                     <div>
                         <a href="./" hx-get="./" hx-push-url="true" hx-target="#main">servers</a> <span class="separator">&nbsp;/&nbsp;</span>
                         <a href="about.php" hx-get="about.php" hx-push-url="true" hx-target="#main">about</a> <span class="separator">&nbsp;/&nbsp;</span>
-                        <a href="masterlist.php" hx-get="masterlist.php" hx-push-url="true" hx-target="#main"><span style="color: cyan">[!]</span> masterlist</a> <span class="separator">&nbsp;/&nbsp;</span>
+                        <a href="masterlist.php" hx-get="masterlist.php" hx-push-url="true" hx-target="#main">masterlist</a> <span class="separator">&nbsp;/&nbsp;</span>
                         <a href="metrics.php" hx-get="metrics.php" hx-push-url="true" hx-target="#main">metrics</a> <span class="separator">&nbsp;/&nbsp;</span>
                         <a href="add.php" hx-get="add.php" hx-push-url="true" hx-target="#main">add server</a> <span class="separator">&nbsp;/&nbsp;</span>
                         <a href="blacklist.php" hx-get="blacklist.php" hx-push-url="true" hx-target="#main">blacklist</a>

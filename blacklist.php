@@ -44,6 +44,11 @@
                 <td>Fake player count</td>
                 <td style="max-width: 400px">Reporting counts in the neighbourhood of ~823 players online at all times.<br>While the server did reflect this amount in-game, they were obviously fake.<br>By our testing, there only seemed to be around ~15 actual players in-game.</td>
             </tr>
+            <tr>
+                <td>MyArena</td>
+                <td>Fake player count</td>
+                <td style="max-width: 400px">Servers which cannot be accessed, used to promote their website with faked queries.</td>
+            </tr>
         </table>
     </div>
     <div class="innerContent">

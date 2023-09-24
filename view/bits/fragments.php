@@ -106,7 +106,8 @@ function DrawServerGraph($serverIP, $hours) {
     $metrics = json_decode(file_get_contents("http://gateway.markski.ar:42069/api/GetServerMetrics?hours={$hours}&ip_addr=".urlencode($serverIP)), true);
 
     if (count($metrics) < 3) {
-        exit("<p>Not enough data for the activity graph, please check later.</p>");
+        echo "<p>Not enough data for the activity graph, please check later.</p>";
+        return;
     }
 
     $playerSet = "";
