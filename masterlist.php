@@ -68,17 +68,6 @@
     </div>
 
     <div class="innerContent">
-        <h3>Hide Russian servers</h3>
-        <p>Because SA-MP is very popular in Russia, a lot of servers are in Russian. If you don't speak that language, this can be very annoying since most servers in the list you won't be able to play.</p>
-        <p>For this reason, there is a way to make your Internet tab not show Russian servers with this mod.</p>
-        <ol type="1" style="line-height: 1.7rem">
-            <li><a href="assets/no_russian_fix.zip">Download this file</a> and decompress. Copy the decompressed "sa-mp_masterlist_fix.json".</li>
-            <li>Go to your Documents folder, then GTA San Andreas User Files, then SAMP.</li>
-            <li>Paste the file there.</li>
-        </ol>
-    </div>
-
-    <div class="innerContent">
         <h3>Attribution</h3>
         <p>I am extremely thankful to spmn, the author of 'SA-MP Masterlist Fix', for taking the time to rewrite his mod.</p>
         <p>We both returned to our projects as soon as we heard about the upcoming shutdown of SA-MP's operations, and I am happy with our work.</p>
@@ -147,18 +136,6 @@
             Your browser does not support the video tag.
         </video> 
     </div>
-
-    <div class="innerContent">
-        <h3>Esconder servidores Rusos</h3>
-        <p>SA-MP es muy popular en Rusia, y por lo tanto muchos servidores son Rusos. Esto puede ser molesto si no hablas ruso ya que muchos servidores no los podras jugar.</p>
-        <p>Por esa razon, tenemos una manera de ocultar los servidores rusos de tu Internet tab.</p>
-        <ol type="1" style="line-height: 1.7rem">
-            <li><a href="assets/no_russian_fix.zip">Descarga este archivo</a> y descomprimilo. Copia el archivo "sa-mp_masterlist_fix.json" descomprimido.</li>
-            <li>Anda a la carpeta Documentos, luego GTA San Andreas User Files, luego SAMP.</li>
-            <li>Pega el archivo ahí.</li>
-        </ol>
-    </div>
-
 
     <div class="innerContent">
         <h3>Creditos</h3>

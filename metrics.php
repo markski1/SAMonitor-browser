@@ -31,24 +31,37 @@
         echo '</table>';
         exit;
     }
+
+    $lang_metrics = json_decode(file_get_contents("http://gateway.markski.ar:42069/api/GetLanguageStats"), true);
+    $lang_total = array_sum($lang_metrics);
+    foreach ($lang_metrics as $lang => $amount) {
+        $lang_pct[$lang] = ($amount / $lang_total) * 100;
+    }
+
+    $gm_metrics = json_decode(file_get_contents("http://gateway.markski.ar:42069/api/GetGamemodeStats"), true);
+    $gm_total = array_sum($gm_metrics);
+    foreach ($gm_metrics as $gm => $amount) {
+        $gm_pct[$gm] = ($amount / $gm_total) * 100;
+    }
 ?>
 
 <div>
     <h2>Metrics</h3>
     <p>SAMonitor accounts for the total amount of servers and players a few times every hour, of every day.</p>
     <div class="innerContent">
+        </h3>
         <form hx-target="#graph-cnt" hx-get="view/bits/fragments.php?type=metricsGraph" hx-trigger="change">
-            <h3>Global 
+            <h3>Global Activity - 
                 <select name="dataType" style="width: 6rem">
-                    <option value=0>player</option>
-                    <option value=1>server</option>
+                    <option value=0>players</option>
+                    <option value=1>servers</option>
                     <option value=2>api hits</option>
                 </select>
-            metrics | 
+            in the 
                 <select name="hours">
-                    <option value=24>Last 24 hours</option>
-                    <option value=72>Last 72 hours</option>
-                    <option value=168>Last week</option>
+                    <option value=24>last 24 hours</option>
+                    <option value=72>last 72 hours</option>
+                    <option value=168>last week</option>
                 </select>
             </h3>
         </form>
@@ -65,8 +78,38 @@
         </p>
     </div>
     <div class="innerContent">
-        <h3>Server-Specific metrics</h3>
-        <p>The same graphs are available in every server's page. Simply click "Show details" and then "All server information" where desired.</p>
+        <h3>Miscelaneous metrics</h3>
+        <p>Amount of servers by language</p>
+        <table style="width: 100%">
+            <th>  <td>Amount</td> <td>Percentage</td> </th>
+            <tr>  <td>Russian</td> <td><?=$lang_metrics['russian']?></td> <td><?=number_format($lang_pct['russian'], 2)?>%</td> </tr>
+            <tr>  <td>English</td> <td><?=$lang_metrics['english']?></td> <td><?=number_format($lang_pct['english'], 2)?>%</td> </tr>
+            <tr>  <td>Spanish</td> <td><?=$lang_metrics['spanish']?></td> <td><?=number_format($lang_pct['spanish'], 2)?>%</td> </tr>
+            <tr>  <td>Portuguese</td> <td><?=$lang_metrics['portuguese']?></td> <td><?=number_format($lang_pct['portuguese'], 2)?>%</td> </tr>
+            <tr>  <td>Romanian</td> <td><?=$lang_metrics['romanian']?></td> <td><?=number_format($lang_pct['romanian'], 2)?>%</td> </tr>
+            <tr>  <td>Misc. East Europe</td> <td><?=$lang_metrics['eastEuro']?></td> <td><?=number_format($lang_pct['eastEuro'], 2)?>%</td> </tr>
+            <tr>  <td>Misc. West Europe</td> <td><?=$lang_metrics['westEuro']?></td> <td><?=number_format($lang_pct['westEuro'], 2)?>%</td> </tr>
+            <tr>  <td>Misc. Asia</td> <td><?=$lang_metrics['asia']?></td> <td><?=number_format($lang_pct['asia'], 2)?>%</td> </tr>
+            <tr>  <td>Other</td> <td><?=$lang_metrics['other']?></td> <td><?=number_format($lang_pct['other'], 2)?>%</td> </tr>
+        </table>
+        <p>Amount of servers by gamemode</p>
+        <table style="width: 100%">
+            <th>  <td>Amount</td> <td>Percentage</td> </th>
+            <tr>  <td>Roleplay</td> <td><?=$gm_metrics['roleplay']?></td> <td><?=number_format($gm_pct['roleplay'], 2)?>%</td> </tr>
+            <tr>  <td>Deathmatch</td> <td><?=$gm_metrics['deathmatch']?></td> <td><?=number_format($gm_pct['deathmatch'], 2)?>%</td> </tr>
+            <tr>  <td>Race/Stunt/Drift</td> <td><?=$gm_metrics['raceStunt']?></td> <td><?=number_format($gm_pct['raceStunt'], 2)?>%</td> </tr>
+            <tr>  <td>Cops and Robbers</td> <td><?=$gm_metrics['cnr']?></td> <td><?=number_format($gm_pct['cnr'], 2)?>%</td> </tr>
+            <tr>  <td>Freeroam</td> <td><?=$gm_metrics['freeRoam']?></td> <td><?=number_format($gm_pct['freeRoam'], 2)?>%</td> </tr>
+            <tr>  <td>Survival</td> <td><?=$gm_metrics['survival']?></td> <td><?=number_format($gm_pct['survival'], 2)?>%</td> </tr>
+            <tr>  <td>Vehicle Simulation</td> <td><?=$gm_metrics['vehSim']?></td> <td><?=number_format($gm_pct['vehSim'], 2)?>%</td> </tr>
+            <tr>  <td>Other/Unknown</td> <td><?=$gm_metrics['other']?></td> <td><?=number_format($gm_pct['other'], 2)?>%</td> </tr>
+        </table>
+        <p style="margin-top: 1rem">
+            Disclaimer: Numbers are inferred from names and/or gamemodes. Sadly, there's not a standarized format for neither representing the languages nor the gamemode of the server.
+        </p>
+        <p>
+            Even worse, there seems to be a practice to use the 'Language' or 'Gamemode' fields for the name of the server rather than what they actually are. Server owners, please, this makes it harder for people to find your server.
+        </p>
     </div>
 </div>
 
