@@ -31,7 +31,6 @@
                 <h3 style="margin-bottom: 0.33rem">Options</h3>
                 <label><input type="checkbox" name="hide_empty" checked> No empty servers</label><br />
                 <label><input type="checkbox" name="hide_roleplay"> No roleplay servers</label><br />
-                <label><input type="checkbox" name="hide_russian"> No russian servers</label><br />
                 <label><input type="checkbox" name="require_sampcac"> SAMPCAC Required</label><br />
             </fieldset>
             <table style="width: 100%; margin-top: .75rem">
