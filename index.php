@@ -29,7 +29,7 @@
             </fieldset>
             <fieldset style="margin-top: 1rem">
                 <h3 style="margin-bottom: 0.33rem">Options</h3>
-                <label><input type="checkbox" name="hide_empty" checked> No empty servers</label><br />
+                <label><input type="checkbox" name="hide_empty"> No empty servers</label><br />
                 <label><input type="checkbox" name="hide_roleplay"> No roleplay servers</label><br />
                 <label><input type="checkbox" name="require_sampcac"> SAMPCAC Required</label><br />
             </fieldset>
@@ -40,9 +40,9 @@
                     </td>
                     <td style="text-align: right">
                         <select style="width: 100%" name="order" id="order">
-                            <option value="none">Don't order</option>
+                            <option value="none" selected>Don't order</option>
                             <option value="players">Player count</option>
-                            <option value="ratio" selected>Players/max ratio</option>
+                            <option value="ratio">Players/max ratio</option>
                         </select>
                     </td>
                 </tr>

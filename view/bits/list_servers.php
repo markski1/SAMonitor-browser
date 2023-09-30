@@ -24,7 +24,7 @@
         $filters .= "&require_sampcac=1";
     }
 
-    $order = $_GET['order'] ?? "ratio";
+    $order = $_GET['order'] ?? "none";
     $filters .= "&order=".$order;
 
     $page = $_GET['page'] ?? 0;
