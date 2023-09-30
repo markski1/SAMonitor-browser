@@ -40,7 +40,7 @@
         <h4>1. Get SA-MP</h4>
         <p>
             Of course, the first step is to install SA-MP. The mod works with both 0.3.7 and 0.3DL. <br />
-            While it should work with any version of 0.3.7, I strongly suggest you use the latest R5. <a target="_blank" href="https://sa-mp.com/download.php">Download here</a>.
+            While it should work with any version of 0.3.7, I strongly suggest you use the latest R5. <a target="_blank" href="https://samp.gg/downloads/">Download here</a>.
         </p>
         <h4>2. Get SA-MP Masterlist Fix</h4>
         <p>

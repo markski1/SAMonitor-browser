@@ -56,22 +56,15 @@ function DrawServer($server, $details = false) {
             <td style="width: 50%"><b><?=$server['gameMode']?></b></td><td><b>Language</b>: <?=$server['language']?></td>
         </tr>
         <tr>
-            <td><b>Players</b>: <?=$server['playersOnline']?> / <?=$server['maxPlayers']?></td>
+            <td><b>Players</b>: <?=$server['playersOnline']?> / <?=$server['maxPlayers']?></td><td><?=$server['version']?></td>
         </tr>
     </table>
 
     <?php if ($details) { ?>
         <div style="margin-bottom: 0.75rem;">
-            <h3 style="margin: 1rem .2rem .4rem">Details</h3>
             <table class="serverDetailsTable">
                 <tr>
-                    <td><b>Map</b></td><td><?=$server['mapName']?></td>
-                </tr>
-                <tr>
                     <td><b>Lag compensation</b></td><td><?=$lagcomp?></td>
-                </tr>
-                <tr>
-                    <td><b>Version</b></td><td><?=$server['version']?></td>
                 </tr>
                 <tr>
                     <td><b>Website</b></td><td><?=$website?></td>

@@ -7,19 +7,30 @@
 
     $total_reqs = count($metrics);
     $req_miss = 0;
+    $total_players_found = 0;
 
     foreach ($metrics as $instant) {
         if ($instant['players'] < 0) {
             $req_miss++;
         }
+        else {
+            $total_players_found += $instant['players'];
+        }
     }
 
-    if ($total_reqs > 0 && $req_miss > 0) {
-        $downtime = ($req_miss / $total_reqs) * 100;
-        $uptime = 100 - $downtime;
-    }
-    else {
-        $uptime = 100.0;
+    $uptime = 100.0;
+    $avg_players = 0.0;
+
+    if ($total_reqs > 0) {
+        if ($req_miss > 0) {
+            $downtime = ($req_miss / $total_reqs) * 100;
+            $uptime = 100 - $downtime;
+        }
+        
+        $req_success = $total_reqs - $req_miss;
+        if ($req_success > 0) {
+            $avg_players = $total_players_found / $req_success;
+        }
     }
 
     if (isset($_GET['ip_addr']) && strlen($_GET['ip_addr']) > 0) {
@@ -86,7 +97,7 @@
                     <td><b>Last updated</b></td><td><?=timeSince($last_updated)?> ago</td>
                 </tr>
             </table>
-            <p>Uptime during the last week: <?=number_format($uptime, 2)?>%<br/><small>Based on measurements every 20 minutes.</small></p>
+            <p>Uptime during the last week: <?=number_format($uptime, 2)?>%<br/>Average players during last week: <?=number_format($avg_players, 2)?><br/><small>Based on measurements every 20 minutes.</small></p>
             <div style="margin-top: 1.5rem">
                 <div style="float: left; margin-top: 0">
                     <p class="ipAddr" id="ipAddr<?=$server['id']?>"><?=$server['ipAddr']?></p>
@@ -122,6 +133,7 @@
 
 <script>
     document.title = "SAMonitor - <?=$server['name']?>"
+    window.scrollTo(0, 0);
 </script>
 
 <?php
