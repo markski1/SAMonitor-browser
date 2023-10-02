@@ -55,6 +55,9 @@
     else {
         PageHeader("Invalid server");
     }
+
+    if ($server['isOpenMp'] == 1) $server_software = "open.mp";
+    else $server_software = "SA-MP";
 ?>
 
 <div>
@@ -85,10 +88,13 @@
                     <td><b>Lag compensation</b></td><td><?=$lagcomp?></td>
                 </tr>
                 <tr>
-                    <td><b>Version</b></td><td><?=$server['version']?></td>
+                    <td><b>Website</b></td><td><?=$website?></td>
                 </tr>
                 <tr>
-                    <td><b>Website</b></td><td><?=$website?></td>
+                    <td><b>Server software</b></td><td><?=$server_software?></td>
+                </tr>
+                <tr>
+                    <td><b>Version</b></td><td><?=$server['version']?></td>
                 </tr>
                 <tr>
                     <td><b>SAMPCAC</b></td><td><?=$server['sampCac']?></td>

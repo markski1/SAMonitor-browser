@@ -6,6 +6,7 @@
 
     $total_servers = $globalStats['serversTracked'];
     $online_servers = $globalStats['serversOnline'];
+    $online_servers_omp = $globalStats['serversOnlineOMP'];
     $total_players = $globalStats['playersOnline'];
 ?>
 
@@ -54,7 +55,7 @@
         </form>
     </div>
     <p><?=$total_servers?> total servers tracked.</br>
-    <?=$online_servers?> servers currently online.</br>
+    <?=$online_servers?> servers currently online [<?=$online_servers_omp?> are open.mp].</br>
     <?=$total_players?> people playing right now.</p>
 </div>
 <div id="server-list" class="pageContent" hx-get="view/bits/list_servers.php?hide_empty" hx-trigger="load">
