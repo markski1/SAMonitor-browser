@@ -101,35 +101,40 @@
     <div class="innerContent">
         <h3>Miscelaneous metrics</h3>
         <p>Amount of servers by language</p>
-        <table style="width: 100%">
-            <th>  <td>Amount</td> <td>Percentage</td> </th>
-            <tr>  <td>Russian</td> <td><?=$lang_metrics['russian']?></td> <td><?=number_format($lang_pct['russian'], 2)?>%</td> </tr>
-            <tr>  <td>English</td> <td><?=$lang_metrics['english']?></td> <td><?=number_format($lang_pct['english'], 2)?>%</td> </tr>
-            <tr>  <td>Spanish</td> <td><?=$lang_metrics['spanish']?></td> <td><?=number_format($lang_pct['spanish'], 2)?>%</td> </tr>
-            <tr>  <td>Portuguese</td> <td><?=$lang_metrics['portuguese']?></td> <td><?=number_format($lang_pct['portuguese'], 2)?>%</td> </tr>
-            <tr>  <td>Romanian</td> <td><?=$lang_metrics['romanian']?></td> <td><?=number_format($lang_pct['romanian'], 2)?>%</td> </tr>
-            <tr>  <td>Misc. East Europe</td> <td><?=$lang_metrics['eastEuro']?></td> <td><?=number_format($lang_pct['eastEuro'], 2)?>%</td> </tr>
-            <tr>  <td>Misc. West Europe</td> <td><?=$lang_metrics['westEuro']?></td> <td><?=number_format($lang_pct['westEuro'], 2)?>%</td> </tr>
-            <tr>  <td>Misc. Asia</td> <td><?=$lang_metrics['asia']?></td> <td><?=number_format($lang_pct['asia'], 2)?>%</td> </tr>
-            <tr>  <td>Other</td> <td><?=$lang_metrics['other']?></td> <td><?=number_format($lang_pct['other'], 2)?>%</td> </tr>
+        <table style="width: 100%" id="language_table">
+            <thead>
+                <th>Language</thg> <th>Amount</th> <th>Percentage</th>
+            </thead>
+            <tbody>
+                <tr>  <td>Russian</td> <td><?=$lang_metrics['russian']?></td> <td><?=number_format($lang_pct['russian'], 2)?>%</td> </tr>
+                <tr>  <td>English</td> <td><?=$lang_metrics['english']?></td> <td><?=number_format($lang_pct['english'], 2)?>%</td> </tr>
+                <tr>  <td>Spanish</td> <td><?=$lang_metrics['spanish']?></td> <td><?=number_format($lang_pct['spanish'], 2)?>%</td> </tr>
+                <tr>  <td>Portuguese</td> <td><?=$lang_metrics['portuguese']?></td> <td><?=number_format($lang_pct['portuguese'], 2)?>%</td> </tr>
+                <tr>  <td>Romanian</td> <td><?=$lang_metrics['romanian']?></td> <td><?=number_format($lang_pct['romanian'], 2)?>%</td> </tr>
+                <tr>  <td>Misc. East Europe</td> <td><?=$lang_metrics['eastEuro']?></td> <td><?=number_format($lang_pct['eastEuro'], 2)?>%</td> </tr>
+                <tr>  <td>Misc. West Europe</td> <td><?=$lang_metrics['westEuro']?></td> <td><?=number_format($lang_pct['westEuro'], 2)?>%</td> </tr>
+                <tr>  <td>Misc. Asia</td> <td><?=$lang_metrics['asia']?></td> <td><?=number_format($lang_pct['asia'], 2)?>%</td> </tr>
+            </tbody>
         </table>
+        <p><small>The other <?=$lang_metrics['other']?> (<?=number_format($lang_pct['other'], 2)?>%) servers don't have a defined language.</small></p>
         <p>Amount of servers by gamemode</p>
-        <table style="width: 100%">
-            <th>  <td>Amount</td> <td>Percentage</td> </th>
-            <tr>  <td>Roleplay</td> <td><?=$gm_metrics['roleplay']?></td> <td><?=number_format($gm_pct['roleplay'], 2)?>%</td> </tr>
-            <tr>  <td>Deathmatch</td> <td><?=$gm_metrics['deathmatch']?></td> <td><?=number_format($gm_pct['deathmatch'], 2)?>%</td> </tr>
-            <tr>  <td>Race/Stunt/Drift</td> <td><?=$gm_metrics['raceStunt']?></td> <td><?=number_format($gm_pct['raceStunt'], 2)?>%</td> </tr>
-            <tr>  <td>Cops and Robbers</td> <td><?=$gm_metrics['cnr']?></td> <td><?=number_format($gm_pct['cnr'], 2)?>%</td> </tr>
-            <tr>  <td>Freeroam</td> <td><?=$gm_metrics['freeRoam']?></td> <td><?=number_format($gm_pct['freeRoam'], 2)?>%</td> </tr>
-            <tr>  <td>Survival</td> <td><?=$gm_metrics['survival']?></td> <td><?=number_format($gm_pct['survival'], 2)?>%</td> </tr>
-            <tr>  <td>Vehicle Simulation</td> <td><?=$gm_metrics['vehSim']?></td> <td><?=number_format($gm_pct['vehSim'], 2)?>%</td> </tr>
-            <tr>  <td>Other/Unknown</td> <td><?=$gm_metrics['other']?></td> <td><?=number_format($gm_pct['other'], 2)?>%</td> </tr>
+        <table style="width: 100%" id="gamemode_table">
+            <thead>
+                <th>Gamemode</thg> <th>Amount</th> <th>Percentage</th>
+            </thead>
+            <tbody>
+                <tr>  <td>Roleplay</td> <td><?=$gm_metrics['roleplay']?></td> <td><?=number_format($gm_pct['roleplay'], 2)?>%</td> </tr>
+                <tr>  <td>Deathmatch</td> <td><?=$gm_metrics['deathmatch']?></td> <td><?=number_format($gm_pct['deathmatch'], 2)?>%</td> </tr>
+                <tr>  <td>Race/Stunt/Drift</td> <td><?=$gm_metrics['raceStunt']?></td> <td><?=number_format($gm_pct['raceStunt'], 2)?>%</td> </tr>
+                <tr>  <td>Cops and Robbers</td> <td><?=$gm_metrics['cnr']?></td> <td><?=number_format($gm_pct['cnr'], 2)?>%</td> </tr>
+                <tr>  <td>Freeroam</td> <td><?=$gm_metrics['freeRoam']?></td> <td><?=number_format($gm_pct['freeRoam'], 2)?>%</td> </tr>
+                <tr>  <td>Survival</td> <td><?=$gm_metrics['survival']?></td> <td><?=number_format($gm_pct['survival'], 2)?>%</td> </tr>
+                <tr>  <td>Vehicle Simulation</td> <td><?=$gm_metrics['vehSim']?></td> <td><?=number_format($gm_pct['vehSim'], 2)?>%</td> </tr>
+            </tbody>
         </table>
+        <p><small>The other <?=$gm_metrics['other']?> (<?=number_format($gm_pct['other'], 2)?>%) servers don't have a defined gamemode.</small></p>
         <p style="margin-top: 1rem">
-            Disclaimer: Numbers are inferred from names and/or gamemodes. Sadly, there's not a standarized format for neither representing the languages nor the gamemode of the server.
-        </p>
-        <p>
-            Even worse, there seems to be a practice to use the 'Language' or 'Gamemode' fields for the name of the server rather than what they actually are. Server owners, please, this makes it harder for people to find your server.
+            There seems to be a practice to use the 'Language' or 'Gamemode' fields for the name of the server rather than what they actually are. Server owners, please, this makes it harder for people to find your server.
         </p>
     </div>
 </div>
@@ -137,6 +142,28 @@
 <script>
     document.title = "SAMonitor - metrics";
     window.scrollTo(0, 0);
+
+    // order the tables
+
+    tables = [];
+
+    tables[0] = document.getElementById("language_table");
+    tables[1] = document.getElementById("gamemode_table");
+
+    tables.forEach((table) => {
+        const rows = Array.from(table.querySelectorAll("tr"));
+        rows.sort((rowA, rowB) => {
+            const cellA = rowA.cells[1].textContent;
+            const cellB = rowB.cells[1].textContent;
+
+            return Number(cellB) - Number(cellA);
+        });
+
+        const tbody = table.querySelector("tbody");
+        rows.forEach((row) => {
+            tbody.appendChild(row);
+        });
+    })
 </script>
 
 <?php PageBottom() ?>

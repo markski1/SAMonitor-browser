@@ -53,7 +53,8 @@
 </div>
 
 <script>
-    document.title = "SAMonitor - donate";    
+    document.title = "SAMonitor - donate";
+    window.scrollTo(0, 0);
 </script>
 
 <?php PageBottom() ?>

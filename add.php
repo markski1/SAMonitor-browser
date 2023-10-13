@@ -28,7 +28,8 @@
 </div>
 
 <script>
-    document.title = "SAMonitor - add server";  
+    document.title = "SAMonitor - add server";
+    window.scrollTo(0, 0);
 </script>
 
 <?php PageBottom() ?>

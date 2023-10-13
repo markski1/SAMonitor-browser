@@ -39,6 +39,7 @@
 
 <script>
     document.title = "SAMonitor - about";
+    window.scrollTo(0, 0);
 </script>
 
 <?php PageBottom() ?>

@@ -120,6 +120,7 @@
 
 <script>
     document.title = "SAMonitor - masterlist mod";
+    window.scrollTo(0, 0);
 </script>
 
 <?php PageBottom() ?>
