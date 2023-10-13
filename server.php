@@ -132,7 +132,9 @@
         </div>
         <div class="innerContent flexBox">
             <h3>Player list</h3>
-            <iframe style="width: 100%; height: 15rem; border: 1px solid gray" src="view/playerlist.php?ip_addr=<?=$server['ipAddr']?>&players=<?=$server['playersOnline']?>"></iframe>
+            <div hx-get="view/playerlist.php?ip_addr=<?=$server['ipAddr']?>&players=<?=$server['playersOnline']?>" hx-trigger="load">
+                <p>Loading player list...</p>
+            </div>
         </div>
     </div>
 </div>

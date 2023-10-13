@@ -11,7 +11,7 @@
         $players = json_decode(file_get_contents("http://127.0.0.1:42069/api/GetServerPlayers?ip_addr=".$_GET['ip_addr']), true);
         
         if (count($players) > 0) {
-            echo '<table>';
+            echo '<table style="width: 100%; border: 0;">';
             echo '<tr style="border: 1px gray solid"><b><td>Id</td><td>Name</td><td>Score</td><td>Ping</td></b></tr>';
 
             foreach ($players as $player) {
@@ -25,15 +25,3 @@
         }
     }
 ?>
-
-<style>
-    * {
-        font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
-    Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;   
-        color: white;
-    }
-    table {
-        width: 100%;
-        border: 0;
-    }
-</style>
