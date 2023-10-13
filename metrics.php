@@ -136,6 +136,7 @@
 
 <script>
     document.title = "SAMonitor - metrics";
+    window.scrollTo(0, 0);
 </script>
 
 <?php PageBottom() ?>
