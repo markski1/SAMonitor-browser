@@ -42,7 +42,23 @@
         $filters .= "&language=".urlencode($_GET['language']);
     }
 
-    $servers = json_decode(file_get_contents("http://gateway.markski.ar:42069/api/GetFilteredServers" . $filters . "&page=".$page), true);
+    try {
+        $success = @$servers = json_decode(file_get_contents("http://gateway.markski.ar:42069/api/GetFilteredServers" . $filters . "&page=".$page), true);
+
+        if (!$success) {
+            throw new ErrorException('Failure to connect to the API.', 0, 0, 0);
+        }
+    }
+    catch (Exception $ex) {
+        echo "
+            <h1>Error fetching servers.</h1>
+            <p>There was an error fetching servers from the SAMonitor API.</p>
+            <p>This might be a server issue, in which case, an automated script has already alerted me about this. Please try again in a few minutes.</p>
+            <p><a href='https://status.markski.ar/'>Current status of my services</a></p>
+        ";
+        exit;
+    }
+
 
     if (count($servers) == 0) {
         exit("No results.");
@@ -57,7 +73,7 @@
     if (Count($servers) == 20) {   
         echo '
             <div hx-target="this" style="margin: 3rem">
-                <center><button hx-trigger="click" hx-get="./view/bits/list_servers.php'.$filters.'&page='.($page + 1).'" hx-swap="outerHTML">Load more</button></center>
+                <center><button hx-trigger="click" hx-get="./view/list_servers.php'.$filters.'&page='.($page + 1).'" hx-swap="outerHTML">Load more</button></center>
             </div>
         ';
     }

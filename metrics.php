@@ -1,6 +1,6 @@
 <?php
     include 'logic/layout.php';
-    include 'view/bits/fragments.php';
+    include 'view/fragments.php';
 
     PageHeader("metrics");
 
@@ -32,13 +32,34 @@
         exit;
     }
 
-    $lang_metrics = json_decode(file_get_contents("http://gateway.markski.ar:42069/api/GetLanguageStats"), true);
+    
+
+    try {
+        $success = @$lang_metrics = json_decode(file_get_contents("http://gateway.markski.ar:42069/api/GetLanguageStats"), true);
+        $success_2 = @$gm_metrics = json_decode(file_get_contents("http://gateway.markski.ar:42069/api/GetGamemodeStats"), true);
+
+        if (!$success || !$success_2) {
+            throw new ErrorException('Failure to connect to the API.', 0, 0, 0);
+        }
+    }
+    catch (Exception $ex) {
+        echo "
+            <div>
+                <h1>Error fetching metrics.</h1>
+                <p>There was an error fetching the metrics data from the SAMonitor API.</p>
+                <p>This might be a server issue, in which case, an automated script has already alerted me about this. Please try again in a few minutes.</p>
+                <p><a href='https://status.markski.ar/'>Current status of my services</a></p>
+            </div>
+        ";
+        exit;
+    }
+
     $lang_total = array_sum($lang_metrics);
     foreach ($lang_metrics as $lang => $amount) {
         $lang_pct[$lang] = ($amount / $lang_total) * 100;
     }
 
-    $gm_metrics = json_decode(file_get_contents("http://gateway.markski.ar:42069/api/GetGamemodeStats"), true);
+    
     $gm_total = array_sum($gm_metrics);
     foreach ($gm_metrics as $gm => $amount) {
         $gm_pct[$gm] = ($amount / $gm_total) * 100;
@@ -50,7 +71,7 @@
     <p>SAMonitor accounts for the total amount of servers and players a few times every hour, of every day.</p>
     <div class="innerContent">
         </h3>
-        <form hx-target="#graph-cnt" hx-get="view/bits/fragments.php?type=metricsGraph" hx-trigger="change">
+        <form hx-target="#graph-cnt" hx-get="view/fragments.php?type=metricsGraph" hx-trigger="change">
             <h3>Global Activity - 
                 <select name="dataType" style="width: 6rem">
                     <option value=0>players</option>

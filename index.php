@@ -2,17 +2,34 @@
     include 'logic/layout.php';
     PageHeader("San Andreas Multiplayer server monitor, for SA-MP and open.mp");
 
-    $globalStats = json_decode(file_get_contents("http://gateway.markski.ar:42069/api/GetGlobalStats"), true);
+    try {
+        $success = @$globalStats = json_decode(file_get_contents("http://gateway.markski.ar:42069/api/GetGlobalStats"), true);
 
-    $total_servers = $globalStats['serversTracked'];
-    $online_servers = $globalStats['serversOnline'];
-    $online_servers_omp = $globalStats['serversOnlineOMP'];
-    $total_players = $globalStats['playersOnline'];
+        if (!$success) {
+            throw new ErrorException('Failure to connect to the API.', 0, 0, 0);
+        }
+
+        $total_servers = $globalStats['serversTracked'];
+        $online_servers = $globalStats['serversOnline'];
+        $online_servers_omp = $globalStats['serversOnlineOMP'];
+        $total_players = $globalStats['playersOnline'];
+    }
+    catch (Exception $ex) {
+        $total_servers = 0;
+        $online_servers = 0;
+        $online_servers_omp = 0;
+        $total_players = 0;
+    }
+
+    
+    
+    
+    
 ?>
 
 <div class="filterContainer">
     <div class="filterBox">
-        <form hx-get="./view/bits/list_servers.php" hx-target="#server-list">
+        <form hx-get="./view/list_servers.php" hx-target="#server-list">
             <h2>Filters</h2>
             <fieldset style="margin-top: .66rem">
                 <h3 style="margin-bottom: 0.33rem">Search</h3>
@@ -58,7 +75,7 @@
     <?=$online_servers?> servers currently online [<?=$online_servers_omp?> are open.mp].</br>
     <?=$total_players?> people playing right now.</p>
 </div>
-<div id="server-list" class="pageContent" hx-get="view/bits/list_servers.php?hide_empty" hx-trigger="load">
+<div id="server-list" class="pageContent" hx-get="view/list_servers.php?hide_empty" hx-trigger="load">
     <h1>Loading servers!</h1>
     <p>Please wait. If servers don't load in, SAMonitor might be having issues, please check in later!. Alternatively, if you're using NoScript, you'll need to disable it.</p>
 </div>

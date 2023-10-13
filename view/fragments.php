@@ -87,7 +87,7 @@ function DrawServer($server, $details = false) {
     </div>
     <div style="text-align: right; float: right; margin-top: 0">
         <?php if (!$details) { ?>
-            <button hx-get="view/bits/fragments.php?type=details&ip_addr=<?=$server['ipAddr']?>">Details</button>
+            <button hx-get="view/fragments.php?type=details&ip_addr=<?=$server['ipAddr']?>">Details</button>
         <?php } ?>
         <button class="connectButton" id="copyButton<?=$server['id']?>" onclick="CopyAddress('ipAddr<?=$server['id']?>', 'copyButton<?=$server['id']?>')">Copy IP</button>
     </div>
