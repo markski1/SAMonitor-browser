@@ -8,13 +8,13 @@
 
 if (isset($_GET['type'])) {
     if ($_GET['type'] == 'details') {
-        $server = json_decode(file_get_contents("http://gateway.markski.ar:42069/api/GetServerByIP?ip_addr=".urlencode($_GET['ip_addr'])), true);
+        $server = json_decode(file_get_contents("http://127.0.0.1:42069/api/GetServerByIP?ip_addr=".urlencode($_GET['ip_addr'])), true);
 
         DrawServer($server, true);
     }
 
     if ($_GET['type'] == 'listing') {
-        $server = json_decode(file_get_contents("http://gateway.markski.ar:42069/api/GetServerByIP?ip_addr=".urlencode($_GET['ip_addr'])), true);
+        $server = json_decode(file_get_contents("http://127.0.0.1:42069/api/GetServerByIP?ip_addr=".urlencode($_GET['ip_addr'])), true);
 
         DrawServer($server, false);
     }
@@ -96,7 +96,7 @@ function DrawServer($server, $details = false) {
 }
 
 function DrawServerGraph($serverIP, $hours) {
-    $metrics = json_decode(file_get_contents("http://gateway.markski.ar:42069/api/GetServerMetrics?hours={$hours}&ip_addr=".urlencode($serverIP)), true);
+    $metrics = json_decode(file_get_contents("http://127.0.0.1:42069/api/GetServerMetrics?hours={$hours}&ip_addr=".urlencode($serverIP)), true);
 
     if (count($metrics) < 3) {
         echo "<p>Not enough data for the activity graph, please check later.</p>";
@@ -184,7 +184,7 @@ function DrawMetricsGraphs($dataType, $hours) {
     $timeSet = "";
     $first = true;
 
-    $metrics = json_decode(file_get_contents("http://gateway.markski.ar:42069/api/GetGlobalMetrics?hours=".$hours), true);
+    $metrics = json_decode(file_get_contents("http://127.0.0.1:42069/api/GetGlobalMetrics?hours=".$hours), true);
     // API provides data in descendent order, but we'd want to show it as a graph, so it should be ascending.
     $metrics = array_reverse($metrics);
 

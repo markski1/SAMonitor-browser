@@ -10,7 +10,7 @@
     //     - Making the main page load faster. HTMX calls this page again with this parameter to get the table without delaying the main page load.
     if (isset($_GET['load_table'])) {
         // get data for one week
-        $metrics = json_decode(file_get_contents("http://gateway.markski.ar:42069/api/GetGlobalMetrics?hours=168"), true);
+        $metrics = json_decode(file_get_contents("http://127.0.0.1:42069/api/GetGlobalMetrics?hours=168"), true);
         
         echo '<table style="width: 100%; border: 1px gray solid;">
                 <tr><th>Time</th><th>Players online</th><th>Servers online</th><th>API Hits</th></tr>';
@@ -35,8 +35,8 @@
     
 
     try {
-        $success = @$lang_metrics = json_decode(file_get_contents("http://gateway.markski.ar:42069/api/GetLanguageStats"), true);
-        $success_2 = @$gm_metrics = json_decode(file_get_contents("http://gateway.markski.ar:42069/api/GetGamemodeStats"), true);
+        $success = @$lang_metrics = json_decode(file_get_contents("http://127.0.0.1:42069/api/GetLanguageStats"), true);
+        $success_2 = @$gm_metrics = json_decode(file_get_contents("http://127.0.0.1:42069/api/GetGamemodeStats"), true);
 
         if (!$success || !$success_2) {
             throw new ErrorException('Failure to connect to the API.', 0, 0, 0);

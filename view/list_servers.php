@@ -43,7 +43,7 @@
     }
 
     try {
-        $success = @$servers = json_decode(file_get_contents("http://gateway.markski.ar:42069/api/GetFilteredServers" . $filters . "&page=".$page), true);
+        $success = @$servers = json_decode(file_get_contents("http://127.0.0.1:42069/api/GetFilteredServers" . $filters . "&page=".$page), true);
 
         if (!$success) {
             throw new ErrorException('Failure to connect to the API.', 0, 0, 0);

@@ -3,7 +3,7 @@
     include 'view/fragments.php';
 
     // calculate week's uptime
-    $metrics = json_decode(file_get_contents("http://gateway.markski.ar:42069/api/GetServerMetrics?hours=168&include_misses=1&ip_addr=".urlencode($_GET['ip_addr'])), true);
+    $metrics = json_decode(file_get_contents("http://127.0.0.1:42069/api/GetServerMetrics?hours=168&include_misses=1&ip_addr=".urlencode($_GET['ip_addr'])), true);
 
     $total_reqs = count($metrics);
     $req_miss = 0;
@@ -34,7 +34,7 @@
     }
 
     if (isset($_GET['ip_addr']) && strlen($_GET['ip_addr']) > 0) {
-        $server = json_decode(file_get_contents("http://gateway.markski.ar:42069/api/GetServerByIP?ip_addr=".urlencode($_GET['ip_addr'])), true);
+        $server = json_decode(file_get_contents("http://127.0.0.1:42069/api/GetServerByIP?ip_addr=".urlencode($_GET['ip_addr'])), true);
     }
     
     if (isset($server)) {

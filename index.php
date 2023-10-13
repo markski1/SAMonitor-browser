@@ -1,30 +1,6 @@
 <?php
     include 'logic/layout.php';
     PageHeader("San Andreas Multiplayer server monitor, for SA-MP and open.mp");
-
-    try {
-        $success = @$globalStats = json_decode(file_get_contents("http://gateway.markski.ar:42069/api/GetGlobalStats"), true);
-
-        if (!$success) {
-            throw new ErrorException('Failure to connect to the API.', 0, 0, 0);
-        }
-
-        $total_servers = $globalStats['serversTracked'];
-        $online_servers = $globalStats['serversOnline'];
-        $online_servers_omp = $globalStats['serversOnlineOMP'];
-        $total_players = $globalStats['playersOnline'];
-    }
-    catch (Exception $ex) {
-        $total_servers = 0;
-        $online_servers = 0;
-        $online_servers_omp = 0;
-        $total_players = 0;
-    }
-
-    
-    
-    
-    
 ?>
 
 <div class="filterContainer">
@@ -71,9 +47,9 @@
             </div>
         </form>
     </div>
-    <p><?=$total_servers?> total servers tracked.</br>
-    <?=$online_servers?> servers currently online [<?=$online_servers_omp?> are open.mp].</br>
-    <?=$total_players?> people playing right now.</p>
+    <div hx-get="view/current_stats.php" style="margin-top: 1rem" hx-trigger="load">
+        <p>Loading current stats...</p>
+    </div>
 </div>
 <div id="server-list" class="pageContent" hx-get="view/list_servers.php?hide_empty" hx-trigger="load">
     <h1>Loading servers!</h1>

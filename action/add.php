@@ -4,7 +4,7 @@
         exit;
     }
 
-    $result = file_get_contents("http://gateway.markski.ar:42069/api/AddServer?ip_addr=".trim($_POST['ip_addr']));
+    $result = file_get_contents("http://127.0.0.1:42069/api/AddServer?ip_addr=".trim($_POST['ip_addr']));
 
     echo "Result: {$result}";
 ?>
