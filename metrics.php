@@ -35,10 +35,19 @@
     
 
     try {
-        $success = @$lang_metrics = json_decode(file_get_contents("http://127.0.0.1:42069/api/GetLanguageStats"), true);
-        $success_2 = @$gm_metrics = json_decode(file_get_contents("http://127.0.0.1:42069/api/GetGamemodeStats"), true);
+        $ctx = stream_context_create(array('http'=>
+            array(
+                'timeout' => 5,
+            )
+        ));
 
-        if (!$success || !$success_2) {
+        $success = @$lang_metrics = json_decode(file_get_contents("http://127.0.0.1:42069/api/GetLanguageStats", false, $ctx), true);
+        if (!$success) {
+            throw new ErrorException('Failure to connect to the API.', 0, 0, 0);
+        }
+
+        $success = @$gm_metrics = json_decode(file_get_contents("http://127.0.0.1:42069/api/GetGamemodeStats", false, $ctx), true);
+        if (!$success) {
             throw new ErrorException('Failure to connect to the API.', 0, 0, 0);
         }
     }
