@@ -20,12 +20,12 @@ if (isset($_GET['type'])) {
     }
 
     if ($_GET['type'] == 'serverGraph') {
-        DrawServerGraph($_GET['ip_addr'], $_GET['hours']);
+        echo DrawServerGraph($_GET['ip_addr'], $_GET['hours']);
     }
 
     if ($_GET['type'] == 'metricsGraph') {
         $dataType = $_GET['dataType'] ?? 0;
-        DrawMetricsGraphs($dataType, $_GET['hours']);
+        echo DrawMetricsGraphs($dataType, $_GET['hours']);
     }
 }
 
