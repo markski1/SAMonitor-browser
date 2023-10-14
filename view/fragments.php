@@ -37,7 +37,8 @@ if (isset($_GET['type'])) {
  */
 
 
-function DrawServer($server, $details = false) {
+function DrawServer($server, $details = false): void
+{
     $server = array_map('htmlspecialchars', $server);
 
     if ($server['website'] != "Unknown") {
@@ -47,10 +48,10 @@ function DrawServer($server, $details = false) {
         $website = "No website specified.";
     }
 
-    $lagcomp = $server['lagComp'] == 1 ? "Enabled" : "Disabled";
+    $lag_comp = $server['lagComp'] == 1 ? "Enabled" : "Disabled";
     $last_updated = strtotime($server['lastUpdated']);
 ?>
-    <h3 style="margin: 0 0 .4rem"><?=$server['name']?></h3>
+    <h3 style="margin: 0 0 .4rem; color: #A0C0F0"><?=$server['name']?></h3>
     <table style="width: 100%" class="serverInfo">
         <tr>
             <td style="width: 50%"><b><?=$server['gameMode']?></b></td><td><b>Language</b>: <?=$server['language']?></td>
@@ -64,7 +65,7 @@ function DrawServer($server, $details = false) {
         <div style="margin-bottom: 0.75rem;">
             <table class="serverDetailsTable">
                 <tr>
-                    <td><b>Lag compensation</b></td><td><?=$lagcomp?></td>
+                    <td><b>Lag compensation</b></td><td><?=$lag_comp?></td>
                 </tr>
                 <tr>
                     <td><b>Website</b></td><td><?=$website?></td>

@@ -25,6 +25,6 @@
 
 <p>
     <?=$total_servers?> total servers tracked.<br>
-    <?=$online_servers?> servers currently online [<?=$online_servers_omp?> are open.mp].<br>
+    <?=$online_servers?> servers online [<?=$online_servers_omp?> are open.mp].<br>
     <?=$total_players?> people playing right now.
 </p>

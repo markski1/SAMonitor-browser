@@ -79,8 +79,8 @@
 
     if (Count($servers) == 20) {   
         echo '
-            <div hx-target="this" style="margin: 3rem">
-                <center><button hx-trigger="click" hx-get="./view/list_servers.php'.$filters.'&page='.($page + 1).'" hx-swap="outerHTML">Load more</button></center>
+            <div hx-target="this" style="margin: 3rem; width: 80%; text-align: center">
+                <button hx-trigger="click" hx-get="./view/list_servers.php'.$filters.'&page='.($page + 1).'" hx-swap="outerHTML">Load more</button>
             </div>
         ';
     }
