@@ -12,6 +12,7 @@ function PageHeader($title, $description = null) {
         <head>
             <title>SAMonitor - <?=$title?></title>
             <link rel="icon" type="image/x-icon" href="./assets/logo256.webp">
+            <meta property="og:image" href="https://sam.markski.ar/web/assets/logo256.webp" />
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <meta charset="utf-8">
             <link rel="stylesheet" type="text/css" href="styles.css">

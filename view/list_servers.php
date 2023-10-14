@@ -49,7 +49,7 @@
             )
         ));
 
-        $success = @$servers = json_decode(file_get_contents("http://127.0.0.1:42069/api/GetFilteredServers" . $filters . "&page=".$page, false, $ctx), true);
+        $success = @$response = file_get_contents("http://127.0.0.1:42069/api/GetFilteredServers" . $filters . "&page=".$page, false, $ctx);
 
         if (!$success) {
             throw new ErrorException('Failure to connect to the API.', 0, 0, 0);
@@ -65,9 +65,10 @@
         exit;
     }
 
+    $servers = json_decode($response, true);
 
     if (count($servers) == 0) {
-        exit("No results.");
+        exit("<h1>No results</h1><p>Sorry, there are no results for your filter options.</p><p>If we're missing a server, feel free to add it on the add server page.</p>");
     }
 
     foreach ($servers as $server) {
