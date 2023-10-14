@@ -112,7 +112,6 @@ header .separators {
 
 button {
     padding: .8rem 1.33rem;
-    border: 1px solid black;
     border-radius: 8px;
     margin-right: 1rem;
     cursor: pointer;
@@ -135,7 +134,7 @@ button:active {
 }
 
 td, th {
-    border: 1px solid gray;
+    border: 1px solid rgb(128, 128, 128);
 }
 
 .serverDetailsTable {
@@ -198,9 +197,8 @@ fieldset {
 .server {
     max-width: 34rem;
     background-color: #28292A;
-    box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 8px;
-    margin: 0;
-    margin-bottom: 1.25rem;
+    box-shadow: rgba(0, 0, 0, 0.15) 0 3px 8px;
+    margin: 0 0 1.25rem;
     padding: .66rem;
     border: 0;
     border-radius: 18px;
@@ -222,7 +220,7 @@ fieldset {
 .filterBox {
     margin: 0;
     background-color: #2D2F31;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
     padding: .75rem;
     border-radius: 12px;
 }
@@ -237,7 +235,7 @@ fieldset {
 
 .innerContent {
     background-color: #2D2F31;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
     border-radius: 6px;
     padding: .8rem;
     width: 95%;
@@ -267,7 +265,6 @@ fieldset {
 
 .ipAddr {
     font-size: 1.1rem;
-    margin: unset;
     margin: 0.5rem 0.33rem 0 !important;
     color: rgb(183, 203, 209);
 }
