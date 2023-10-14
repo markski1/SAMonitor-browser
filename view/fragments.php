@@ -76,7 +76,7 @@ function DrawServer($server, $details = false) {
                     <td><b>Last updated</b></td><td><?=timeSince($last_updated)?> ago</td>
                 </tr>
             </table>
-            <a href="server.php?&ip_addr=<?=$server['ipAddr']?>" target="_blank" alt="Opens in new tab.">
+            <a href="server.php?&ip_addr=<?=$server['ipAddr']?>" target="_blank">
                 <button style="width: 100%; margin-top: 1rem; font-size: 1.25rem">All server information</button>
             </a>
         </div>
@@ -95,12 +95,12 @@ function DrawServer($server, $details = false) {
 <?php
 }
 
-function DrawServerGraph($serverIP, $hours) {
+function DrawServerGraph($serverIP, $hours): string
+{
     $metrics = json_decode(file_get_contents("http://127.0.0.1:42069/api/GetServerMetrics?hours={$hours}&ip_addr=".urlencode($serverIP)), true);
 
     if (count($metrics) < 3) {
-        echo "<p>Not enough data for the activity graph, please check later.</p>";
-        return;
+        return "<p>Not enough data for the activity graph, please check later.</p>";
     }
 
     $playerSet = "";
@@ -148,7 +148,7 @@ function DrawServerGraph($serverIP, $hours) {
         }
     }
 
-    echo "
+    return "
         <canvas id='globalPlayersChart' style='width: 100%'></canvas>
         <p>The highest player count was <span style='color: green'>{$highest}</span> at {$highest_time}, and the lowest was <span style='color: red'>{$lowest}</span> at {$lowest_time}</p>
     
@@ -173,7 +173,7 @@ function DrawServerGraph($serverIP, $hours) {
                         }
                     ]
                 }
-            });
+            })
         </script>
     ";
 }
@@ -196,10 +196,6 @@ function DrawMetricsGraphs($dataType, $hours) {
     $skip = true;
 
     switch ($dataType) {
-        case 0:
-            $getField = 'players';
-            $datasetName = 'Players online';
-            break;
         case 1:
             $getField = 'servers';
             $datasetName = 'Servers online';
@@ -247,7 +243,7 @@ function DrawMetricsGraphs($dataType, $hours) {
     $min = intval($lowest / 3);
     $min = $min - $min % 10;
 
-    echo "
+    return "
         <canvas id='globalPlayersChart' style='width: 60rem; max-width: 100%'></canvas>
         <script>
             new Chart(document.getElementById('globalPlayersChart'),
@@ -271,7 +267,7 @@ function DrawMetricsGraphs($dataType, $hours) {
                         }
                     ]
                 }
-            });
+            })
         </script>
         <p>The highest count was <span style='color: green'>{$highest}</span> at {$highest_time}, and the lowest was <span style='color: red'>{$lowest}</span> at {$lowest_time}</p>
     ";
@@ -284,7 +280,8 @@ function DrawMetricsGraphs($dataType, $hours) {
  *
  */
 
-function timeSince($time) {
+function timeSince($time): string
+{
     $time = time() - $time; // to get the time since that moment
     $time = ($time<1)? 1 : $time;
     $tokens = array (
@@ -302,5 +299,6 @@ function timeSince($time) {
         $numberOfUnits = floor($time / $unit);
         return $numberOfUnits.' '.$text.(($numberOfUnits>1)?'s':'');
     }
+    return "Unknown time.";
 }
 ?>

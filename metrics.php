@@ -12,7 +12,7 @@
         // get data for one week
         $metrics = json_decode(file_get_contents("http://127.0.0.1:42069/api/GetGlobalMetrics?hours=168"), true);
         
-        echo '<table style="width: 100%; border: 1px gray solid;">
+        echo '<table style="width: 100%; border: 1px rgb(128, 128, 128) solid;">
                 <tr><th>Time</th><th>Players online</th><th>Servers online</th><th>API Hits</th></tr>';
 
         foreach ($metrics as $instant) {
@@ -76,10 +76,9 @@
 ?>
 
 <div>
-    <h2>Metrics</h3>
+    <h2>Metrics</h2>
     <p>SAMonitor accounts for the total amount of servers and players a few times every hour, of every day.</p>
     <div class="innerContent">
-        </h3>
         <form hx-target="#graph-cnt" hx-get="view/fragments.php?type=metricsGraph" hx-trigger="change">
             <h3>Global Activity - 
                 <select name="dataType" style="width: 6rem">
@@ -112,7 +111,7 @@
         <p>Amount of servers by language</p>
         <table style="width: 100%" id="language_table">
             <thead>
-                <th>Language</thg> <th>Amount</th> <th>Percentage</th>
+                <th>Language</th> <th>Amount</th> <th>Percentage</th>
             </thead>
             <tbody>
                 <tr>  <td>Russian</td> <td><?=$lang_metrics['russian']?></td> <td><?=number_format($lang_pct['russian'], 2)?>%</td> </tr>
@@ -129,7 +128,7 @@
         <p>Amount of servers by gamemode</p>
         <table style="width: 100%" id="gamemode_table">
             <thead>
-                <th>Gamemode</thg> <th>Amount</th> <th>Percentage</th>
+                <th>Gamemode</th> <th>Amount</th> <th>Percentage</th>
             </thead>
             <tbody>
                 <tr>  <td>Roleplay</td> <td><?=$gm_metrics['roleplay']?></td> <td><?=number_format($gm_pct['roleplay'], 2)?>%</td> </tr>

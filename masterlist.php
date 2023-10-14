@@ -7,7 +7,8 @@
 
 <div>
     <h2>Masterlist mod</h2>
-    <p>Integrate SAMonitor's listings right in your SA-MP client. | <a href="masterlist.php?spanish" hx-get="masterlist.php?spanish" hx-push-url="true" hx-target="#main"">Leer en Español</a>.</p>
+    <p>Integrate SAMonitor's listings right in your SA-MP client. | <a href="masterlist.php?spanish" hx-get="masterlist.php?spanish" hx-push-url="true" hx-target="#main"">Leer
+        en Español.</a></p>
 
     <div class="innerContent">
         <h3>Information</h3>
@@ -16,7 +17,7 @@
         <p>If desired, you can use any other masterlist provider.</p>
 
         <figure style="margin: .5rem">
-            <img style="width: 100%; max-width: 640px" src="assets/client-showcase.png">
+            <img style="width: 100%; max-width: 640px" src="assets/client-showcase.png" alt="Screenshot of the SA-MP client with the mod.">
             <figcaption style="font-size: 0.9rem">Look at all those servers!</figcaption>
         </figure>
     </div>
@@ -66,7 +67,7 @@
 
 <div>
     <h2>Masterlist mod</h2>
-    <p>Integra el listado de servidores de SAMonitor en SA-MP. | <a href="masterlist.php" hx-get="masterlist.php" hx-push-url="true" hx-target="#main"">Read in English</a>.
+    <p>Integra el listado de servidores de SAMonitor en SA-MP. | <a href="masterlist.php" hx-get="masterlist.php" hx-push-url="true" hx-target="#main"">Read in English</a></p>.
     
     <div class="innerContent">
         <h3>Información</h3>
@@ -75,7 +76,7 @@
         <p>Si lo deseas, podes configurarlo para que use cualquier otro masterlist.</p>
 
         <figure style="margin: .5rem">
-            <img style="width: 100%; max-width: 640px" src="assets/client-showcase.png">
+            <img style="width: 100%; max-width: 640px" src="assets/client-showcase.png" alt="Captura del cliente de SA-MP con el mod instalado.">
             <figcaption style="font-size: 0.9rem">Mirá todos esos servers!</figcaption>
         </figure>
     </div>
@@ -92,7 +93,7 @@
            Una vez que tenemos SA-MP instalado, procedemos a descargar el mod. <a target="_blank" href="https://github.com/spmn/sa-mp_masterlist_fix/releases/latest">Descargar de acá</a>.
         </p>
         <p>
-            <b>Atención:</b> Es posible que recibas una alerta de "software malicioso". Esto es falso, <a href="https://github.com/spmn/sa-mp_masterlist_fix/issues/9">y se ha contactado a Microsoft para intentar solucionarlo</a>. Si no nos crees, podes chequearlo por tu cuenta en <a href="https://virustotal.com">VirusTotal</a>, o compilarlo.</p>
+            <b>Atención:</b> Es posible que recibas una alerta de "software malicioso". Esto es falso, <a href="https://github.com/spmn/sa-mp_masterlist_fix/issues/9">y se ha contactado a Microsoft para intentar solucionarlo</a>. Si no nos crees, podes chequearlo por tu cuenta en <a href="https://virustotal.com">VirusTotal</a>, o compilarlo.
         </p>
         <h4>3. Instalar el mod</h4>
         <ol type="1" style="line-height: 1.7rem">

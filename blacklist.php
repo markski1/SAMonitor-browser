@@ -34,7 +34,7 @@
             If your server is found to register several IP's pointing to the same server, the server itself won't be blocked, but any IP found to be repeated will be blocked.
         </p>
         <p>
-            Attempts to bypass the anti-repeat measures, succesful or not, will result in blacklisting.
+            Attempts to bypass the anti-repeat measures, successful or not, will result in blacklisting.
         </p>
     </div>
 </div>

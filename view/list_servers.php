@@ -1,7 +1,7 @@
 <?php
     include 'fragments.php';
 
-    // no sanitiztion is required on these GET parameters as these just call the public API.
+    // no sanitization is required on these GET parameters as these just call the public API.
 
     $filters = "?";
 

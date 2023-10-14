@@ -12,7 +12,7 @@
         
         if (count($players) > 0) {
             echo '<table style="width: 100%; border: 0;">';
-            echo '<tr style="border: 1px gray solid"><b><td>Id</td><td>Name</td><td>Score</td><td>Ping</td></b></tr>';
+            echo '<tr style="border: 1px rgb(128, 128, 128) solid"><b><td>Id</td><td>Name</td><td>Score</td><td>Ping</td></b></tr>';
 
             foreach ($players as $player) {
                 echo "<tr><td style='width: 100px'>{$player['id']}</td> <td>{$player['name']}</td> <td>{$player['score']}</td> <td>{$player['ping']}</td></tr>";

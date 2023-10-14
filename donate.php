@@ -24,8 +24,8 @@
         <h3>What donations do</h3>
         <ul>
             <li>Help cover the costs of hosting and developing the service.</li>
-            <li>The name and/or organization of a donator will be added to a "Sponsors" section of this page, and remain there forever.</li>
-            <li>Optionally, a server of the donator's choosing will show up in green instead of purple in the servers page for 30 days.</li>
+            <li>The name and/or organization of a donor will be added to a "Sponsors" section of this page, and remain there forever.</li>
+            <li>Optionally, a server of the donor's choosing will show up in green instead of purple in the servers page for 30 days.</li>
         </ul>
         <h3>What donations <span style="text-decoration: underline">won't</span> do</h3>
         <ul>

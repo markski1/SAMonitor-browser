@@ -15,7 +15,7 @@
                     </tr>
                     <tr>
                         <td><label for="gamemode">Gamemode:</label></td><td><input type="text" id="gamemode" name="gamemode"></td>
-                    </td>
+                    </tr>
                     <tr>
                         <td><label for="language">Language:</label></td><td><input type="text" id="language" name="language"></td>
                     </tr>

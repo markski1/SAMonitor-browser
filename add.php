@@ -11,8 +11,10 @@
         <p>If you're blocking the range containing gateway.markski.ar (45.153.48.229), this won't work.</p>
         <fieldset>
             <form hx-target="#result" hx-post="./action/add.php">
-                IP Address or domain:<br />
-                <input required type="text" name="ip_addr" style="width: 20rem" placeholder="address:port format please."> <input type="submit" value="Add server" hx-indicator="#add-indicator"> <img style="width: 2rem; vertical-align: middle" src="assets/loading.svg" id="add-indicator" class="htmx-indicator">
+                <label>
+                    IP Address or domain:<br />
+                    <input required type="text" name="ip_addr" style="width: 20rem" placeholder="address:port format please.">
+                </label> <input type="submit" value="Add server" hx-indicator="#add-indicator"> <img style="width: 2rem; vertical-align: middle" src="assets/loading.svg" id="add-indicator" class="htmx-indicator" alt="Loading indicator.">
                 <div id="result" style="margin-top: .5rem">Result: Waiting for submit...</div>
             </form>
         </fieldset>

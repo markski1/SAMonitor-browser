@@ -61,7 +61,7 @@
 ?>
 
 <div>
-    <h2>Server information</h3>
+    <h2>Server information</h2>
     <?php
         if (!isset($server) || $server['name'] == null) {
             exit("<p>Sorry, there was an error loading this server's information. It may not be in SAMonitor.</p>");
