@@ -21,7 +21,7 @@
 
     <p>There are no permanent blocks in SAMonitor. No matter the size of the transgression, if you have truly rectified it, you may appeal and be unblocked.</p>
     <p>If you own a blocked server and wish to appeal, contact me.</p>
-    <p>Email: me@markski.ar<br/>Discord: markski.ar (yes, that's a username)</p>
+    <p>Email: me@markski.ar<br/>Discord: markski.ar (yes, that's a username)<br/>Telegram: @Markski</p>
 
     <div class="innerContent">
         <h3>Blocked servers</h3>

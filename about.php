@@ -18,7 +18,8 @@
             <li>Offer the highest quality listings: Don't have repeated servers, don't fill the masterlist with trash.</li>
             <li>Blacklist illegitimate servers, be them stolen scripts, malicious or faking data.</li>
         </ul>
-        <p>If you wish to contact me, please check <a target="_blank" href="https://markski.ar">my personal website</a> for contact methods.</p>
+        <p>Contact</p>
+        <p>Email: me@markski.ar<br/>Discord: markski.ar (yes, that's a username)<br/>Telegram: @Markski</p>
         <p>For supporting SAMonitor, check the <a href="donate.php" hx-get="donate.php" hx-push-url="true" hx-target="#main">donations</a> page.</p>
     </div>
 

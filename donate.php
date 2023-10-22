@@ -42,7 +42,8 @@
 
         <p>If you wish to apply the sponsor state on a server, you should contact me directly. You may also contact me directly for any inquiry regarding SAMonitor, be it related to donations or not.</p>
         <p>Email: me@markski.ar<br />
-        Discord: markski.ar (yes, that's a username)</p>
+        Discord: markski.ar (yes, that's a username)<br/>
+        Telegram: @Markski</p>
     </div>
     <!--
     <div class="innerContent">
