@@ -12,10 +12,10 @@
             throw new ErrorException('Failure to connect to the API.', 0, 0, 0);
         }
 
-        $total_servers = $globalStats['serversTracked'];
-        $online_servers = $globalStats['serversOnline'];
-        $online_servers_omp = $globalStats['serversOnlineOMP'];
-        $total_players = $globalStats['playersOnline'];
+        $total_servers = number_format($globalStats['serversTracked']);
+        $online_servers = number_format($globalStats['serversOnline']);
+        $online_servers_omp = number_format($globalStats['serversOnlineOMP']);
+        $total_players = number_format($globalStats['playersOnline']);
     }
     catch (Exception $ex) {
         echo '<p>Failed to load stats.</p>';

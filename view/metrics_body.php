@@ -59,17 +59,6 @@
         exit;
     }
 
-    $lang_total = array_sum($lang_metrics);
-    foreach ($lang_metrics as $lang => $amount) {
-        $lang_pct[$lang] = ($amount / $lang_total) * 100;
-    }
-
-
-    $gm_total = array_sum($gm_metrics);
-    foreach ($gm_metrics as $gm => $amount) {
-        $gm_pct[$gm] = ($amount / $gm_total) * 100;
-    }
-
 ?>
 
 <div class="innerContent">
@@ -105,36 +94,36 @@
     <p>Amount of servers by language</p>
     <table style="width: 100%" id="language_table">
         <thead>
-        <th>Language</th> <th>Amount</th> <th>Percentage</th>
+        <th>Language</th> <th>Servers</th> <th>Players</th>
         </thead>
         <tbody>
-        <tr>  <td>Russian</td> <td><?=$lang_metrics['russian']?></td> <td><?=number_format($lang_pct['russian'], 2)?>%</td> </tr>
-        <tr>  <td>English</td> <td><?=$lang_metrics['english']?></td> <td><?=number_format($lang_pct['english'], 2)?>%</td> </tr>
-        <tr>  <td>Spanish</td> <td><?=$lang_metrics['spanish']?></td> <td><?=number_format($lang_pct['spanish'], 2)?>%</td> </tr>
-        <tr>  <td>Portuguese</td> <td><?=$lang_metrics['portuguese']?></td> <td><?=number_format($lang_pct['portuguese'], 2)?>%</td> </tr>
-        <tr>  <td>Romanian</td> <td><?=$lang_metrics['romanian']?></td> <td><?=number_format($lang_pct['romanian'], 2)?>%</td> </tr>
-        <tr>  <td>Misc. East Europe</td> <td><?=$lang_metrics['eastEuro']?></td> <td><?=number_format($lang_pct['eastEuro'], 2)?>%</td> </tr>
-        <tr>  <td>Misc. West Europe</td> <td><?=$lang_metrics['westEuro']?></td> <td><?=number_format($lang_pct['westEuro'], 2)?>%</td> </tr>
-        <tr>  <td>Misc. Asia</td> <td><?=$lang_metrics['asia']?></td> <td><?=number_format($lang_pct['asia'], 2)?>%</td> </tr>
+        <tr>  <td>Russian</td> <td><?=$lang_metrics['russian']['amount']?></td> <td><?=number_format($lang_metrics['russian']['players'])?></td> </tr>
+        <tr>  <td>English</td> <td><?=$lang_metrics['english']['amount']?></td> <td><?=number_format($lang_metrics['english']['players'])?></td> </tr>
+        <tr>  <td>Spanish</td> <td><?=$lang_metrics['spanish']['amount']?></td> <td><?=number_format($lang_metrics['spanish']['players'])?></td> </tr>
+        <tr>  <td>Portuguese</td> <td><?=$lang_metrics['portuguese']['amount']?></td> <td><?=number_format($lang_metrics['portuguese']['players'])?></td> </tr>
+        <tr>  <td>Romanian</td> <td><?=$lang_metrics['romanian']['amount']?></td> <td><?=number_format($lang_metrics['romanian']['players'])?></td> </tr>
+        <tr>  <td>Misc. East Europe</td> <td><?=$lang_metrics['eastEuro']['amount']?></td> <td><?=number_format($lang_metrics['eastEuro']['players'])?></td> </tr>
+        <tr>  <td>Misc. West Europe</td> <td><?=$lang_metrics['westEuro']['amount']?></td> <td><?=number_format($lang_metrics['westEuro']['players'])?></td> </tr>
+        <tr>  <td>Misc. Asia</td> <td><?=$lang_metrics['asia']['amount']?></td> <td><?=number_format($lang_metrics['asia']['players'])?></td> </tr>
         </tbody>
     </table>
-    <p><small>The other <?=$lang_metrics['other']?> (<?=number_format($lang_pct['other'], 2)?>%) servers don't have a defined language.</small></p>
+    <p><small>The other <?=$lang_metrics['other']['amount']?> (<?=number_format($lang_metrics['other']['players'])?>) servers don't have a defined language.</small></p>
     <p>Amount of servers by gamemode</p>
     <table style="width: 100%" id="gamemode_table">
         <thead>
-        <th>Gamemode</th> <th>Amount</th> <th>Percentage</th>
+        <th>Gamemode</th> <th>Servers</th> <th>Players</th>
         </thead>
         <tbody>
-        <tr>  <td>Roleplay</td> <td><?=$gm_metrics['roleplay']?></td> <td><?=number_format($gm_pct['roleplay'], 2)?>%</td> </tr>
-        <tr>  <td>Deathmatch</td> <td><?=$gm_metrics['deathmatch']?></td> <td><?=number_format($gm_pct['deathmatch'], 2)?>%</td> </tr>
-        <tr>  <td>Race/Stunt/Drift</td> <td><?=$gm_metrics['raceStunt']?></td> <td><?=number_format($gm_pct['raceStunt'], 2)?>%</td> </tr>
-        <tr>  <td>Cops and Robbers</td> <td><?=$gm_metrics['cnr']?></td> <td><?=number_format($gm_pct['cnr'], 2)?>%</td> </tr>
-        <tr>  <td>Freeroam</td> <td><?=$gm_metrics['freeRoam']?></td> <td><?=number_format($gm_pct['freeRoam'], 2)?>%</td> </tr>
-        <tr>  <td>Survival</td> <td><?=$gm_metrics['survival']?></td> <td><?=number_format($gm_pct['survival'], 2)?>%</td> </tr>
-        <tr>  <td>Vehicle Simulation</td> <td><?=$gm_metrics['vehSim']?></td> <td><?=number_format($gm_pct['vehSim'], 2)?>%</td> </tr>
+        <tr>  <td>Roleplay</td> <td><?=$gm_metrics['roleplay']['amount']?></td> <td><?=number_format($gm_metrics['roleplay']['players'])?></td> </tr>
+        <tr>  <td>Deathmatch</td> <td><?=$gm_metrics['deathmatch']['amount']?></td> <td><?=number_format($gm_metrics['deathmatch']['players'])?></td> </tr>
+        <tr>  <td>Race/Stunt/Drift</td> <td><?=$gm_metrics['raceStunt']['amount']?></td> <td><?=number_format($gm_metrics['raceStunt']['players'])?></td> </tr>
+        <tr>  <td>Cops and Robbers</td> <td><?=$gm_metrics['cnr']['amount']?></td> <td><?=number_format($gm_metrics['cnr']['players'])?></td> </tr>
+        <tr>  <td>Freeroam</td> <td><?=$gm_metrics['freeRoam']['amount']?></td> <td><?=number_format($gm_metrics['freeRoam']['players'])?></td> </tr>
+        <tr>  <td>Survival</td> <td><?=$gm_metrics['survival']['amount']?></td> <td><?=number_format($gm_metrics['survival']['players'])?></td> </tr>
+        <tr>  <td>Vehicle Simulation</td> <td><?=$gm_metrics['vehSim']['amount']?></td> <td><?=number_format($gm_metrics['vehSim']['players'])?></td> </tr>
         </tbody>
     </table>
-    <p><small>The other <?=$gm_metrics['other']?> (<?=number_format($gm_pct['other'], 2)?>%) servers don't have a defined gamemode.</small></p>
+    <p><small>The other <?=$gm_metrics['other']['amount']?> (<?=number_format($gm_metrics['other']['players'])?>) servers don't have a defined gamemode.</small></p>
     <p style="margin-top: 1rem">
         There seems to be a practice to use the 'Language' or 'Gamemode' fields for the name of the server rather than what they actually are. Server owners, please, this makes it harder for people to find your server.
     </p>
