@@ -107,7 +107,7 @@
         <tr>  <td>Misc. Asia</td> <td><?=$lang_metrics['asia']['amount']?></td> <td><?=number_format($lang_metrics['asia']['players'])?></td> </tr>
         </tbody>
     </table>
-    <p><small>The other <?=$lang_metrics['other']['amount']?> (<?=number_format($lang_metrics['other']['players'])?>) servers don't have a defined language.</small></p>
+    <p><small>The other <?=$lang_metrics['other']['amount']?> servers don't have a defined language.</small></p>
     <p>Amount of servers by gamemode</p>
     <table style="width: 100%" id="gamemode_table">
         <thead>
@@ -123,7 +123,7 @@
         <tr>  <td>Vehicle Simulation</td> <td><?=$gm_metrics['vehSim']['amount']?></td> <td><?=number_format($gm_metrics['vehSim']['players'])?></td> </tr>
         </tbody>
     </table>
-    <p><small>The other <?=$gm_metrics['other']['amount']?> (<?=number_format($gm_metrics['other']['players'])?>) servers don't have a defined gamemode.</small></p>
+    <p><small>The other <?=$gm_metrics['other']['amount']?> servers don't have a defined gamemode.</small></p>
     <p style="margin-top: 1rem">
         There seems to be a practice to use the 'Language' or 'Gamemode' fields for the name of the server rather than what they actually are. Server owners, please, this makes it harder for people to find your server.
     </p>

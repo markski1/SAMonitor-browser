@@ -14,6 +14,7 @@
 
         $total_servers = number_format($globalStats['serversTracked']);
         $online_servers = number_format($globalStats['serversOnline']);
+        $inhabited_servers = number_format($globalStats['serversInhabited']);
         $online_servers_omp = number_format($globalStats['serversOnlineOMP']);
         $total_players = number_format($globalStats['playersOnline']);
     }
@@ -24,7 +25,7 @@
 ?>
 
 <p>
-    <?=$total_servers?> total servers tracked.<br>
-    <?=$online_servers?> servers online [<?=$online_servers_omp?> are open.mp].<br>
-    <?=$total_players?> people playing right now.
+    <?=$online_servers?> servers online (<?=$total_servers?> total)<br>
+    <?=$inhabited_servers?> servers with players, <?=$online_servers_omp?> running open.mp.<br>
+    <?=$total_players?> playing right now!
 </p>
