@@ -115,7 +115,7 @@
         </div>
         <div class="innerContent flexBox">
             <h3>Activity graph |
-                <select hx-target="#graph-cnt" name="hours" hx-get="view/fragments.php?type=serverGraph&ip_addr=<?=$server['ipAddr']?>">
+                <select hx-target="#graph-cnt" name="hours" hx-get="../view/fragments.php?type=serverGraph&ip_addr=<?=$server['ipAddr']?>">
                     <option value=24>Last 24 hours</option>
                     <option value=72>Last 72 hours</option>
                     <option value=168>Last week</option>
@@ -132,7 +132,7 @@
         </div>
         <div class="innerContent flexBox">
             <h3>Player list</h3>
-            <div hx-get="view/playerlist.php?ip_addr=<?=$server['ipAddr']?>&players=<?=$server['playersOnline']?>" hx-trigger="load">
+            <div hx-get="../view/playerlist.php?ip_addr=<?=$server['ipAddr']?>&players=<?=$server['playersOnline']?>" hx-trigger="load">
                 <p>Loading player list...</p>
             </div>
         </div>

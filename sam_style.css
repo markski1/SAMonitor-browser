@@ -185,44 +185,31 @@ fieldset {
     border-radius: 12px;
     border: 1px solid #1F1F1F;
     background-color: #252525;
+    min-width: 20rem;
 }
 
 /* Containers */
 
-.pageContent {
-    width: 100%;
-    max-width: 35rem;
-}
-
 .server {
-    max-width: 34rem;
     background-color: #28292A;
     box-shadow: rgba(0, 0, 0, 0.15) 0 3px 8px;
-    margin: 0 0 1.25rem;
-    padding: .66rem;
+    margin: 0 0 1.2rem;
+    padding: .6rem;
     border: 0;
     border-radius: 18px;
+    width: 95%;
 }
 
 .server div {
     margin-top: 1rem;
 }
 
-.filterContainer {
-    max-width: 34rem;
-    min-width: 20rem;
-    margin: 0;
-    position: fixed;
-    top: 3.5rem;
-    left: 55rem;
-}
-
 .filterBox {
     margin: 0;
-    background-color: #2D2F31;
-    box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
-    padding: .75rem;
-    border-radius: 12px;
+    background-color: #26262A;
+    border-radius: 6px;
+    padding: .6rem;
+    width: 95%;
 }
 
 .filterBox table {
@@ -245,21 +232,10 @@ fieldset {
 .flexBox {
     margin: 0;
     max-width: 100rem;
-    flex: 1;
-    flex-basis: 48%;
+    flex: 1 1;
+    flex-basis: 45%;
 }
 
-@media (max-width: 1300px) {
-    .server, .filterContainer {
-        min-width: 0;
-        position: relative;
-    }
-    .filterContainer {
-        width: 100%;
-        top: 0;
-        left: 0;
-    }
-}
 
 /* Text styles */
 

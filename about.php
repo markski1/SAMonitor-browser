@@ -20,7 +20,7 @@
         </ul>
         <p>Contact</p>
         <p>Email: me@markski.ar<br/>Discord: markski.ar (yes, that's a username)<br/>Telegram: @Markski</p>
-        <p>For supporting SAMonitor, check the <a href="donate.php" hx-get="donate.php" hx-push-url="true" hx-target="#main">donations</a> page.</p>
+        <p>For supporting SAMonitor, check the <a href="donate" hx-get="donate.php" hx-push-url="true" hx-target="#main">donations</a> page.</p>
     </div>
 
     <div class="innerContent">

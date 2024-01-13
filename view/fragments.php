@@ -77,7 +77,7 @@ function DrawServer($server, $details = false): void
                     <td><b>Last updated</b></td><td><?=timeSince($last_updated)?> ago</td>
                 </tr>
             </table>
-            <a href="server.php?&ip_addr=<?=$server['ipAddr']?>" target="_blank">
+            <a href="../server/<?=$server['ipAddr']?>" hx-get="../server/<?=$server['ipAddr']?>" hx-push-url="true" hx-target="#main" target="_blank">
                 <button style="width: 100%; margin-top: 1rem; font-size: 1.25rem">All server information</button>
             </a>
         </div>
@@ -88,7 +88,7 @@ function DrawServer($server, $details = false): void
     </div>
     <div style="text-align: right; float: right; margin-top: 0">
         <?php if (!$details) { ?>
-            <button hx-get="view/fragments.php?type=details&ip_addr=<?=$server['ipAddr']?>">Details</button>
+            <button hx-get="../view/fragments.php?type=details&ip_addr=<?=$server['ipAddr']?>">Details</button>
         <?php } ?>
         <button class="connectButton" id="copyButton<?=$server['id']?>" onclick="CopyAddress('ipAddr<?=$server['id']?>', 'copyButton<?=$server['id']?>')">Copy IP</button>
     </div>
@@ -194,8 +194,6 @@ function DrawMetricsGraphs($dataType, $hours) {
     $highest = -1;
     $highest_time = null;
 
-    $skip = true;
-
     switch ($dataType) {
         case 1:
             $getField = 'servers';
@@ -211,6 +209,7 @@ function DrawMetricsGraphs($dataType, $hours) {
             break;
     }
 
+    $total = 0;
     foreach ($metrics as $instant) {
         $humanTime = strtotime($instant['time']);
 
@@ -219,6 +218,8 @@ function DrawMetricsGraphs($dataType, $hours) {
             $humanTime = date("j/m H:i", $humanTime);
         }
         else $humanTime = date("H:i", $humanTime);
+
+        $total += $instant[$getField];
 
         if ($instant[$getField] > $highest) {
             $highest = $instant[$getField];
@@ -244,7 +245,12 @@ function DrawMetricsGraphs($dataType, $hours) {
     $min = intval($lowest / 3);
     $min = $min - $min % 10;
 
-    return "
+    $apihit_total = "";
+    if ($dataType == 2) {
+        $apihit_total = "<p>There were {$total} API hits in this timeframe.</p>";
+    }
+
+    return <<<HTML
         <canvas id='globalPlayersChart' style='width: 60rem; max-width: 100%'></canvas>
         <script>
             new Chart(document.getElementById('globalPlayersChart'),
@@ -271,7 +277,8 @@ function DrawMetricsGraphs($dataType, $hours) {
             })
         </script>
         <p>The highest count was <span style='color: green'>{$highest}</span> at {$highest_time}, and the lowest was <span style='color: red'>{$lowest}</span> at {$lowest_time}</p>
-    ";
+        {$apihit_total}
+HTML;
 }
 
 

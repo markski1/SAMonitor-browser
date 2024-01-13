@@ -62,7 +62,7 @@
 ?>
 
 <div class="innerContent">
-    <form hx-target="#graph-cnt" hx-get="view/fragments.php?type=metricsGraph" hx-trigger="change">
+    <form hx-target="#graph-cnt" hx-get="../view/fragments.php?type=metricsGraph" hx-trigger="change">
         <h3>Global Activity -
             <select name="dataType" style="width: 6rem">
                 <option value=0>players</option>

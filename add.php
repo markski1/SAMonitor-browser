@@ -9,7 +9,7 @@
     <div class="innerContent">
         <h3>Add server directly</h3>
         <p>If you're blocking the range containing gateway.markski.ar (45.153.48.229), this won't work.</p>
-        <fieldset>
+        <hr>
             <form hx-target="#result" hx-post="./action/add.php">
                 <label>
                     IP Address or domain:<br />
@@ -17,7 +17,7 @@
                 </label> <input type="submit" value="Add server" hx-indicator="#add-indicator"> <img style="width: 2rem; vertical-align: middle" src="assets/loading.svg" id="add-indicator" class="htmx-indicator" alt="Loading indicator.">
                 <div id="result" style="margin-top: .5rem">Result: Waiting for submit...</div>
             </form>
-        </fieldset>
+        <hr>
         <p>If you change your IP in the future just submit it again, old ones are removed automatically.</p>
         <p>We will fetch all information automatically.</p>
     </div>
