@@ -51,16 +51,19 @@ function DrawServer($server, $details = false): void
     $lag_comp = $server['lagComp'] == 1 ? "Enabled" : "Disabled";
     $last_updated = strtotime($server['lastUpdated']);
 ?>
-    <h3 style="margin: 0 0 .4rem; color: #A0C0F0"><?=$server['name']?></h3>
-    <table style="width: 100%" class="serverInfo">
+    <table style="width: 100%">
         <tr>
-            <td style="width: 50%"><b><?=$server['gameMode']?></b></td><td><b>Language</b>: <?=$server['language']?></td>
-        </tr>
-        <tr>
-            <td><b>Players</b>: <?=$server['playersOnline']?> / <?=$server['maxPlayers']?></td><td><?=$server['version']?></td>
+            <td style="border: 0; width: 66%">
+                <span style="margin: 0 0 .4rem; color: #A0C0F0; font-weight: 700; font-size: 1.2rem"><?=$server['name']?></span>
+            </td>
+            <td style="border: 0; width: 13%">
+                <span style="font-size: 1.2rem"><?=$server['playersOnline']?> / <?=$server['maxPlayers']?></span>
+            </td>
+            <td style="border: 0; width: 21%">
+                <span><?=$server['language']?></span>
+            </td>
         </tr>
     </table>
-
     <?php if ($details) { ?>
         <div style="margin-bottom: 0.75rem;">
             <table class="serverDetailsTable">
@@ -68,7 +71,13 @@ function DrawServer($server, $details = false): void
                     <td><b>Lag compensation</b></td><td><?=$lag_comp?></td>
                 </tr>
                 <tr>
+                    <td><b>Gamemode</b></td><td><?=$server['gameMode']?></td>
+                </tr>
+                <tr>
                     <td><b>Website</b></td><td><?=$website?></td>
+                </tr>
+                <tr>
+                    <td><b>Version</b></td><td><?=$server['version']?></td>
                 </tr>
                 <tr>
                     <td><b>SAMPCAC</b></td><td><?=$server['sampCac']?></td>
@@ -83,14 +92,13 @@ function DrawServer($server, $details = false): void
         </div>
     <?php } ?>
 
-    <div style="float: left; margin-top: 0">
-        <p class="ipAddr" id="ipAddr<?=$server['id']?>"><?=$server['ipAddr']?></p>
+    <div style="float: left; margin-top: 0.5rem">
+        <p><span class="ipAddr" id="ipAddr<?=$server['id']?>"><?=$server['ipAddr']?></span></p>
     </div>
     <div style="text-align: right; float: right; margin-top: 0">
         <?php if (!$details) { ?>
-            <button hx-get="../view/fragments.php?type=details&ip_addr=<?=$server['ipAddr']?>">Details</button>
+            <button style="margin-left: 1rem" hx-get="../view/fragments.php?type=details&ip_addr=<?=$server['ipAddr']?>">Details</button>
         <?php } ?>
-        <button class="connectButton" id="copyButton<?=$server['id']?>" onclick="CopyAddress('ipAddr<?=$server['id']?>', 'copyButton<?=$server['id']?>')">Copy IP</button>
     </div>
     <div style="clear: both"></div>
 <?php

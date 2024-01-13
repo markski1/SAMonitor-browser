@@ -193,10 +193,9 @@ fieldset {
 .server {
     background-color: #28292A;
     box-shadow: rgba(0, 0, 0, 0.15) 0 3px 8px;
-    margin: 0 0 1.2rem;
+    margin: 0;
+    border-bottom: 1px solid #151520;
     padding: .6rem;
-    border: 0;
-    border-radius: 18px;
     width: 95%;
 }
 
@@ -241,7 +240,7 @@ fieldset {
 
 .ipAddr {
     font-size: 1.1rem;
-    margin: 0.5rem 0.33rem 0 !important;
+    margin: 0.5rem 0.5rem 0 !important;
     color: rgb(183, 203, 209);
 }
 
