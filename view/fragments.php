@@ -50,58 +50,56 @@ function DrawServer($server, $details = false): void
 
     $lag_comp = $server['lagComp'] == 1 ? "Enabled" : "Disabled";
     $last_updated = strtotime($server['lastUpdated']);
-?>
-    <table style="width: 100%">
-        <tr>
-            <td style="border: 0; width: 66%">
-                <span style="margin: 0 0 .4rem; color: #A0C0F0; font-weight: 700; font-size: 1.2rem"><?=$server['name']?></span>
-            </td>
-            <td style="border: 0; width: 13%">
-                <span style="font-size: 1.2rem"><?=$server['playersOnline']?> / <?=$server['maxPlayers']?></span>
-            </td>
-            <td style="border: 0; width: 21%">
-                <span><?=$server['language']?></span>
-            </td>
-        </tr>
-    </table>
-    <?php if ($details) { ?>
-        <div style="margin-bottom: 0.75rem;">
-            <table class="serverDetailsTable">
-                <tr>
-                    <td><b>Lag compensation</b></td><td><?=$lag_comp?></td>
-                </tr>
-                <tr>
-                    <td><b>Gamemode</b></td><td><?=$server['gameMode']?></td>
-                </tr>
-                <tr>
-                    <td><b>Website</b></td><td><?=$website?></td>
-                </tr>
-                <tr>
-                    <td><b>Version</b></td><td><?=$server['version']?></td>
-                </tr>
-                <tr>
-                    <td><b>SAMPCAC</b></td><td><?=$server['sampCac']?></td>
-                </tr>
-                <tr>
-                    <td><b>Last updated</b></td><td><?=timeSince($last_updated)?> ago</td>
-                </tr>
-            </table>
-            <a href="../server/<?=$server['ipAddr']?>" hx-get="../server/<?=$server['ipAddr']?>" hx-push-url="true" hx-target="#main" target="_blank">
-                <button style="width: 100%; margin-top: 1rem; font-size: 1.25rem">All server information</button>
-            </a>
-        </div>
-    <?php } ?>
 
-    <div style="float: left; margin-top: 0.5rem">
-        <p><span class="ipAddr" id="ipAddr<?=$server['id']?>"><?=$server['ipAddr']?></span></p>
-    </div>
-    <div style="text-align: right; float: right; margin-top: 0">
-        <?php if (!$details) { ?>
-            <button style="margin-left: 1rem" hx-get="../view/fragments.php?type=details&ip_addr=<?=$server['ipAddr']?>">Details</button>
+    if (!$details) echo '<div hx-swap="outerHTML" hx-target="this" hx-get="../view/fragments.php?type=details&ip_addr='.$server["ipAddr"].'" class="server server_clickable">';
+    else echo '<div hx-swap="outerHTML" hx-target="this" class="server">';
+?>
+
+        <div style="float: left;">
+            <span style="color: #A0C0F0; font-weight: 700; font-size: 1.2rem"><?=$server['name']?></span><br>
+        </div>
+        <div style="text-align: right; float: right;">
+            <span style="font-size: 1.2rem; font-weight: 700;"><?=$server['playersOnline']?> / <?=$server['maxPlayers']?></span><br>
+        </div>
+        <div style="clear: both;"></div>
+        <div style="float: left;">
+            <p><span class="ipAddr" id="ipAddr<?=$server['id']?>"><?=$server['ipAddr']?></span></p>
+        </div>
+        <div style="text-align: right; float: right;">
+            <span><b>Lang:</b> <?=$server['language']?></span>
+        </div>
+        <?php if ($details) { ?>
+            <div style="margin-bottom: 0.75rem;">
+                <table class="serverDetailsTable">
+                    <tr>
+                        <td><b>Gamemode</b></td><td><?=$server['gameMode']?></td>
+                    </tr>
+                    <tr>
+                        <td><b>Website</b></td><td><?=$website?></td>
+                    </tr>
+                    <tr>
+                        <td><b>Lag compensation</b></td><td><?=$lag_comp?></td>
+                    </tr>
+                    <tr>
+                        <td><b>Version</b></td><td><?=$server['version']?></td>
+                    </tr>
+                    <tr>
+                        <td><b>SAMPCAC</b></td><td><?=$server['sampCac']?></td>
+                    </tr>
+                    <tr>
+                        <td><b>Checked</b></td><td><?=timeSince($last_updated)?> ago</td>
+                    </tr>
+                </table>
+                <a style="text-decoration: none" href="../server/<?=$server['ipAddr']?>">
+                    <button style="margin-top: 1rem;">All information</button>
+                </a>
+                <button class="connectButton" id="copyButton<?=$server['id']?>" onclick="CopyAddress('ipAddr<?=$server['id']?>', 'copyButton<?=$server['id']?>')">Copy IP</button>
+                <button hx-get="../view/fragments.php?type=listing&ip_addr=<?=$server["ipAddr"]?>">Close</button>
+            </div>
         <?php } ?>
-    </div>
-    <div style="clear: both"></div>
+        <div style="clear: both"></div>
 <?php
+    echo '</div>';
 }
 
 function DrawServerGraph($serverIP, $hours): string

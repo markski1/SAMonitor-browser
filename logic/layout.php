@@ -15,7 +15,7 @@ function PageHeader($title, $description = null) {
             <meta property="og:image" content="https://sam.markski.ar/web/assets/logo256.webp" />
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <meta charset="utf-8">
-            <link rel="stylesheet" type="text/css" href="../new_style.css">
+            <link rel="stylesheet" type="text/css" href="../style.css">
             <link rel="manifest" href="manifest.json" />
             <meta name="title" content="SAMonitor - <?=$title?>">
             <meta name="description" content="<?=$showDescription?>">

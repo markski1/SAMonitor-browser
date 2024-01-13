@@ -72,9 +72,7 @@
     }
 
     foreach ($servers as $server) {
-        echo '<div hx-target="this" class="server">';
         DrawServer($server);
-        echo '</div>';
     }
 
     if (Count($servers) == 20) {   

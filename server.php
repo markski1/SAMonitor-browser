@@ -100,7 +100,7 @@
                     <td><b>SAMPCAC</b></td><td><?=$server['sampCac']?></td>
                 </tr>
                 <tr>
-                    <td><b>Last updated</b></td><td><?=timeSince($last_updated)?> ago</td>
+                    <td><b>Checked</b></td><td><?=timeSince($last_updated)?> ago</td>
                 </tr>
             </table>
             <p>Uptime during the last week: <?=number_format($uptime, 2)?>%<br/>Average players during last week: <?=number_format($avg_players, 2)?><br/><small>Based on measurements every 20 minutes.</small></p>
