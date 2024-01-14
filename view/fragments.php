@@ -53,13 +53,15 @@ function DrawServer($server, $details = false): void
 
     if (!$details) echo '<div hx-swap="outerHTML" hx-target="this" hx-get="../view/fragments.php?type=details&ip_addr='.$server["ipAddr"].'" class="server server_clickable">';
     else echo '<div hx-swap="outerHTML" hx-target="this" class="server">';
+
+    $server_name = trim($server['name']);
 ?>
 
         <div style="float: left;">
-            <span style="color: #A0C0F0; font-weight: 700; font-size: 1.2rem"><?=$server['name']?></span><br>
+            <span style="color: #A0C0F0; font-weight: 700; font-size: 1.1rem"><?=$server_name?></span><br>
         </div>
         <div style="text-align: right; float: right;">
-            <span style="font-size: 1.2rem; font-weight: 700;"><?=$server['playersOnline']?> / <?=$server['maxPlayers']?></span><br>
+            <span style="font-size: 1.1rem; font-weight: 700;"><?=$server['playersOnline']?> / <?=$server['maxPlayers']?></span><br>
         </div>
         <div style="clear: both;"></div>
         <div style="float: left;">
@@ -90,7 +92,7 @@ function DrawServer($server, $details = false): void
                         <td><b>Checked</b></td><td><?=timeSince($last_updated)?> ago</td>
                     </tr>
                 </table>
-                <a style="text-decoration: none" href="../server/<?=$server['ipAddr']?>">
+                <a style="text-decoration: none; user-select: none;" href="../server/<?=$server['ipAddr']?>">
                     <button style="margin-top: 1rem;">All information</button>
                 </a>
                 <button class="connectButton" id="copyButton<?=$server['id']?>" onclick="CopyAddress('ipAddr<?=$server['id']?>', 'copyButton<?=$server['id']?>')">Copy IP</button>

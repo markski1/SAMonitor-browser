@@ -25,7 +25,7 @@
 ?>
 
 <p>
-    <?=$online_servers?> servers online (<?=$total_servers?> total)<br>
-    <?=$inhabited_servers?> servers with players, <?=$online_servers_omp?> running open.mp.<br>
-    <?=$total_players?> playing right now!
+    <b><?=$online_servers?></b> servers online (<b><?=$total_servers?></b> total)<br>
+    <b><?=$inhabited_servers?></b> servers have players, <b><?=$online_servers_omp?></b> have open.mp.<br>
+    <b><?=$total_players?></b> are playing right now!
 </p>

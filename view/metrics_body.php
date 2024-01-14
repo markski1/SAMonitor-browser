@@ -90,7 +90,7 @@
     </p>
 </div>
 <div class="innerContent">
-    <h3>Miscellaneous metrics</h3>
+    <h3>Miscellaneous stats</h3>
     <p>Amount of servers by language</p>
     <table style="width: 100%" id="language_table">
         <thead>

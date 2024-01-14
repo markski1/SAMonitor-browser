@@ -1,11 +1,16 @@
 /* Main layout */
 
+html {
+    margin: 0;
+}
+
 body {
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
     Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
     background-color: #1F1F1F;
     color: #E3E3E3;
     font-size: 16px;
+    margin: 0;
 }
 
 header {
@@ -14,8 +19,8 @@ header {
 }
 
 main {
-    margin-top: 2rem;
-    width: 100%;
+    margin: 2rem auto;
+    width: 95%;
     max-width: 75rem;
     display: flex;
     flex-direction: row-reverse;
@@ -53,7 +58,7 @@ select {
     border: 0;
     border-radius: 8px;
     font-size: 1.1rem;
-    padding: 0.5rem;
+    padding: .6rem;
     width: 10rem;
 }
 
@@ -94,7 +99,7 @@ header .separators {
     main {
         justify-self: left;
         justify-content: left;
-		margin: 3rem 0 0;
+		margin: 3rem 0;
 	}
 
     .headerContents {
@@ -111,7 +116,7 @@ header .separators {
 /* Global elements */
 
 button {
-    padding: .8rem 1.33rem;
+    padding: .8rem 1.2rem;
     border-radius: 8px;
     margin-right: 1rem;
     cursor: pointer;
@@ -160,7 +165,7 @@ a:hover {
 
 input {
     padding: .5rem;
-    border-radius: 8px;
+    border-radius: 6px;
     margin: .25rem;
 }
 
@@ -190,13 +195,22 @@ fieldset {
 
 /* Containers */
 
+.announce-banner {
+    background-color: #303045;
+    width: 95%;
+    font-size: 1.05rem;
+    border-radius: 6px;
+    padding: 1.2rem .66rem 0.2rem;
+    margin: 0.5rem auto;
+}
+
 .server {
     background-color: #28292A;
     box-shadow: rgba(0, 0, 0, 0.15) 0 3px 8px;
-    margin: 0;
-    border-bottom: 1px solid #151520;
+    margin: 0 auto;
+    border-bottom: 2px solid #131315;
     width: 95%;
-    padding: 0 1rem;
+    padding: 0 .66rem;
 }
 
 .server_clickable {
@@ -216,7 +230,7 @@ fieldset {
 }
 
 .filterBox {
-    margin: 0;
+    margin: auto;
     background-color: #26262A;
     border-radius: 6px;
     padding: .6rem;
@@ -235,7 +249,7 @@ fieldset {
     background-color: #2D2F31;
     box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
     border-radius: 6px;
-    padding: .8rem;
+    padding: .6rem;
     width: 95%;
     margin-top: 1rem;
 }

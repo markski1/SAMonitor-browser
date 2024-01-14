@@ -20,7 +20,6 @@
         </ul>
         <p>Contact</p>
         <p>Email: me@markski.ar<br/>Discord: markski.ar (yes, that's a username)<br/>Telegram: @Markski</p>
-        <p>For supporting SAMonitor, check the <a href="donate" hx-get="donate.php" hx-push-url="true" hx-target="#main">donations</a> page.</p>
     </div>
 
     <div class="innerContent">
@@ -28,8 +27,9 @@
         <p>SAMonitor's listings only include servers which are online.</p>
         <p>A server is considered offline if they replied to queries in the last 6 hours, and if they're not password protected. Servers who don't meet this are not listed, but continue to be tracked, and become listed when they do.</p>
         <p>Every server is queried every 20 minutes (3 times per hour). Each query updates its information and saves the player counts for posterity.</p>
-        <p>SAMonitor keeps track of a bunch of statistics. Check them out in the <a href="metrics.php" hx-get="metrics.php" hx-push-url="true" hx-target="#main">metrics</a> page.</p>
+        <p>SAMonitor keeps track of a bunch of statistics. Check them out in the <a href="statistics.php" hx-get="metrics.php" hx-push-url="true" hx-target="#main">metrics</a> page.</p>
     </div>
+
     <div class="innerContent">
         <h3>Third party attributions</h3>
         <p>HTMX by Carson Gross is used for the website's presentation. <a target="_blank" href="https://htmx.org">htmx.org</a></p>

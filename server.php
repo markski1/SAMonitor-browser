@@ -114,7 +114,7 @@
             </div>
         </div>
         <div class="innerContent flexBox">
-            <h3>Activity graph |
+            <h3>Player activity |
                 <select hx-target="#graph-cnt" name="hours" hx-get="../view/fragments.php?type=serverGraph&ip_addr=<?=$server['ipAddr']?>">
                     <option value=24>Last 24 hours</option>
                     <option value=72>Last 72 hours</option>

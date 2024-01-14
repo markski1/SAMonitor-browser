@@ -40,7 +40,7 @@
 </div>
 
 <script>
-    document.title = "SAMonitor - blacklist";}
+    document.title = "SAMonitor - blacklist";
     window.scrollTo(0, 0);
 </script>
 

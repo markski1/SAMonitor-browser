@@ -3,8 +3,8 @@
     PageHeader("San Andreas Multiplayer server monitor, for GTA SA-MP and open.mp");
 ?>
 
-<div style="width: 100%">
-    <form class="filterBox" hx-get="./view/list_servers.php" hx-target="#server-list" hx-trigger="keyup, change">
+<div style="width: 100%; max-width: 70rem">
+    <form class="filterBox" hx-get="./view/list_servers.php" hx-target="#server-list" hx-trigger="keyup, change, delay:0.5s">
         <h2>Filter options</h2>
         <div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 1rem; margin-top: .6rem;">
             <fieldset style="flex: 1 1;" class="flexBox">
@@ -39,14 +39,12 @@
                     </tr>
                 </table>
             </fieldset>
-            <fieldset style="flex: 1 1;" class="flexBox">
-                <div hx-get="../view/current_stats.php" style="margin-top: 1rem" hx-trigger="load" hx-target="this">
-                    <p>Loading current stats...</p>
-                </div>
-            </fieldset>
         </div>
     </form>
-    <div id="server-list" style="margin-top: 1rem" hx-get="../view/list_servers.php?hide_empty" hx-trigger="load">
+    <div class="announce-banner" hx-get="../view/current_stats.php" hx-trigger="load" hx-target="this">
+        <p>Loading current stats...</p>
+    </div>
+    <div id="server-list" hx-get="../view/list_servers.php?hide_empty" hx-trigger="load">
         <h1>Loading servers!</h1>
         <p>Please wait.</p><p>If you're using NoScript, you'll need to disable it.</p>
     </div>
