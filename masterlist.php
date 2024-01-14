@@ -7,9 +7,7 @@
 
 <div>
     <h2>Masterlist mod</h2>
-    <p>Integrate SAMonitor's listings right in your SA-MP client. | <a href="masterlist.php?spanish" hx-get="masterlist.php?spanish" hx-push-url="true" hx-target="#main"">Leer
-        en Español.</a></p>
-
+    <p>Integrate SAMonitor's listings right in your SA-MP client. | <a href="masterlist?spanish" hx-get="masterlist?spanish" hx-push-url="true" hx-target="#main"">Leer en Español.</a></p>
     <div class="innerContent">
         <h3>Information</h3>
         <p>SA-MP Masterlist Fix is a mod which replaces the "Internet" tab's server list with a new source, specifically, SAMonitor.</p>
@@ -27,7 +25,7 @@
         <h4>1. Get SA-MP</h4>
         <p>
             Of course, the first step is to install SA-MP. The mod works with both 0.3.7 and 0.3DL. <br />
-            While it should work with any version of 0.3.7, I strongly suggest you use the latest R5. <a target="_blank" href="https://samp.gg/downloads/">Download here</a>.
+            While it should work with any version of 0.3.7, I strongly suggest you use the latest R5. <a target="_blank" href="https://www.sa-mp.mp/downloads/">Download here</a>.
         </p>
         <h4>2. Get SA-MP Masterlist Fix</h4>
         <p>
@@ -67,7 +65,7 @@
 
 <div>
     <h2>Masterlist mod</h2>
-    <p>Integra el listado de servidores de SAMonitor en SA-MP. | <a href="masterlist.php" hx-get="masterlist.php" hx-push-url="true" hx-target="#main"">Read in English</a></p>.
+    <p>Integra el listado de servidores de SAMonitor en SA-MP. | <a href="masterlist" hx-get="masterlist" hx-push-url="true" hx-target="#main"">Read in English</a>.</p>
     
     <div class="innerContent">
         <h3>Información</h3>
@@ -86,7 +84,7 @@
         <h4>1. Obtener SA-MP</h4>
         <p>
             Obviamente, el primer caso es instalar SA-MP, si aún no lo hiciste. El mod funciona tanto con 0.3.7 como con 0.3DL. <br />
-            Si bien deberia funcionar con cualquier edición de 0.3.7, recomiendo usar la ultima edición, R5. <a target="_blank" href="https://sa-mp.com/download.php">Descargar de acá</a>.
+            Si bien deberia funcionar con cualquier edición de 0.3.7, recomiendo usar la ultima edición, R5. <a target="_blank" href="https://www.sa-mp.mp/downloads/">Descargar de acá</a>.
         </p>
         <h4>2. Descargar SA-MP Masterlist Fix</h4>
         <p>

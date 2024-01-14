@@ -57,10 +57,12 @@
     }
     catch (Exception $ex) {
         echo "
-            <h1>Error fetching servers.</h1>
-            <p>There was an error fetching servers from the SAMonitor API.</p>
-            <p>This might be a server issue, in which case, an automated script has already alerted me about this. Please try again in a few minutes.</p>
-            <p><a href='https://status.markski.ar/'>Current status of my services</a></p>
+            <center>            
+                <h1>Error fetching servers.</h1>
+                <p>There was an error fetching servers from the SAMonitor API.</p>
+                <p>This might be a server issue, in which case, an automated script has already alerted me about this. Please try again in a few minutes.</p>
+                <p><a href='https://status.markski.ar/'>Current status of my services</a></p>
+            </center>
         ";
         exit;
     }
@@ -68,7 +70,7 @@
     $servers = json_decode($response, true);
 
     if (count($servers) == 0) {
-        exit("<h1>No results</h1><p>Sorry, there are no results for your filter options.</p><p>If we're missing a server, feel free to add it on the add server page.</p>");
+        exit("<center><h1>No results</h1><p>Sorry, there are no results for your filter options.</p><p>If we're missing a server, feel free to add it on the add server page.</p></center>");
     }
 
     foreach ($servers as $server) {

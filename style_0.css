@@ -119,6 +119,7 @@ button {
     padding: .8rem 1.2rem;
     border-radius: 8px;
     margin-right: 1rem;
+    margin-bottom: .5rem;
     cursor: pointer;
     background-color: #A8C7FA;
     border: 0;
@@ -207,8 +208,8 @@ fieldset {
 .server {
     background-color: #28292A;
     box-shadow: rgba(0, 0, 0, 0.15) 0 3px 8px;
-    margin: 0 auto;
-    border-bottom: 2px solid #131315;
+    margin: 0 auto 3px;
+    border: 0;
     width: 95%;
     padding: 0 .66rem;
 }
@@ -223,6 +224,10 @@ fieldset {
 
 .server_clickable:active {
     background-color: #404040;
+}
+
+.server_clickable:focus {
+    background-color: #504070;
 }
 
 .server div {
@@ -281,4 +286,17 @@ fieldset {
 
 .serverInfo td {
     border: 0;
+}
+
+/* Animate */
+
+.opacity-trans{
+    opacity:1;
+    transition: opacity 250ms ease-in;
+}
+.htmx-request .opacity-trans{
+    opacity:0.1
+}
+.htmx-request.opacity-trans{
+    opacity:0.1
 }

@@ -45,8 +45,10 @@
         <p>Loading current stats...</p>
     </div>
     <div id="server-list" hx-get="../view/list_servers.php?hide_empty" hx-trigger="load">
-        <h1>Loading servers!</h1>
-        <p>Please wait.</p><p>If you're using NoScript, you'll need to disable it.</p>
+        <center>
+            <h1>Loading servers!</h1>
+            <p>Please wait.</p><p>If you're using NoScript, you'll need to disable it.</p>
+        </center>
     </div>
 </div>
 

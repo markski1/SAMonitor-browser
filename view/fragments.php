@@ -92,7 +92,7 @@ function DrawServer($server, $details = false): void
                         <td><b>Checked</b></td><td><?=timeSince($last_updated)?> ago</td>
                     </tr>
                 </table>
-                <a style="text-decoration: none; user-select: none;" href="../server/<?=$server['ipAddr']?>">
+                <a style="text-decoration: none; user-select: none;" href="../server/<?=$server['ipAddr']?>" hx-get="../server/<?=$server['ipAddr']?>" hx-push-url="true" hx-target="#main" hx-swap="innerHTML" hx-indicator="#main">
                     <button style="margin-top: 1rem;">All information</button>
                 </a>
                 <button class="connectButton" id="copyButton<?=$server['id']?>" onclick="CopyAddress('ipAddr<?=$server['id']?>', 'copyButton<?=$server['id']?>')">Copy IP</button>
