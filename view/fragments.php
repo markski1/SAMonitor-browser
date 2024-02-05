@@ -207,10 +207,6 @@ function DrawMetricsGraphs($dataType, $hours) {
             $getField = 'servers';
             $datasetName = 'Servers online';
             break;
-        case 2:
-            $getField = 'apiHits';
-            $datasetName = 'API hits';
-            break;
         default:
             $getField = 'players';
             $datasetName = 'Players online';
@@ -253,11 +249,6 @@ function DrawMetricsGraphs($dataType, $hours) {
     $min = intval($lowest / 3);
     $min = $min - $min % 10;
 
-    $apihit_total = "";
-    if ($dataType == 2) {
-        $apihit_total = "<p>There were {$total} API hits in this timeframe.</p>";
-    }
-
     return <<<HTML
         <canvas id='globalPlayersChart' style='width: 60rem; max-width: 100%'></canvas>
         <script>
@@ -285,7 +276,6 @@ function DrawMetricsGraphs($dataType, $hours) {
             })
         </script>
         <p>The highest count was <span style='color: green'>{$highest}</span> at {$highest_time}, and the lowest was <span style='color: red'>{$lowest}</span> at {$lowest_time}</p>
-        {$apihit_total}
 HTML;
 }
 

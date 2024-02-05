@@ -18,8 +18,18 @@
             <li>Offer the highest quality listings: Don't have repeated servers, don't fill the masterlist with trash.</li>
             <li>Blacklist illegitimate servers, be them stolen scripts, malicious or faking data.</li>
         </ul>
-        <p>Contact</p>
-        <p>Email: me@markski.ar<br/>Discord: markski.ar (yes, that's a username)<br/>Telegram: @Markski</p>
+    </div>
+
+    <div class="innerContent">
+        <h3>Motivation</h3>
+        <p>I am deeply fond of the San Andreas Multiplayer community and all it's provided (and allowed me to provide back) during my formative years.</p>
+        <p>As such, after the official masterlist ceased operation, I found it under my best interest (and quite likely, that of the community) that the server list of the future must be:</p>
+        <ul>
+            <li>High quality: I don't want the server list to be full of repeated servers, or servers with false statistics.</li>
+            <li>Fair: A server list should not be a moneycow. SAMonitor is free, forever, and does not take payments for "advantages".</li>
+            <li>Unbiased: A server list should be focused on San Andreas Multiplayer itself, not taking firm sides on either being official (sa-mp) or alternative (open.mp).</li>
+            <li>Transparent: The code for SAMonitor is entirely free and open source. If I ever turn corrupt, you can take the code and build it for yourself.</li>
+        </ul>
     </div>
 
     <div class="innerContent">
@@ -28,6 +38,12 @@
         <p>A server is considered offline if they replied to queries in the last 6 hours, and if they're not password protected. Servers who don't meet this are not listed, but continue to be tracked, and become listed when they do.</p>
         <p>Every server is queried every 20 minutes (3 times per hour). Each query updates its information and saves the player counts for posterity.</p>
         <p>SAMonitor keeps track of a bunch of statistics. Check them out in the <a href="statistics" hx-get="statistics" hx-push-url="true" hx-target="#main">metrics</a> page.</p>
+    </div>
+
+
+    <div class="innerContent">
+        <h3>Contact</h3>
+        <p>Email: me@markski.ar<br/>Discord: markski.ar (yes, that's a username)<br/>Telegram: @Markski</p>
     </div>
 
     <div class="innerContent">

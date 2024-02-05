@@ -9,7 +9,7 @@
         $metrics = json_decode(file_get_contents("http://127.0.0.1:42069/api/GetGlobalMetrics?hours=168"), true);
 
         echo '<table style="width: 100%; border: 1px rgb(128, 128, 128) solid;">
-                <tr><th>Time</th><th>Players online</th><th>Servers online</th><th>API Hits</th></tr>';
+                <tr><th>Time</th><th>Players online</th><th>Servers online</th></tr>';
 
         foreach ($metrics as $instant) {
             $humanTime = strtotime($instant['time']);
@@ -19,7 +19,6 @@
                     <td>{$humanTime}</td>
                     <td>{$instant['players']}</td>
                     <td>{$instant['servers']}</td>
-                    <td>{$instant['apiHits']}</td>
                 </tr>
             ";
         }
@@ -67,7 +66,6 @@
             <select name="dataType" style="width: 6rem">
                 <option value=0>players</option>
                 <option value=1>servers</option>
-                <option value=2>api hits</option>
             </select>
             in the
             <select name="hours">
