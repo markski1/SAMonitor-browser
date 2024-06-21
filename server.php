@@ -18,19 +18,19 @@
         }
     }
 
-    $uptime = 100.0;
-    $avg_players = 0.0;
+        $uptime = 100.0;
+        $avg_players = 0.0;
 
-    if ($total_reqs > 0) {
-        if ($req_miss > 0) {
-            $downtime = ($req_miss / $total_reqs) * 100;
-            $uptime = 100 - $downtime;
-        }
-        
-        $req_success = $total_reqs - $req_miss;
-        if ($req_success > 0) {
-            $avg_players = $total_players_found / $req_success;
-        }
+        if ($total_reqs > 0) {
+            if ($req_miss > 0) {
+                $downtime = ($req_miss / $total_reqs) * 100;
+                $uptime = 100 - $downtime;
+            }
+
+            $req_success = $total_reqs - $req_miss;
+            if ($req_success > 0) {
+                $avg_players = $total_players_found / $req_success;
+            }
     }
 
     if (isset($_GET['ip_addr']) && strlen($_GET['ip_addr']) > 0) {

@@ -1,6 +1,6 @@
 <?php
     include 'logic/layout.php';
-    PageHeader("San Andreas Multiplayer server monitor, for GTA SA-MP and open.mp");
+    PageHeader("Home", "San Andreas Multiplayer server monitor, for GTA SA-MP and open.mp");
 ?>
 
 <div style="width: 100%; max-width: 70rem">

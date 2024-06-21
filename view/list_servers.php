@@ -16,10 +16,6 @@
         $filters .= "&hide_roleplay=1";
     }
 
-    if (isset($_GET['hide_russian'])) {
-        $filters .= "&hide_russian=1";
-    }
-
     if (isset($_GET['require_sampcac'])) {
         $filters .= "&require_sampcac=1";
     }

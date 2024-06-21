@@ -128,10 +128,10 @@ function DrawServerGraph($serverIP, $hours): string
 
     foreach ($metrics as $instant) {
         $humanTime = strtotime($instant['time']);
-        
+
         // only specify the day if we're listing more than 24 hours.
         if ($hours > 24) {
-            $humanTime = date("j/m H:i", $humanTime);
+                $humanTime = date("j/m H:i", $humanTime);
         }
         else $humanTime = date("H:i", $humanTime);
 
