@@ -40,7 +40,7 @@ def server_page(is_htmx, server_ip):
 
     if total_reqs > 0:
         if missed_reqs > 0:
-            downtime_pct = (total_reqs / total_reqs) * 100
+            downtime_pct = (missed_reqs / total_reqs) * 100
             uptime_pct = 100 - downtime_pct
 
         req_success = total_reqs - missed_reqs
@@ -52,5 +52,5 @@ def server_page(is_htmx, server_ip):
 
     return render_template("server.html", htmx=is_htmx, server=server,
                            server_name=server_data["name"], website=server_data['website'],
-                           uptime=uptime_pct, avg_players=avg_players,
+                           uptime=uptime_pct, avg_players=avg_players, lag_comp=server_data['lag_comp'],
                            last_updated=server_data['last_updated'], server_software=server_data['software'])
