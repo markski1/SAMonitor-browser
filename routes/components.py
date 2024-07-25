@@ -113,7 +113,7 @@ def server_graph(server_ip):
     hours = int(request.args.get("hours", 24))
 
     try:
-        result = requests.get(f"http://127.0.0.1:42069/api/GetServerMetrics?hours={hours}&ip_addr={server_ip}").json()
+        result = requests.get(f"http://127.0.0.1:42069/api/GetServerMetrics?hours={hours}&include_misses=1&ip_addr={server_ip}").json()
     except:
         return "<p>Error obtaining server metrics to build graph.</p>"
 
@@ -141,23 +141,26 @@ def server_graph(server_ip):
         else:
             human_time = instant_time.strftime("%H:%M")
 
-        if instant['players'] < 0:
-            instant['players'] = 0
-
         if instant['players'] > highest:
             highest = instant['players']
             highest_time = human_time
 
-        if instant['players'] < lowest:
+        if 0 <= instant['players'] < lowest:
             lowest = instant['players']
             lowest_time = human_time
 
         if is_first:
-            player_set += f"{instant['players']}"
+            if instant['players'] < 0:
+                player_set += "null"
+            else:
+                player_set += f"{instant['players']}"
             time_set += f"'{human_time}'"
             is_first = False
         else:
-            player_set += f", {instant['players']}"
+            if instant['players'] < 0:
+                player_set += ", null"
+            else:
+                player_set += f", {instant['players']}"
             time_set += f", '{human_time}'"
 
     return render_template("components/graph.html", highest=highest, highest_time=highest_time,

@@ -40,7 +40,7 @@ def server_page(is_htmx, server_ip):
 
     if total_reqs > 0:
         if missed_reqs > 0:
-            downtime_pct = (total_reqs / total_reqs) * 100
+            downtime_pct = (missed_reqs / total_reqs) * 100
             uptime_pct = 100 - downtime_pct
 
         req_success = total_reqs - missed_reqs

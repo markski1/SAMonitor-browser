@@ -1,6 +1,7 @@
 <canvas id='globalPlayersChart' style='width: 60rem; max-width: 100%'></canvas>
 
 <p>The highest count was <span style='color: green'>{{ highest }}</span> at {{ highest_time }} and the lowest was <span style='color: red'>{{ lowest }}</span> at {{ lowest_time }}</p>
+<small>Empty spaces in the chart means the server did not respond.</small>
 
 <script>
     new Chart(document.getElementById('globalPlayersChart'),
@@ -18,7 +19,7 @@
             datasets: [
                 {
                     label: '{{ dataset_name }}',
-                    data: [{{ data_set }}],
+                    data: [{{ data_set|safe }}],
                     borderWidth: 1
                 }
             ]
