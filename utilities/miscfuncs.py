@@ -38,13 +38,12 @@ def parse_server_data(server):
             lag_comp = "Disabled"
 
     last_updated = parse_datetime(server['lastUpdated'])
-
-    last_updated_delta = last_updated - datetime.datetime.now()
-
+    current_utc = datetime.datetime.now(datetime.timezone.utc)
+    last_updated_delta = current_utc - last_updated
     last_updated_sec = last_updated_delta.total_seconds()
 
-    hours = last_updated_sec // 3600
-    minutes = (last_updated_sec % 3600) // 60
+    hours = int(last_updated_sec // 3600)
+    minutes = int((last_updated_sec % 3600) // 60)
 
     if hours > 0:
         if hours == 1:
@@ -77,6 +76,6 @@ def parse_datetime(datetime_str):
     if '.' in datetime_str and datetime_str.endswith('Z'):
         # Truncate the microseconds to 6 digits
         datetime_str = datetime_str[:-8] + datetime_str[-8:-2] + 'Z'
-        return datetime.datetime.strptime(datetime_str, "%Y-%m-%dT%H:%M:%S.%fZ")
+        return (datetime.datetime.strptime(datetime_str, "%Y-%m-%dT%H:%M:%S.%fZ")).replace(tzinfo=datetime.timezone.utc)
     else:
-        return datetime.datetime.strptime(datetime_str, "%Y-%m-%dT%H:%M:%S")
+        return (datetime.datetime.strptime(datetime_str, "%Y-%m-%dT%H:%M:%S")).replace(tzinfo=datetime.timezone.utc)
