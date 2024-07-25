@@ -39,16 +39,23 @@ def parse_server_data(server):
 
     last_updated = parse_datetime(server['lastUpdated'])
 
-    if last_updated.hour > 0:
-        if last_updated.hour == 1:
-            last_updated_str = f"{last_updated.hour} hour ago"
+    last_updated_delta = last_updated - datetime.datetime.now()
+
+    last_updated_sec = last_updated_delta.total_seconds()
+
+    hours = last_updated_sec // 3600
+    minutes = (last_updated_sec % 3600) // 60
+
+    if hours > 0:
+        if hours == 1:
+            last_updated_str = f"{hours} hour ago"
         else:
-            last_updated_str = f"{last_updated.hour} hours ago"
+            last_updated_str = f"{hours} hours ago"
     else:
-        if last_updated.minute == 1:
-            last_updated_str = f"{last_updated.minute} minute ago"
+        if minutes == 1:
+            last_updated_str = f"{minutes} minute ago"
         else:
-            last_updated_str = f"{last_updated.minute} minutes ago"
+            last_updated_str = f"{minutes} minutes ago"
 
     server_name = server["name"].strip()
 

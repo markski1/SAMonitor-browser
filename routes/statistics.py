@@ -53,6 +53,9 @@ def graph():
         case 1:
             get_field = 'servers'
             dataset_name = 'Servers online'
+        case 2:
+            get_field = 'ompServers'
+            dataset_name = 'open.mp servers online'
         case _:
             get_field = 'players'
             dataset_name = 'Players online'
