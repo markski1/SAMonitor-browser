@@ -1,15 +1,4 @@
 {% if htmx %}
-    <div class="announce-banner" style="background-color: #640e04; max-width: 48rem; margin: 0.5rem">
-        <p><b>July 23, 2024 | Be advised:</b></p>
-        <small>
-            <p>
-                Servers are currently affected by a bug in RakNet's bitstream reader. It allows malicious actors to crash servers by sending malformed bitstreams snuck into chat command packets.
-            </p>
-            <p>
-                SA-MP servers will have severe outages until a fix is available; open.mp server software is unaffected.
-            </p>
-        </small>
-    </div>
     {% block main %} {% endblock %}
     <script>
         document.title = "SAMonitor - {{ self.title() }}";
@@ -52,17 +41,6 @@
                 </div>
             </header>
             <main id="main" class="opacity-trans">
-                <div class="announce-banner" style="background-color: #640e04; max-width: 48rem; margin: 0.5rem">
-                    <p><b>July 23, 2024 | Be advised:</b></p>
-                    <small>
-                        <p>
-                            Servers are currently affected by a bug in RakNet's bitstream reader. It allows malicious actors to crash servers by sending malformed bitstreams snuck into chat command packets.
-                        </p>
-                        <p>
-                            SA-MP servers will have severe outages until a fix is available; open.mp server software is unaffected.
-                        </p>
-                    </small>
-                </div>
                 {{ self.main() }}
             </main>
         </body>
