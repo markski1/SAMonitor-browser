@@ -78,4 +78,8 @@ def parse_datetime(datetime_str):
         datetime_str = datetime_str[:-8] + datetime_str[-8:-2] + 'Z'
         return (datetime.datetime.strptime(datetime_str, "%Y-%m-%dT%H:%M:%S.%fZ")).replace(tzinfo=datetime.timezone.utc)
     else:
-        return (datetime.datetime.strptime(datetime_str, "%Y-%m-%dT%H:%M:%S")).replace(tzinfo=datetime.timezone.utc)
+        datetime_str = datetime_str.replace('Z', '')
+        try:
+            return (datetime.datetime.strptime(datetime_str, "%Y-%m-%dT%H:%M:%S")).replace(tzinfo=datetime.timezone.utc)
+        except ValueError:
+            return datetime.now()
