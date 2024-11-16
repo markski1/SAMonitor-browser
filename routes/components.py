@@ -113,17 +113,14 @@ def server_graph(server_ip):
     hours = int(request.args.get("hours", 24))
 
     try:
-        result = requests.get(f"http://127.0.0.1:42069/api/GetServerMetrics?hours={hours}&include_misses=1&ip_addr={server_ip}").json()
+        result = requests.get(
+            f"http://127.0.0.1:42069/api/GetServerMetrics?hours={hours}&include_misses=1&ip_addr={server_ip}"
+        ).json()
     except:
         return "<p>Error obtaining server metrics to build graph.</p>"
 
     if len(result) < 3:
         return "<p>Not enough data for the activity graph, please check later.</p>"
-
-    # Sets to feed the graph
-    player_set = ""
-    time_set = ""
-    is_first = True
 
     server_metrics = list(reversed(result))
 
@@ -132,6 +129,9 @@ def server_graph(server_ip):
     lowest_time = None
     highest = -1
     highest_time = None
+
+    time_list = []
+    pcount_list = []
 
     for instant in server_metrics:
         instant_time = parse_datetime(instant['time'])
@@ -149,19 +149,15 @@ def server_graph(server_ip):
             lowest = instant['players']
             lowest_time = human_time
 
-        if is_first:
-            if instant['players'] < 0:
-                player_set += "null"
-            else:
-                player_set += f"{instant['players']}"
-            time_set += f"'{human_time}'"
-            is_first = False
+        if instant['players'] < 0:
+            pcount_list.append("null")
         else:
-            if instant['players'] < 0:
-                player_set += ", null"
-            else:
-                player_set += f", {instant['players']}"
-            time_set += f", '{human_time}'"
+            pcount_list.append(f"{instant['players']}")
+
+        time_list.append(f"'{human_time}'")
+
+    time_set = str(','.join(map(str, time_list)))
+    player_set = str(','.join(map(str, pcount_list)))
 
     return render_template("components/graph.html", highest=highest, highest_time=highest_time,
                            lowest=lowest, lowest_time=lowest_time, time_set=time_set, data_set=player_set,
