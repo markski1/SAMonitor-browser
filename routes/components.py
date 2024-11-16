@@ -18,7 +18,11 @@ def server_list():
     name = options.get("name", None)
     gamemode = options.get("gamemode", None)
     language = options.get("language", None)
-    page = int(options.get("page", 0))
+
+    try:
+        page = int(options.get("page", 0))
+    except:
+        page = 0
 
     filters = ""
 

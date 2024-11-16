@@ -82,4 +82,4 @@ def parse_datetime(datetime_str):
         try:
             return (datetime.datetime.strptime(datetime_str, "%Y-%m-%dT%H:%M:%S")).replace(tzinfo=datetime.timezone.utc)
         except ValueError:
-            return datetime.now()
+            return datetime.datetime.now()
