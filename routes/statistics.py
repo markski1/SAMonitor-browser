@@ -68,7 +68,9 @@ def graph():
     for instant in metrics:
         instant_time = parse_datetime(instant['time'])
 
-        if hours > 24:
+        if hours >= 2016:
+            human_time = instant_time.strftime("%d/%m/%Y")
+        elif hours > 24:
             human_time = instant_time.strftime("%d/%m %H:%M")
         else:
             human_time = instant_time.strftime("%H:%M")

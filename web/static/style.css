@@ -21,7 +21,7 @@ header {
 main {
     margin: 2rem auto;
     width: 95%;
-    max-width: 75rem;
+    max-width: 80rem;
     display: flex;
     flex-direction: row-reverse;
     justify-content: center;
