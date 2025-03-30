@@ -52,5 +52,5 @@ def server_page(is_htmx, server_ip):
 
     return render_template("server.html", htmx=is_htmx, server=server,
                            server_name=server_data["name"], website=server_data['website'],
-                           uptime=uptime_pct, avg_players=avg_players,
+                           uptime=uptime_pct, avg_players=avg_players, lag_comp=server_data['lag_comp'],
                            last_updated=server_data['last_updated'], server_software=server_data['software'])
