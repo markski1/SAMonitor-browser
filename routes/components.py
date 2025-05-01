@@ -3,6 +3,8 @@ import requests
 from utilities.miscfuncs import render_server, parse_datetime
 from flask import Blueprint, render_template, request
 
+from utilities.server import get_server_data, get_server_metrics
+
 components_bp = Blueprint("components", __name__, url_prefix="/components")
 
 
@@ -66,7 +68,7 @@ def server_list():
     result_buffer = ""
 
     for server in result:
-        result_buffer += render_server(server)
+        result_buffer += render_server(get_server_data(server_json=server))
 
     # "Show more" button if there's more results left.
     if len(result) == 20:
@@ -107,9 +109,9 @@ def server_details(show_type, server_ip):
     else:
         details = False
 
-    server_data = requests.get(f"http://127.0.0.1:42069/api/GetServerByIP?ip_addr={server_ip}").json()
+    server = get_server_data(ip_addr=server_ip)
 
-    return render_server(server_data, details)
+    return render_server(server, details)
 
 
 @components_bp.get("/graph/<string:server_ip>")
@@ -117,16 +119,14 @@ def server_graph(server_ip):
     hours = int(request.args.get("hours", 24))
 
     try:
-        result = requests.get(
-            f"http://127.0.0.1:42069/api/GetServerMetrics?hours={hours}&include_misses=1&ip_addr={server_ip}"
-        ).json()
+        metrics = get_server_metrics(ip_addr=server_ip, hours=hours, include_misses=True)
     except:
         return "<p>Error obtaining server metrics to build graph.</p>"
 
-    if len(result) < 3:
+    if len(metrics.logged_data) < 3:
         return "<p>Not enough data for the activity graph, please check later.</p>"
 
-    server_metrics = list(reversed(result))
+    server_metrics = list(reversed(metrics.logged_data))
 
     # Minimums and maximums
     lowest = 69420

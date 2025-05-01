@@ -1,48 +1,48 @@
 {% if detailed %}
 <div hx-swap="outerHTML" hx-target="this" class="server">
 {% else %}
-<div hx-swap="outerHTML" hx-target="this" hx-get="./components/server/detailed/{{ server['ipAddr'] }}" class="server server_clickable">
+<div hx-swap="outerHTML" hx-target="this" hx-get="./components/server/detailed/{{ server.ip_addr }}" class="server server_clickable">
 {% endif %}
      <div style="float: left;">
-        <span style="color: #A0C0F0; font-weight: 700; font-size: 1.1rem">{{ name }}</span><br>
+        <span style="color: #A0C0F0; font-weight: 700; font-size: 1.1rem">{{ server.name }}</span><br>
     </div>
     <div style="text-align: right; float: right;">
-        <span style="font-size: 1.1rem; font-weight: 700;">{{ server['playersOnline'] }} / {{ server['maxPlayers'] }}</span><br>
+        <span style="font-size: 1.1rem; font-weight: 700;">{{ server.players_online }} / {{ server.max_players }}</span><br>
     </div>
     <div style="clear: both;"></div>
     <div style="float: left;">
-        <p><span class="ipAddr" id="ipAddr{{ server['id'] }}">{{ server['ipAddr'] }}</span></p>
+        <p><span class="ipAddr" id="ipAddr{{ server.id }}">{{ server.ip_addr }}</span></p>
     </div>
     <div style="text-align: right; float: right;">
-        <span><b>Lang:</b> {{ server['language'] }}</span>
+        <span><b>Lang:</b> {{ server.language }}</span>
     </div>
     {% if detailed %}
         <div style="margin-bottom: 0.75rem;">
             <table class="serverDetailsTable">
                 <tr>
-                    <td><b>Gamemode</b></td><td>{{ server['gameMode'] }}</td>
+                    <td><b>Gamemode</b></td><td>{{ server.gamemode }}</td>
                 </tr>
                 <tr>
-                    <td><b>Website</b></td><td>{{ website|safe }}</td>
+                    <td><b>Website</b></td><td>{{ server.website_anchor()|safe }}</td>
                 </tr>
                 <tr>
-                    <td><b>Lag compensation</b></td><td>{{ lag_comp }}</td>
+                    <td><b>Lag compensation</b></td><td>{{ server.lagcomp }}</td>
                 </tr>
                 <tr>
-                    <td><b>Version</b></td><td>{{ server['version'] }}</td>
+                    <td><b>Version</b></td><td>{{ server.version }}</td>
                 </tr>
                 <tr>
-                    <td><b>SAMPCAC</b></td><td>{{ server['sampCac'] }}</td>
+                    <td><b>SAMPCAC</b></td><td>{{ server.sampcac }}</td>
                 </tr>
                 <tr>
-                    <td><b>Checked</b></td><td>{{ last_updated }}</td>
+                    <td><b>Checked</b></td><td>{{ server.last_updated }}</td>
                 </tr>
             </table>
-            <a style="text-decoration: none; user-select: none;" href="../server/{{ server['ipAddr'] }}" hx-get="../server/{{ server['ipAddr'] }}" hx-push-url="true" hx-target="#main" hx-swap="innerHTML" hx-indicator="#main">
+            <a style="text-decoration: none; user-select: none;" href="../server/{{ server.ip_addr }}" hx-get="../server/{{ server.ip_addr }}" hx-push-url="true" hx-target="#main" hx-swap="innerHTML" hx-indicator="#main">
                 <button style="margin-top: 1rem;">All information</button>
             </a>
-            <button class="connectButton" id="copyButton{{ server['id'] }}" onclick="CopyAddress('ipAddr{{ server['id'] }}', 'copyButton{{ server['id'] }}')">Copy IP</button>
-            <button hx-get="./components/server/basic/{{ server['ipAddr'] }}">Close</button>
+            <button class="connectButton" id="copyButton{{ server.id }}" onclick="CopyAddress('ipAddr{{ server.id }}', 'copyButton{{ server.id }}')">Copy IP</button>
+            <button hx-get="./components/server/basic/{{ server.ip_addr }}">Close</button>
         </div>
     {% endif %}
     <div style="clear: both"></div>

@@ -5,6 +5,11 @@ from flask import render_template, request
 
 
 def htmx_check(func):
+    """
+    Checks if the request was made by HTMX. Used to decide if a full page should be returned, or just a component.
+    :param func: Function passed by decorator.
+    :return: A boolean `is_htmx` indicating if the request was sent by an HTMX call.
+    """
     @wraps(func)
     def wrapper(*args, **kwargs):
         if 'HX-Request' in request.headers:
@@ -18,60 +23,8 @@ def htmx_check(func):
 
 
 def render_server(server, details=False):
-    server_data = parse_server_data(server)
-
     return render_template("components/server-snippet.html",
-                           server=server, name=server_data['name'], website=server_data['website'],
-                           lag_comp=server_data['lag_comp'], last_updated=server_data['last_updated'], detailed=details)
-
-
-def parse_server_data(server):
-    if server["website"] != "Unknown":
-        if 'http' not in server["website"] and '://' not in server["website"]:
-            server["website"] = f"https://{server['website']}"
-        website = f"<a href='{server['website']}'>{server['website']}</a>"
-    else:
-        website = "No website specified."
-
-    match server["lagComp"]:
-        case 1:
-            lag_comp = "Enabled"
-        case _:
-            lag_comp = "Disabled"
-
-    last_updated = parse_datetime(server['lastUpdated'])
-    current_utc = datetime.datetime.now(datetime.timezone.utc)
-    last_updated_delta = current_utc - last_updated
-    last_updated_sec = last_updated_delta.total_seconds()
-
-    hours = int(last_updated_sec // 3600)
-    minutes = int((last_updated_sec % 3600) // 60)
-
-    if hours > 0:
-        if hours == 1:
-            last_updated_str = f"{hours} hour ago"
-        else:
-            last_updated_str = f"{hours} hours ago"
-    else:
-        if minutes == 1:
-            last_updated_str = f"{minutes} minute ago"
-        else:
-            last_updated_str = f"{minutes} minutes ago"
-
-    server_name = server["name"].strip()
-
-    if server['isOpenMp'] == 1:
-        software = "open.mp"
-    else:
-        software = "SA-MP"
-
-    return {
-        "name": server_name,
-        "website": website,
-        "last_updated": last_updated_str,
-        "lag_comp": lag_comp,
-        "software": software
-    }
+                           server=server, detailed=details)
 
 
 def parse_datetime(datetime_str):

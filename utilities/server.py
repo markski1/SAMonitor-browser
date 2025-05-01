@@ -5,16 +5,16 @@ from utilities.miscfuncs import parse_datetime
 
 
 class SAServer:
-    def __init__(self, ip_addr):
-        server_request = requests.get(f"http://127.0.0.1:42069/api/GetServerByIP?ip_addr={ip_addr}")
-
-        if server_request.status_code != 204:
-            raise Exception("Server does not exist in SAMonitor.")
-
-        try:
+    def __init__(self, ip_addr=None, server_json=None):
+        if ip_addr is not None:
+            server_request = requests.get(f"http://127.0.0.1:42069/api/GetServerByIP?ip_addr={ip_addr}")
+            if server_request.status_code != 204:
+                raise Exception("Server does not exist in SAMonitor.")
             server_data = server_request.json()
-        except:
-            raise Exception("SAMonitor did not provide a valid JSON response.")
+        elif server_json is not None:
+            server_data = server_json
+        else:
+            raise Exception("No IP or data provided.")
 
         self.id = server_data["id"]
         self.name = server_data["name"].strip()
@@ -65,9 +65,9 @@ class SAServer:
 
 
 class SAServerMetrics:
-    def __init__(self, ip_addr):
+    def __init__(self, ip_addr: str, hours: int, include_misses: bool):
         metrics_request = requests.get(
-            f"http://127.0.0.1:42069/api/GetServerMetrics?hours=168&include_misses=1&ip_addr={ip_addr}"
+            f"http://127.0.0.1:42069/api/GetServerMetrics?hours={hours}&include_misses={1 if include_misses else 0}&ip_addr={ip_addr}"
         )
 
         if metrics_request.status_code != 204:
@@ -78,7 +78,9 @@ class SAServerMetrics:
         except:
             raise Exception("SAMonitor did not provide a valid JSON response.")
 
-        self.self.total_reqs = len(metrics)
+        self.logged_data = metrics
+
+        self.total_reqs = len(metrics)
         self.missed_reqs = 0
         self.total_players_m = 0
 
@@ -101,15 +103,21 @@ class SAServerMetrics:
                 self.avg_players = self.total_players_m / req_success
 
 
-def get_server_metrics(ip_addr: str) -> SAServerMetrics | None:
+def get_server_metrics(ip_addr: str, hours: int, include_misses: bool) -> SAServerMetrics | None:
     try:
-        return SAServerMetrics(ip_addr)
+        return SAServerMetrics(ip_addr, hours, include_misses)
     except:
         return None
 
 
-def get_server_data(ip_addr: str) -> SAServer | None:
+def get_server_data(ip_addr: str | None = None, server_json: str | None = None) -> SAServer | None:
     try:
-        return SAServer(ip_addr)
+        if ip_addr:
+            return SAServer(ip_addr)
+        elif server_json:
+            return SAServer(server_json)
+        else:
+            print("No IP address or data provided for a get_server_data call.")
+            raise Exception("No IP or data provided.")
     except:
         return None
