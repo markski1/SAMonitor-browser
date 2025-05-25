@@ -35,7 +35,7 @@
                     <td><b>SAMPCAC</b></td><td>{{ server.sampcac }}</td>
                 </tr>
                 <tr>
-                    <td><b>Checked</b></td><td>{{ server.last_updated }}</td>
+                    <td><b>Checked</b></td><td>{{ server.formatted_last_updated() }}</td>
                 </tr>
             </table>
             <a style="text-decoration: none; user-select: none;" href="../server/{{ server.ip_addr }}" hx-get="../server/{{ server.ip_addr }}" hx-push-url="true" hx-target="#main" hx-swap="innerHTML" hx-indicator="#main">

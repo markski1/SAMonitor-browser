@@ -19,7 +19,7 @@ def server_list():
     ip_addr = ip_addr.strip()
 
     try:
-        result = requests.get("http://127.0.0.1:42069/api/AddServer?ip_addr=" + ip_addr)
+        result = requests.get(f"http://127.0.0.1:42069/api/AddServer?ip_addr={ip_addr}")
     except:
         return "Error contacting SAMonitor to add the server, please try again later."
 

@@ -47,7 +47,7 @@ def server_list():
     if language:
         filters += f"&language={language}"
 
-    # Remove first ampersand for whichever option did get chosen
+    # Remove the first ampersand for whichever option did get chosen
     if len(filters) > 0:
         filters = filters[1:]
 
@@ -70,7 +70,7 @@ def server_list():
     for server in result:
         result_buffer += render_server(get_server_data(server_json=server))
 
-    # "Show more" button if there's more results left.
+    # "Show more" button if there are more results left.
     if len(result) == 20:
         result_buffer += f"""
             <div hx-target="this" style="margin: 3rem; width: 80%; text-align: center">
@@ -183,7 +183,7 @@ def players_list(server_ip, num_players):
         return "<p>Error fetching players.</p>"
 
     if len(result) > 0:
-        # Open a table, and it's header.
+        # Open a table, and it's a header.
         result_buffer = """
             <table style="width: 100%; border: 0;">
                 <tr style="border: 1px rgb(128, 128, 128) solid">
@@ -205,7 +205,7 @@ def players_list(server_ip, num_players):
                 </tr>
             """
 
-        # Close the table, and return.
+        # Close the table and return.
         result_buffer += "</table>"
         return result_buffer
 
