@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { filters, type ServerFilters } from '$lib/stores/filters';
+    import { filters, DEFAULT_FILTERS, type ServerFilters } from '$lib/stores/filters';
 
-    let local = $state<ServerFilters>({ ...$filters });
+    let local: ServerFilters = $state({ ...DEFAULT_FILTERS });
 
     let debounceTimer: ReturnType<typeof setTimeout> | null = null;
 
@@ -12,20 +12,14 @@
         }, 500);
     }
 
-    // Whenever the store changes from outside (e.g. reset), sync the form.
+    // Sync the form from the store whenever the store changes externally
+
     $effect(() => {
         const f = $filters;
-        if (
-            f.name !== local.name ||
-            f.gamemode !== local.gamemode ||
-            f.language !== local.language ||
-            f.showEmpty !== local.showEmpty ||
-            f.hideRoleplay !== local.hideRoleplay ||
-            f.requireSampcac !== local.requireSampcac ||
-            f.order !== local.order
-        ) {
-            local = { ...f };
-        }
+        const serialized = JSON.stringify(f);
+        if (serialized === lastSyncedStore) return;
+        lastSyncedStore = serialized;
+        local = { ...f };
     });
 </script>
 
@@ -33,7 +27,11 @@
     class="filterBox"
     onsubmit={(e) => {
         e.preventDefault();
-        commit();
+        if (debounceTimer) {
+            clearTimeout(debounceTimer);
+            debounceTimer = null;
+        }
+        filters.set({ ...local });
     }}
 >
     <h2>Filter options</h2>
@@ -81,26 +79,6 @@
             </table>
         </fieldset>
         <fieldset style="flex: 1 1;" class="flexBox">
-            <label
-                ><input type="checkbox" name="show_empty" bind:checked={local.showEmpty} onchange={commit} /> Show
-                empty servers</label
-            ><br />
-            <label
-                ><input
-                    type="checkbox"
-                    name="hide_roleplay"
-                    bind:checked={local.hideRoleplay}
-                    onchange={commit}
-                /> No roleplay servers</label
-            ><br />
-            <label
-                ><input
-                    type="checkbox"
-                    name="require_sampcac"
-                    bind:checked={local.requireSampcac}
-                    onchange={commit}
-                /> SAMPCAC Required</label
-            ><br />
             <table style="width: 100%; margin-top: .75rem">
                 <tbody>
                     <tr>
@@ -123,6 +101,22 @@
                     </tr>
                 </tbody>
             </table>
+            <label
+                ><input
+                    type="checkbox"
+                    name="show_empty"
+                    bind:checked={local.showEmpty}
+                    onchange={commit}
+                /> Show empty servers</label
+            ><br />
+            <label
+                ><input
+                    type="checkbox"
+                    name="hide_roleplay"
+                    bind:checked={local.hideRoleplay}
+                    onchange={commit}
+                /> No roleplay servers</label
+            >
         </fieldset>
     </div>
 </form>

@@ -26,7 +26,7 @@
         <p>
             <b>{formatThousands(stats.serversOnline)}</b> servers online (<b
                 >{formatThousands(stats.serversTracked)}</b
-            >total)<br />
+            > total)<br />
             <b>{formatThousands(stats.serversInhabited)}</b> servers have players,
             <b>{formatThousands(stats.serversOnlineOMP)}</b> have open.mp.<br />
             <b>{formatThousands(stats.playersOnline)}</b> are playing right now!

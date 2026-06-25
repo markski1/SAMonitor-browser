@@ -34,6 +34,6 @@
 
 <style>
     .active {
-        text-decoration: underline;
+        color: #a8c7fa;
     }
 </style>

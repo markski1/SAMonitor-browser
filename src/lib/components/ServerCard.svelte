@@ -75,7 +75,7 @@
             </table>
             <a
                 style="text-decoration: none; user-select: none;"
-                href={`/server/${encodeURIComponent(ipAddress)}`}
+                href={`/server/${ipAddress}`}
             >
                 <button style="margin-top: 1rem;">All information</button>
             </a>

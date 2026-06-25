@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { onDestroy, onMount, untrack } from 'svelte';
+    import { onDestroy } from 'svelte';
 
     interface Props {
         labels: string[];
@@ -20,7 +20,7 @@
     type ChartCtor = new (
         ctx: HTMLCanvasElement,
         config: Record<string, unknown>
-    ) => { destroy(): void; update(): void };
+    ) => { destroy(): void };
 
     function getChartCtor(): ChartCtor | undefined {
         if (typeof window === 'undefined') return undefined;
@@ -31,6 +31,17 @@
         const Chart = getChartCtor();
         if (!Chart || !canvas) return;
 
+        const plainData = {
+            labels: [...labels],
+            datasets: [
+                {
+                    label,
+                    data: [...data],
+                    borderWidth: 1
+                }
+            ]
+        };
+
         chartInstance?.destroy();
         chartInstance = new Chart(canvas, {
             type: 'line',
@@ -39,41 +50,27 @@
                     y: { min }
                 }
             },
-            data: {
-                labels,
-                datasets: [
-                    {
-                        label,
-                        data,
-                        borderWidth: 1
-                    }
-                ]
-            }
+            data: plainData
         });
     }
-
-    onMount(() => {
-        build();
-    });
 
     onDestroy(() => {
         chartInstance?.destroy();
         chartInstance = null;
     });
 
-    // React to data/label changes after the initial mount.
     $effect(() => {
-        // Touch all reactive deps so the effect re-runs when they change.
+        // Read the canvas so the effect re-runs once it is bound.
+        void canvas;
         labels;
         data;
         label;
         min;
-        untrack(() => {
-            // Only re-build once the chart has been created; onMount handles
-            // the first build.
-            if (chartInstance) build();
-        });
+
+        if (!canvas) return;
+
+        build();
     });
 </script>
 
-<canvas id={chartId} style="width: 60rem; max-width: 100%"></canvas>
+<canvas id={chartId} bind:this={canvas} style="width: 60rem; max-width: 100%"></canvas>

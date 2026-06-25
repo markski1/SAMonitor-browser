@@ -10,7 +10,7 @@
     import GraphPanel from '$lib/components/GraphPanel.svelte';
     import PlayerList from '$lib/components/PlayerList.svelte';
 
-    const ip = $derived(decodeURIComponent(page.params.ip ?? ''));
+    const ip = $derived(page.params.ip ?? '');
 
     let server = $state<Server | null>(null);
     let metrics = $state<ServerMetrics | null>(null);

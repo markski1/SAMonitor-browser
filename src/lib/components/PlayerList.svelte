@@ -65,7 +65,7 @@
             </tr>
         </thead>
         <tbody>
-            {#each players as player (player.id)}
+            {#each players as player, i (player.id + '-' + i)}
                 <tr>
                     <td style="width: 100px">{player.id}</td>
                     <td>{player.name}</td>
