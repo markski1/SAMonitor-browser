@@ -13,7 +13,7 @@
     />
 </svelte:head>
 
-<div style="width: 100%; max-width: 70rem">
+<div class="page-shell">
     <FilterForm />
     <StatsBanner />
     <ServerList filters={$filters} />

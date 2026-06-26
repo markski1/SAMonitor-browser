@@ -25,7 +25,7 @@
             {#each links as link, i (link.href)}
                 <a href={link.href} class:active={isActive(link.href)}>{link.label}</a>
                 {#if i < links.length - 1}
-                    <span class="separator">&nbsp;/&nbsp;</span>
+                    <span class="separator">/&nbsp;</span>
                 {/if}
             {/each}
         </div>
@@ -34,6 +34,7 @@
 
 <style>
     .active {
-        color: #a8c7fa;
+        color: var(--text);
+        font-weight: 600;
     }
 </style>

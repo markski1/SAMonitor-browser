@@ -88,16 +88,16 @@
     />
 </svelte:head>
 
-<div>
+<div class="page-shell">
     <h2>Server information</h2>
     {#if loadError}
         <p>{loadError}</p>
     {:else if server && metrics}
-        <p>{server.name}</p>
-        <div style="display: flex; flex-wrap: wrap; justify-content: start; gap: 1.5rem">
+        <p class="server-page-title">{server.name}</p>
+        <div class="server-page-grid">
             <div class="innerContent flexBox">
                 <h3>Details</h3>
-                <table class="serverDetailsTable">
+                <table class="serverDetailsTable compactTable">
                     <tbody>
                         <tr>
                             <td><b>Players</b></td>
@@ -132,33 +132,27 @@
                             <td>{server.version}</td>
                         </tr>
                         <tr>
-                            <td><b>SAMPCAC</b></td>
-                            <td>{server.sampCac}</td>
-                        </tr>
-                        <tr>
                             <td><b>Checked</b></td>
                             <td>{lastUpdatedLabel}</td>
                         </tr>
                     </tbody>
                 </table>
-                <p>
+                <p class="server-summary">
                     Uptime during the last week: {metrics.uptimePct.toFixed(2)}%<br />
                     Average players during last week: {metrics.avgPlayers.toFixed(2)}<br />
                     <small>Based on measurements every 20 minutes.</small>
                 </p>
-                <div style="margin-top: 1.5rem">
-                    <div style="float: left; margin-top: 0">
-                        <p class="ipAddr" id="ipAddr">{ip}</p>
-                    </div>
-                    <div style="text-align: right; float: right; margin-top: 0">
+                <div class="server-page-actions">
+                    <p class="ipAddr" id="ipAddr">{ip}</p>
+                    <div class="server-button-row">
                         <ConnectButton {ip} />
                         <CopyIpButton {ip} buttonId="copy-ip" />
                     </div>
                 </div>
             </div>
             <div class="innerContent flexBox">
-                <h3>
-                    <label for="time-sector">Player activity</label> |
+                <h3 class="inline-control-heading">
+                    <label for="time-sector">Player activity</label>
                     <select id="time-sector" bind:value={graphHours}>
                         <option value={24}>Last 24 hours</option>
                         <option value={72}>Last 72 hours</option>

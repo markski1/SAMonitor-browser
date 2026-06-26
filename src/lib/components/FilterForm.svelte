@@ -4,6 +4,7 @@
     let local: ServerFilters = $state({ ...DEFAULT_FILTERS });
 
     let debounceTimer: ReturnType<typeof setTimeout> | null = null;
+    let lastSyncedStore: string | null = null;
 
     function commit() {
         if (debounceTimer) clearTimeout(debounceTimer);
@@ -34,89 +35,75 @@
         filters.set({ ...local });
     }}
 >
-    <h2>Filter options</h2>
-    <div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 1rem; margin-top: .6rem;">
-        <fieldset style="flex: 1 1;" class="flexBox">
-            <table style="margin-top: .66rem;">
-                <tbody>
-                    <tr>
-                        <td><label for="name">Name:</label></td>
-                        <td>
-                            <input
-                                type="text"
-                                id="name"
-                                name="name"
-                                bind:value={local.name}
-                                onkeyup={commit}
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><label for="gamemode">Gamemode:</label></td>
-                        <td>
-                            <input
-                                type="text"
-                                id="gamemode"
-                                name="gamemode"
-                                bind:value={local.gamemode}
-                                onkeyup={commit}
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><label for="language">Language:</label></td>
-                        <td>
-                            <input
-                                type="text"
-                                id="language"
-                                name="language"
-                                bind:value={local.language}
-                                onkeyup={commit}
-                            />
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </fieldset>
-        <fieldset style="flex: 1 1;" class="flexBox">
-            <table style="width: 100%; margin-top: .75rem">
-                <tbody>
-                    <tr>
-                        <td>
-                            <label for="order">Order by:</label>
-                        </td>
-                        <td style="text-align: right">
-                            <select
-                                style="width: 100%"
-                                name="order"
-                                id="order"
-                                bind:value={local.order}
-                                onchange={commit}
-                            >
-                                <option value="none" selected>Don't order</option>
-                                <option value="players">Player count</option>
-                                <option value="ratio">Players/max ratio</option>
-                            </select>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <label
-                ><input
-                    type="checkbox"
-                    name="show_empty"
-                    bind:checked={local.showEmpty}
-                    onchange={commit}
-                /> Show empty servers</label
-            ><br />
-            <label
-                ><input
-                    type="checkbox"
-                    name="hide_roleplay"
-                    bind:checked={local.hideRoleplay}
-                    onchange={commit}
-                /> No roleplay servers</label
-            >
-        </fieldset>
+    <div class="filter-header">
+        <h2>Filters</h2>
+    </div>
+
+    <div class="filter-fields">
+        <label class="filter-field" for="name">
+            <span>Name</span>
+            <input
+                type="text"
+                id="name"
+                name="name"
+                bind:value={local.name}
+                onkeyup={commit}
+                placeholder="Server name"
+            />
+        </label>
+
+        <label class="filter-field" for="gamemode">
+            <span>Gamemode</span>
+            <input
+                type="text"
+                id="gamemode"
+                name="gamemode"
+                bind:value={local.gamemode}
+                onkeyup={commit}
+                placeholder="Roleplay, DM, Freeroam..."
+            />
+        </label>
+
+        <label class="filter-field" for="language">
+            <span>Language</span>
+            <input
+                type="text"
+                id="language"
+                name="language"
+                bind:value={local.language}
+                onkeyup={commit}
+                placeholder="English, Spanish..."
+            />
+        </label>
+
+        <label class="filter-field" for="order">
+            <span>Order by</span>
+            <select name="order" id="order" bind:value={local.order} onchange={commit}>
+                <option value="none" selected>Default</option>
+                <option value="players">Player count</option>
+                <option value="ratio">Players / max ratio</option>
+            </select>
+        </label>
+    </div>
+
+    <div class="filter-toggles">
+        <label class="toggle-chip"
+            ><input
+                type="checkbox"
+                name="show_empty"
+                bind:checked={local.showEmpty}
+                onchange={commit}
+            />
+            <span>Show empty servers</span></label
+        >
+        <label class="toggle-chip"
+            ><input
+                type="checkbox"
+                name="hide_roleplay"
+                bind:checked={local.hideRoleplay}
+                onchange={commit}
+            />
+            <span>No roleplay servers</span></label
+        >
     </div>
 </form>

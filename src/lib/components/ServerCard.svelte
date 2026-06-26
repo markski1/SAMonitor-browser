@@ -28,24 +28,21 @@
 </script>
 
 <div class="server" class:server_clickable={!details}>
-    <div style="float: left;">
-        <span style="color: #A0C0F0; font-weight: 700; font-size: 1.1rem">{server.name}</span><br />
+    <div class="server-row">
+        <span class="server-title">{server.name}</span>
+        <span class="server-count">{server.playersOnline} / {server.maxPlayers}</span>
     </div>
-    <div style="text-align: right; float: right;">
-        <span style="font-size: 1.1rem; font-weight: 700;"
-            >{server.playersOnline} / {server.maxPlayers}</span
-        ><br />
-    </div>
-    <div style="clear: both;"></div>
-    <div style="float: left;">
-        <p><span class="ipAddr" id={`ipAddr${server.id}`}>{ipAddress}</span></p>
-    </div>
-    <div style="text-align: right; float: right;">
-        <span><b>Lang:</b> {server.language}</span>
+    <div class="server-subrow">
+        <span class="server-mode">{server.gameMode}</span>
+        <span class="server-lang">{server.language}</span>
     </div>
     {#if details}
-        <div style="margin-bottom: 0.75rem;">
-            <table class="serverDetailsTable">
+        <div class="server-detail-meta">
+            <span class="ipAddr" id={`ipAddr${server.id}`}>{ipAddress}</span>
+            <span class="server-software">{software}</span>
+        </div>
+        <div class="server-actions">
+            <table class="serverDetailsTable compactTable">
                 <tbody>
                     <tr>
                         <td><b>Gamemode</b></td>
@@ -64,24 +61,18 @@
                         <td>{server.version}</td>
                     </tr>
                     <tr>
-                        <td><b>SAMPCAC</b></td>
-                        <td>{server.sampCac}</td>
-                    </tr>
-                    <tr>
                         <td><b>Checked</b></td>
                         <td>{lastUpdatedLabel}</td>
                     </tr>
                 </tbody>
             </table>
-            <a
-                style="text-decoration: none; user-select: none;"
-                href={`/server/${ipAddress}`}
-            >
-                <button style="margin-top: 1rem;">All information</button>
-            </a>
-            <CopyIpButton ip={ipAddress} buttonId={`copyButton${server.id}`} />
-            <ConnectButton ip={ipAddress} />
+            <div class="server-button-row">
+                <a href={`/server/${ipAddress}`}>
+                    <button>All information</button>
+                </a>
+                <CopyIpButton ip={ipAddress} buttonId={`copyButton${server.id}`} />
+                <ConnectButton ip={ipAddress} />
+            </div>
         </div>
     {/if}
-    <div style="clear: both"></div>
 </div>

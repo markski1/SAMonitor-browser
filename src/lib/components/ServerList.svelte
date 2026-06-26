@@ -144,7 +144,7 @@
     </ul>
 
     {#if pageState.hasMore && !pageState.error}
-        <div style="margin: 3rem; width: 80%; text-align: center">
+        <div class="list-actions">
             <button onclick={loadMore} disabled={pageState.loading}>
                 {pageState.loading ? 'Loading...' : 'Load more'}
             </button>

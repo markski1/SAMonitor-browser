@@ -55,22 +55,22 @@
 {#if error}
     <p>{error}</p>
 {:else if players}
-    <table style="width: 100%; border: 0;">
+    <table class="playersTable compactTable">
         <thead>
-            <tr style="border: 1px rgb(128, 128, 128) solid">
-                <th>Id</th>
+            <tr>
+                <th class="players-id">Id</th>
                 <th>Name</th>
-                <th>Score</th>
-                <th>Ping</th>
+                <th class="players-num">Score</th>
+                <th class="players-num">Ping</th>
             </tr>
         </thead>
         <tbody>
             {#each players as player, i (player.id + '-' + i)}
                 <tr>
-                    <td style="width: 100px">{player.id}</td>
-                    <td>{player.name}</td>
-                    <td>{player.score}</td>
-                    <td>{player.ping}</td>
+                    <td class="players-id">{player.id}</td>
+                    <td class="player-name">{player.name}</td>
+                    <td class="players-num">{player.score}</td>
+                    <td class="players-num">{player.ping}</td>
                 </tr>
             {/each}
         </tbody>
