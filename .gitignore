@@ -1,2 +1,8 @@
-
 __pycache__
+node_modules
+.svelte-kit
+build
+.env
+.vite
+*.log
+.DS_Store
