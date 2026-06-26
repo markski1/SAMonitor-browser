@@ -3,6 +3,7 @@
     import type { Server } from "$lib/types/server";
     import { formatLastUpdated, parseDatetime } from "$lib/format/datetime";
     import { normalizeWebsiteUrl } from "$lib/format/website";
+    import { prefetchServerPage } from "$lib/stores/serverPageCache.svelte";
     import CopyIpButton from "./CopyIpButton.svelte";
     import ConnectButton from "./ConnectButton.svelte";
 
@@ -24,6 +25,17 @@
     /** The address to display and use for the connect link. Falls back to the
      * id if the API didn't include `ipAddr` on this response. */
     const ipAddress = $derived(server.ipAddr ?? String(server.id));
+
+    /** Preload the server's detail page data as soon as the card is expanded
+     * (or the link is hovered/focused) so navigating to "All information"
+     * is instant. */
+    function preload() {
+        prefetchServerPage(ipAddress);
+    }
+
+    $effect(() => {
+        if (expanded) preload();
+    });
 </script>
 
 <div class="server" class:expanded>
@@ -85,7 +97,11 @@
                     </tbody>
                 </table>
                 <div class="server-button-row">
-                    <a href={`/server/${ipAddress}`}>
+                    <a
+                        href={`/server/${ipAddress}`}
+                        onmouseenter={preload}
+                        onfocus={preload}
+                    >
                         <button>All information</button>
                     </a>
                     <CopyIpButton

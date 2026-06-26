@@ -6,6 +6,7 @@
         getServerByIp,
         getServerMetrics,
     } from "$lib/api";
+    import { takeServerPagePrefetch } from "$lib/stores/serverPageCache.svelte";
     import type { Server } from "$lib/types/server";
     import type {
         ServerMetricInstant,
@@ -36,6 +37,21 @@
 
         let cancelled = false;
         (async () => {
+            // If the user expanded a card or hovered "All information" before
+            // clicking, we likely already have the data on the way. Use it to
+            // render immediately, then refresh in the background below.
+            const cached = takeServerPagePrefetch(ip);
+            if (cached) {
+                try {
+                    const hit = await cached;
+                    if (cancelled) return;
+                    server = hit.server;
+                    metrics = hit.metrics;
+                } catch {
+                    // Prefetch failed; fall through to the normal fetch.
+                }
+            }
+
             try {
                 const [s, m] = await Promise.all([
                     getServerByIp(ip),
