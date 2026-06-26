@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { onMount, untrack } from 'svelte';
-    import { ApiError, NetworkError, getServerPlayers } from '$lib/api';
-    import type { Player } from '$lib/types/server';
+    import { onMount, untrack } from "svelte";
+    import { ApiError, NetworkError, getServerPlayers } from "$lib/api";
+    import type { Player } from "$lib/types/server";
 
     interface Props {
         ip: string;
@@ -23,7 +23,7 @@
             return;
         }
         if (count < 1) {
-            error = 'No one is playing at the moment.';
+            error = "No one is playing at the moment.";
             return;
         }
 
@@ -31,13 +31,13 @@
             players = await getServerPlayers(ip);
             if (players.length === 0) {
                 error =
-                    'Could not fetch players. Server might be empty, or SAMonitor might have difficulty querying it at the moment.';
+                    "Could not fetch players. Server might be empty, or SAMonitor might have difficulty querying it at the moment.";
             }
         } catch (e) {
             error =
                 e instanceof NetworkError || e instanceof ApiError
-                    ? 'Error fetching players.'
-                    : 'Unexpected error.';
+                    ? "Error fetching players."
+                    : "Unexpected error.";
         }
     }
 
@@ -58,19 +58,15 @@
     <table class="playersTable compactTable">
         <thead>
             <tr>
-                <th class="players-id">Id</th>
                 <th>Name</th>
                 <th class="players-num">Score</th>
-                <th class="players-num">Ping</th>
             </tr>
         </thead>
         <tbody>
-            {#each players as player, i (player.id + '-' + i)}
+            {#each players as player, i (player.id + "-" + i)}
                 <tr>
-                    <td class="players-id">{player.id}</td>
                     <td class="player-name">{player.name}</td>
                     <td class="players-num">{player.score}</td>
-                    <td class="players-num">{player.ping}</td>
                 </tr>
             {/each}
         </tbody>

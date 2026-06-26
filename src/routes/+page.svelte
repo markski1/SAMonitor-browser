@@ -1,8 +1,7 @@
 <script lang="ts">
-    import FilterForm from '$lib/components/FilterForm.svelte';
-    import ServerList from '$lib/components/ServerList.svelte';
-    import StatsBanner from '$lib/components/StatsBanner.svelte';
-    import { filters } from '$lib/stores/filters';
+    import FilterForm from "$lib/components/FilterForm.svelte";
+    import ServerList from "$lib/components/ServerList.svelte";
+    import StatsBanner from "$lib/components/StatsBanner.svelte";
 </script>
 
 <svelte:head>
@@ -16,5 +15,5 @@
 <div class="page-shell">
     <FilterForm />
     <StatsBanner />
-    <ServerList filters={$filters} />
+    <ServerList />
 </div>

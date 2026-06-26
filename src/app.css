@@ -94,6 +94,15 @@ header a {
     text-decoration: none;
     margin-top: 0.5rem;
     color: var(--text-muted);
+    transition:
+        color 150ms ease,
+        opacity 150ms ease,
+        transform 150ms ease;
+}
+
+header a:hover {
+    color: var(--text);
+    transform: translateX(-2px);
 }
 
 select {
@@ -383,7 +392,40 @@ hr {
 
 .server {
     margin: 0 auto 0.55rem;
+    padding: 0;
+}
+
+.server-header {
+    cursor: pointer;
+    border-radius: 16px;
     padding: 0.65rem 0.8rem;
+    transition:
+        background-color 140ms ease,
+        border-color 140ms ease,
+        transform 140ms ease;
+}
+
+.server:not(.expanded) .server-header:hover {
+    background: var(--surface-soft);
+    transform: translateY(-1px);
+}
+
+.server:not(.expanded) .server-header:active {
+    transform: translateY(0);
+}
+
+.server:not(.expanded) .server-header:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(168, 199, 250, 0.12);
+}
+
+.server.expanded .server-header {
+    cursor: default;
+    opacity: 0.85;
+}
+
+.server-detail-block {
+    padding: 0 0.8rem 0.65rem;
 }
 
 @media (min-width: 900px) {
@@ -400,26 +442,52 @@ hr {
     }
 }
 
-.server_clickable {
+.server-header {
     cursor: pointer;
+    border-radius: 16px;
     transition:
         background-color 140ms ease,
         border-color 140ms ease,
         transform 140ms ease;
 }
 
-.server_clickable:hover {
+.server:not(.expanded) .server-header:hover {
     background: var(--surface-soft);
-    border-color: var(--border-strong);
     transform: translateY(-1px);
 }
 
-.server_clickable:active {
+.server:not(.expanded) .server-header:active {
     transform: translateY(0);
 }
 
-.server_clickable:focus {
-    border-color: rgba(168, 199, 250, 0.4);
+.server:not(.expanded) .server-header:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(168, 199, 250, 0.12);
+}
+
+.server.wrap {
+    padding: 0;
+}
+
+.server-header {
+    padding: 0.65rem 0.8rem;
+}
+
+.server.expanded .server-header {
+    cursor: default;
+    opacity: 0.85;
+}
+
+.server.expanded {
+    padding: 0;
+}
+
+.server.expanded .server-header {
+    padding: 0.65rem 0.8rem;
+}
+
+.server-detail-block {
+    padding: 0 0.8rem 0.65rem;
 }
 
 .filterBox {
@@ -561,6 +629,11 @@ hr {
     color: var(--text-muted);
     white-space: nowrap;
     font-size: 0.9rem;
+}
+
+.server-detail-block {
+    overflow: hidden;
+    padding-top: 0.65rem;
 }
 
 .server-actions {

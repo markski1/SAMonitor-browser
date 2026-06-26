@@ -1,16 +1,24 @@
 <script lang="ts">
-    import { page } from '$app/state';
-    import { ApiError, NetworkError, getServerByIp, getServerMetrics } from '$lib/api';
-    import type { Server } from '$lib/types/server';
-    import type { ServerMetricInstant, ServerMetrics } from '$lib/types/metrics';
-    import { formatLastUpdated, parseDatetime } from '$lib/format/datetime';
-    import { normalizeWebsiteUrl } from '$lib/format/website';
-    import CopyIpButton from '$lib/components/CopyIpButton.svelte';
-    import ConnectButton from '$lib/components/ConnectButton.svelte';
-    import GraphPanel from '$lib/components/GraphPanel.svelte';
-    import PlayerList from '$lib/components/PlayerList.svelte';
+    import { page } from "$app/state";
+    import {
+        ApiError,
+        NetworkError,
+        getServerByIp,
+        getServerMetrics,
+    } from "$lib/api";
+    import type { Server } from "$lib/types/server";
+    import type {
+        ServerMetricInstant,
+        ServerMetrics,
+    } from "$lib/types/metrics";
+    import { formatLastUpdated, parseDatetime } from "$lib/format/datetime";
+    import { normalizeWebsiteUrl } from "$lib/format/website";
+    import CopyIpButton from "$lib/components/CopyIpButton.svelte";
+    import ConnectButton from "$lib/components/ConnectButton.svelte";
+    import GraphPanel from "$lib/components/GraphPanel.svelte";
+    import PlayerList from "$lib/components/PlayerList.svelte";
 
-    const ip = $derived(page.params.ip ?? '');
+    const ip = $derived(page.params.ip ?? "");
 
     let server = $state<Server | null>(null);
     let metrics = $state<ServerMetrics | null>(null);
@@ -31,7 +39,7 @@
             try {
                 const [s, m] = await Promise.all([
                     getServerByIp(ip),
-                    getServerMetrics(ip, 168, true).then(computeMetrics)
+                    getServerMetrics(ip, 168, true).then(computeMetrics),
                 ]);
                 if (cancelled) return;
                 server = s;
@@ -40,8 +48,8 @@
                 if (cancelled) return;
                 loadError =
                     e instanceof NetworkError || e instanceof ApiError
-                        ? 'Sorry, there was an error loading this server\'s information. It may not be in SAMonitor.'
-                        : 'Unexpected error.';
+                        ? "Sorry, there was an error loading this server's information. It may not be in SAMonitor."
+                        : "Unexpected error.";
             }
         })();
 
@@ -59,7 +67,9 @@
             else totalPlayers += instant.players;
         }
         const uptimePct =
-            totalReqs > 0 && missed > 0 ? 100 - (missed / totalReqs) * 100 : 100;
+            totalReqs > 0 && missed > 0
+                ? 100 - (missed / totalReqs) * 100
+                : 100;
         const success = totalReqs - missed;
         const avgPlayers = success > 0 ? totalPlayers / success : 0;
         return {
@@ -68,23 +78,27 @@
             missedReqs: missed,
             totalPlayers,
             uptimePct,
-            avgPlayers
+            avgPlayers,
         };
     }
 
     const lastUpdatedLabel = $derived(
-        server ? formatLastUpdated(parseDatetime(server.lastUpdated)) : ''
+        server ? formatLastUpdated(parseDatetime(server.lastUpdated)) : "",
     );
-    const lagcomp = $derived(server && server.lagComp === 1 ? 'Enabled' : 'Disabled');
-    const software = $derived(server && server.isOpenMp === 1 ? 'open.mp' : 'SA-MP');
-    const website = $derived(server ? normalizeWebsiteUrl(server.website) : '');
+    const lagcomp = $derived(
+        server && server.lagComp === 1 ? "Enabled" : "Disabled",
+    );
+    const software = $derived(
+        server && server.isOpenMp === 1 ? "open.mp" : "SA-MP",
+    );
+    const website = $derived(server ? normalizeWebsiteUrl(server.website) : "");
 </script>
 
 <svelte:head>
-    <title>SAMonitor - {server?.name ?? 'Server'}</title>
+    <title>SAMonitor - {server?.name ?? "Server"}</title>
     <meta
         name="description"
-        content={`Information about the server ${server?.name ?? ''} in SAMonitor.`}
+        content={`Information about the server ${server?.name ?? ""} in SAMonitor.`}
     />
 </svelte:head>
 
@@ -101,7 +115,8 @@
                     <tbody>
                         <tr>
                             <td><b>Players</b></td>
-                            <td>{server.playersOnline} / {server.maxPlayers}</td>
+                            <td>{server.playersOnline} / {server.maxPlayers}</td
+                            >
                         </tr>
                         <tr>
                             <td><b>Gamemode</b></td>
@@ -121,7 +136,13 @@
                         </tr>
                         <tr>
                             <td><b>Website</b></td>
-                            <td><a href={website} target="_blank" rel="noopener noreferrer">{website}</a></td>
+                            <td
+                                ><a
+                                    href={website}
+                                    target="_blank"
+                                    rel="noopener noreferrer">{website}</a
+                                ></td
+                            >
                         </tr>
                         <tr>
                             <td><b>Server software</b></td>
@@ -138,8 +159,9 @@
                     </tbody>
                 </table>
                 <p class="server-summary">
-                    Uptime during the last week: {metrics.uptimePct.toFixed(2)}%<br />
-                    Average players during last week: {metrics.avgPlayers.toFixed(2)}<br />
+                    Uptime during the last week: {metrics.uptimePct.toFixed(
+                        2,
+                    )}%<br />
                     <small>Based on measurements every 20 minutes.</small>
                 </p>
                 <div class="server-page-actions">
