@@ -4,8 +4,6 @@ This is the website of SAMonitor, located at https://sam.markski.ar/
 
 Written in SvelteKit and built to a fully static site.
 
-The previous Flask + HTMX implementation lives in [`legacy/`](./legacy/) for reference.
-
 ## Development
 
 ```sh
