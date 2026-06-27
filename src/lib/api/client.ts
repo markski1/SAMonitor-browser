@@ -1,6 +1,6 @@
 import { browser } from '$app/environment';
 
-const DEFAULT_BASE = 'https://sam.markski.ar/api';
+const DEFAULT_BASE = '/api';
 
 export class ApiError extends Error {
     constructor(
@@ -21,8 +21,6 @@ export class NetworkError extends Error {
 }
 
 function resolveBase(): string {
-    // In the browser, prefer the build-time env var. SSR/prerender will also
-    // resolve this once, but the static adapter will set it on the client.
     const fromEnv = import.meta.env.VITE_API_BASE;
     return (fromEnv && fromEnv.length > 0 ? fromEnv : DEFAULT_BASE).replace(/\/$/, '');
 }
@@ -36,15 +34,24 @@ export interface RequestOptions {
 function buildUrl(path: string, params: RequestOptions['params']): string {
     const base = resolveBase();
     const cleanPath = path.startsWith('/') ? path : `/${path}`;
-    const url = new URL(`${base}${cleanPath}`);
 
+    if (base.startsWith('/')) {
+        const qs = params
+            ? Object.entries(params)
+                  .filter(([, v]) => v !== null && v !== undefined)
+                  .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(String(v))}`)
+                  .join('&')
+            : '';
+        return `${base}${cleanPath}${qs ? `?${qs}` : ''}`;
+    }
+
+    const url = new URL(`${base}${cleanPath}`);
     if (params) {
         for (const [key, value] of Object.entries(params)) {
             if (value === null || value === undefined) continue;
             url.searchParams.set(key, String(value));
         }
     }
-
     return url.toString();
 }
 
@@ -55,11 +62,9 @@ export async function request<T>(path: string, options: RequestOptions = {}): Pr
     try {
         res = await fetch(url, { signal: options.signal });
     } catch (e) {
-        if (!browser) {
-            // During prerender we never expect to call the API; surface a
-            // clearer message than "fetch failed".
-            throw new NetworkError(e);
-        }
+        // During prerender we never expect to call the API; surface a
+        // clearer message than "fetch failed".
+        if (!browser) throw new NetworkError(e);
         throw new NetworkError(e);
     }
 
