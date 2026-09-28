@@ -29,6 +29,7 @@ export interface RequestOptions {
     /** Query string parameters. Values are encoded. */
     params?: Record<string, string | number | boolean | null | undefined>;
     signal?: AbortSignal;
+    responseType?: 'json' | 'text';
 }
 
 function buildUrl(path: string, params: RequestOptions['params']): string {
@@ -88,5 +89,5 @@ export async function request<T>(path: string, options: RequestOptions = {}): Pr
         throw new ApiError(res.status, body);
     }
 
-    return (await res.json()) as T;
+    return (options.responseType === 'text' ? await res.text() : await res.json()) as T;
 }
