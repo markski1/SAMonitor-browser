@@ -2,14 +2,6 @@
     import AddServerForm from '$lib/components/AddServerForm.svelte';
 </script>
 
-<svelte:head>
-    <title>SAMonitor - Add server</title>
-    <meta
-        name="description"
-        content="Here you can add your SA-MP or OMP server to SAMonitor."
-    />
-</svelte:head>
-
 <div>
     <h2>Add server</h2>
     <p>SAMonitor is an open server list, and as such, anyone can add a server.</p>

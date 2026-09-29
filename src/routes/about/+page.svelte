@@ -1,7 +1,3 @@
-<svelte:head>
-    <title>SAMonitor - About</title>
-</svelte:head>
-
 <div>
     <h2>About</h2>
     <p>SAMonitor is a SA-MP and open.mp server monitor.</p>

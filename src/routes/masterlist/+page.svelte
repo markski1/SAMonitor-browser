@@ -1,11 +1,3 @@
-<svelte:head>
-    <title>SAMonitor - Masterlist</title>
-    <meta
-        name="description"
-        content="Use SAMonitor as your SA-MP client's masterlist."
-    />
-</svelte:head>
-
 <div>
     <h2>Masterlist mod</h2>
     <p>Integrate SAMonitor's listings right in your SA-MP client.</p>

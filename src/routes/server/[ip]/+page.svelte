@@ -84,14 +84,6 @@
     const website = $derived(server ? normalizeWebsiteUrl(server.website) : "");
 </script>
 
-<svelte:head>
-    <title>SAMonitor - {server?.name ?? "Server"}</title>
-    <meta
-        name="description"
-        content={`Information about the server ${server?.name ?? ""} in SAMonitor.`}
-    />
-</svelte:head>
-
 <div class="page-shell">
     <h2>Server information</h2>
     {#if loadError}

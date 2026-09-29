@@ -1,11 +1,3 @@
-<svelte:head>
-    <title>SAMonitor - Blacklist</title>
-    <meta
-        name="description"
-        content="Information regarding servers blacklisted from SAMonitor."
-    />
-</svelte:head>
-
 <div>
     <h2>Blacklist</h2>
     <p>Harmful activity will result in servers being blacklisted.</p>

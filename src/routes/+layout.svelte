@@ -3,10 +3,19 @@
     import { page } from "$app/state";
     import "../app.css";
     import Header from "$lib/components/Header.svelte";
+    import { onMount } from "svelte";
+    import { getPageMetadata } from "$lib/metadata.js";
+    import PageMetadata from "$lib/components/PageMetadata.svelte";
 
     let { children } = $props();
+    const metadata = $derived(getPageMetadata(page.url.pathname, import.meta.env.VITE_SITE_URL));
+
+    onMount(() => {
+        document.querySelectorAll('[data-samonitor-preview]').forEach(tag => tag.remove());
+    });
 </script>
 
+<PageMetadata {metadata} />
 <Header />
 <main id="main" class="opacity-trans">
     {#key page.url.pathname}

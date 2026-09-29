@@ -74,14 +74,6 @@
     }
 </script>
 
-<svelte:head>
-    <title>SAMonitor - Statistics</title>
-    <meta
-        name="description"
-        content="Statistics about SA-MP and open.mp servers"
-    />
-</svelte:head>
-
 <div>
     <h2>Statistics</h2>
     <p>
