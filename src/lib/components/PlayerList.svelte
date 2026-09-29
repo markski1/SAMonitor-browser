@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { onMount, untrack } from "svelte";
+    import { untrack } from "svelte";
     import { ApiError, NetworkError, getServerPlayers } from "$lib/api";
     import type { Player } from "$lib/types/server";
 
@@ -13,7 +13,7 @@
     let players = $state<Player[] | null>(null);
     let error = $state<string | null>(null);
 
-    async function load() {
+    async function load(ip: string, count: number, signal: AbortSignal) {
         error = null;
         players = null;
 
@@ -28,12 +28,15 @@
         }
 
         try {
-            players = await getServerPlayers(ip);
+            const result = await getServerPlayers(ip, signal);
+            if (signal.aborted) return;
+            players = result;
             if (players.length === 0) {
                 error =
                     "Could not fetch players. Server might be empty, or SAMonitor might have difficulty querying it at the moment.";
             }
         } catch (e) {
+            if (signal.aborted) return;
             error =
                 e instanceof NetworkError || e instanceof ApiError
                     ? "Error fetching players."
@@ -41,14 +44,12 @@
         }
     }
 
-    onMount(() => {
-        load();
-    });
-
     $effect(() => {
-        ip;
-        count;
-        untrack(() => load());
+        const currentIp = ip;
+        const currentCount = count;
+        const controller = new AbortController();
+        untrack(() => load(currentIp, currentCount, controller.signal));
+        return () => controller.abort();
     });
 </script>
 

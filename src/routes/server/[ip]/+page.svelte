@@ -8,10 +8,8 @@
     } from "$lib/api";
     import { takeServerPagePrefetch } from "$lib/stores/serverPageCache.svelte";
     import type { Server } from "$lib/types/server";
-    import type {
-        ServerMetricInstant,
-        ServerMetrics,
-    } from "$lib/types/metrics";
+    import type { ServerMetrics } from "$lib/types/metrics";
+    import { computeMetrics } from "$lib/format/metrics";
     import { formatLastUpdated, parseDatetime } from "$lib/format/datetime";
     import { normalizeWebsiteUrl } from "$lib/format/website";
     import CopyIpButton from "$lib/components/CopyIpButton.svelte";
@@ -74,38 +72,14 @@
         };
     });
 
-    function computeMetrics(logged: ServerMetricInstant[]): ServerMetrics {
-        const totalReqs = logged.length;
-        let missed = 0;
-        let totalPlayers = 0;
-        for (const instant of logged) {
-            if (instant.players < 0) missed += 1;
-            else totalPlayers += instant.players;
-        }
-        const uptimePct =
-            totalReqs > 0 && missed > 0
-                ? 100 - (missed / totalReqs) * 100
-                : 100;
-        const success = totalReqs - missed;
-        const avgPlayers = success > 0 ? totalPlayers / success : 0;
-        return {
-            loggedData: logged,
-            totalReqs,
-            missedReqs: missed,
-            totalPlayers,
-            uptimePct,
-            avgPlayers,
-        };
-    }
-
     const lastUpdatedLabel = $derived(
         server ? formatLastUpdated(parseDatetime(server.lastUpdated)) : "",
     );
     const lagcomp = $derived(
-        server && server.lagComp === 1 ? "Enabled" : "Disabled",
+        server?.lagComp ? "Enabled" : "Disabled",
     );
     const software = $derived(
-        server && server.isOpenMp === 1 ? "open.mp" : "SA-MP",
+        server?.isOpenMp ? "open.mp" : "SA-MP",
     );
     const website = $derived(server ? normalizeWebsiteUrl(server.website) : "");
 </script>
@@ -175,10 +149,9 @@
                     </tbody>
                 </table>
                 <p class="server-summary">
-                    Uptime during the last week: {metrics.uptimePct.toFixed(
-                        2,
-                    )}%<br />
-                    <small>Based on measurements every 20 minutes.</small>
+                    Estimated uptime in recorded weekly history:
+                    {metrics.uptimePct === null ? "Unknown" : `${metrics.uptimePct.toFixed(2)}%`}<br />
+                    <small>Weighted by time between checks.</small>
                 </p>
                 <div class="server-page-actions">
                     <p class="ipAddr" id="ipAddr">{ip}</p>

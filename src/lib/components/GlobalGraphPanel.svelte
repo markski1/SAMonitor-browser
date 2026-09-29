@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { onMount, untrack } from 'svelte';
+    import { untrack } from 'svelte';
     import { ApiError, NetworkError, getGlobalMetrics } from '$lib/api';
-    import { formatMetricTime, type MetricTimeRange } from '$lib/format/datetime';
+    import { formatMetricTime, parseDatetime, type MetricTimeRange } from '$lib/format/datetime';
     import Chart from './Chart.svelte';
 
     type DataType = 'players' | 'servers' | 'ompServers';
@@ -49,11 +49,16 @@
         }
     }
 
-    async function load() {
+    async function load(hours: number, dataType: DataType, signal: AbortSignal) {
         error = null;
         graph = null;
         try {
-            const metrics = await getGlobalMetrics(hours);
+            const metrics = await getGlobalMetrics(hours, signal);
+            if (signal.aborted) return;
+            if (metrics.length === 0) {
+                error = 'Not enough data for the activity graph, please check later.';
+                return;
+            }
             const ordered = [...metrics].reverse();
 
             const field = fieldFor(dataType);
@@ -68,7 +73,7 @@
             const data: number[] = [];
 
             for (const instant of ordered) {
-                const date = new Date(instant.time);
+                const date = parseDatetime(instant.time);
                 const human = formatMetricTime(date, range);
                 const value = instant[field];
 
@@ -101,6 +106,7 @@
                 min
             };
         } catch (e) {
+            if (signal.aborted) return;
             error =
                 e instanceof NetworkError || e instanceof ApiError
                     ? 'Sorry, there was an error generating the graph.'
@@ -108,14 +114,12 @@
         }
     }
 
-    onMount(() => {
-        load();
-    });
-
     $effect(() => {
-        hours;
-        dataType;
-        untrack(() => load());
+        const currentHours = hours;
+        const currentType = dataType;
+        const controller = new AbortController();
+        untrack(() => load(currentHours, currentType, controller.signal));
+        return () => controller.abort();
     });
 </script>
 

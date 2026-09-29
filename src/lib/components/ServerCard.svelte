@@ -18,8 +18,8 @@
     const lastUpdated = $derived(parseDatetime(server.lastUpdated));
     const lastUpdatedLabel = $derived(formatLastUpdated(lastUpdated));
 
-    const lagcomp = $derived(server.lagComp === 1 ? "Enabled" : "Disabled");
-    const software = $derived(server.isOpenMp === 1 ? "open.mp" : "SA-MP");
+    const lagcomp = $derived(server.lagComp ? "Enabled" : "Disabled");
+    const software = $derived(server.isOpenMp ? "open.mp" : "SA-MP");
     const website = $derived(normalizeWebsiteUrl(server.website));
 
     /** The address to display and use for the connect link. Falls back to the

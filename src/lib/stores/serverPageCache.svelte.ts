@@ -1,32 +1,11 @@
 import type { Server } from "$lib/types/server";
-import type { ServerMetrics, ServerMetricInstant } from "$lib/types/metrics";
+import type { ServerMetrics } from "$lib/types/metrics";
+import { computeMetrics } from "$lib/format/metrics";
 import { getServerByIp, getServerMetrics } from "$lib/api";
 
 export interface CachedServerPage {
   server: Server;
   metrics: ServerMetrics;
-}
-
-function computeMetrics(logged: ServerMetricInstant[]): ServerMetrics {
-  const totalReqs = logged.length;
-  let missed = 0;
-  let totalPlayers = 0;
-  for (const instant of logged) {
-    if (instant.players < 0) missed += 1;
-    else totalPlayers += instant.players;
-  }
-  const uptimePct =
-    totalReqs > 0 && missed > 0 ? 100 - (missed / totalReqs) * 100 : 100;
-  const success = totalReqs - missed;
-  const avgPlayers = success > 0 ? totalPlayers / success : 0;
-  return {
-    loggedData: logged,
-    totalReqs,
-    missedReqs: missed,
-    totalPlayers,
-    uptimePct,
-    avgPlayers,
-  };
 }
 
 const CACHE_TTL_MS = 60 * 1000;

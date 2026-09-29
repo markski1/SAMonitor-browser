@@ -11,8 +11,8 @@ export interface Server {
     version: string;
     sampCac: string;
     website: string;
-    lagComp: number;
-    isOpenMp: number;
+    lagComp: boolean;
+    isOpenMp: boolean;
     lastUpdated: string;
 }
 
@@ -37,8 +37,8 @@ export function isServer(value: unknown): value is Server {
         typeof v.version === 'string' &&
         typeof v.sampCac === 'string' &&
         typeof v.website === 'string' &&
-        typeof v.lagComp === 'number' &&
-        typeof v.isOpenMp === 'number' &&
+        typeof v.lagComp === 'boolean' &&
+        typeof v.isOpenMp === 'boolean' &&
         typeof v.lastUpdated === 'string'
     );
 }

@@ -1,8 +1,9 @@
 <script lang="ts">
-    import { onMount, untrack } from "svelte";
+    import { untrack } from "svelte";
     import { ApiError, NetworkError, getServerMetrics } from "$lib/api";
     import {
         formatMetricTime,
+        parseDatetime,
         type MetricTimeRange,
     } from "$lib/format/datetime";
     import Chart from "./Chart.svelte";
@@ -34,11 +35,12 @@
         return "short";
     }
 
-    async function load() {
+    async function load(ip: string, hours: number, signal: AbortSignal) {
         error = null;
         graph = null;
         try {
-            const metrics = await getServerMetrics(ip, hours, true);
+            const metrics = await getServerMetrics(ip, hours, true, signal);
+            if (signal.aborted) return;
             if (metrics.length < 3) {
                 error =
                     "Not enough data for the activity graph, please check later.";
@@ -61,7 +63,7 @@
             const data: (number | null)[] = [];
 
             for (const instant of ordered) {
-                const date = new Date(instant.time);
+                const date = parseDatetime(instant.time);
                 const human = formatMetricTime(date, range);
 
                 if (instant.players > highest) {
@@ -82,6 +84,10 @@
             }
 
             const average = counted > 0 ? totalPlayers / counted : 0;
+            if (counted === 0) {
+                error = "No responsive samples are available for this graph.";
+                return;
+            }
             graph = {
                 labels,
                 data,
@@ -93,6 +99,7 @@
                 average,
             };
         } catch (e) {
+            if (signal.aborted) return;
             error =
                 e instanceof NetworkError || e instanceof ApiError
                     ? "Error obtaining server metrics to build graph."
@@ -100,14 +107,12 @@
         }
     }
 
-    onMount(() => {
-        load();
-    });
-
     $effect(() => {
-        ip;
-        hours;
-        untrack(() => load());
+        const currentIp = ip;
+        const currentHours = hours;
+        const controller = new AbortController();
+        untrack(() => load(currentIp, currentHours, controller.signal));
+        return () => controller.abort();
     });
 </script>
 

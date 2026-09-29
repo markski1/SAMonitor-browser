@@ -26,6 +26,7 @@ export const serverListState = $state<ServerListState>({
 
 /** Non-reactive: the in-flight request, so we can cancel it on reset/refresh. */
 let currentRequest: AbortController | null = null;
+let serverSnapshot: Server[] = [];
 
 function filtersKey(f: ServerFilters): string {
     return JSON.stringify(f);
@@ -36,7 +37,12 @@ export async function loadPage(
     replace: boolean,
     f: ServerFilters
 ): Promise<void> {
-    if (serverListState.loading) return;
+    const key = filtersKey(f);
+    if (!replace) {
+        if (serverListState.loading || key !== serverListState.lastLoadedKey) return;
+        showPage(pageToLoad);
+        return;
+    }
 
     currentRequest?.abort();
     const controller = new AbortController();
@@ -44,6 +50,12 @@ export async function loadPage(
 
     serverListState.loading = true;
     serverListState.error = null;
+    serverListState.servers = [];
+    serverListState.expandedId = null;
+    serverListState.lastLoadedKey = '';
+    serverListState.page = 0;
+    serverListState.hasMore = true;
+    serverSnapshot = [];
 
     try {
         const servers = await getFilteredServers(
@@ -54,26 +66,23 @@ export async function loadPage(
                 showEmpty: f.showEmpty,
                 hideRoleplay: f.hideRoleplay,
                 requireSampcac: f.requireSampcac,
-                order: f.order,
-                page: pageToLoad,
-                pagingSize: PAGE_SIZE
+                order: f.order
             },
             controller.signal
         );
 
-        if (controller.signal.aborted) return;
+        if (controller.signal.aborted || currentRequest !== controller) return;
 
-        if (replace) {
-            serverListState.servers = servers;
-            serverListState.expandedId = null;
-        } else {
-            serverListState.servers = [...serverListState.servers, ...servers];
-        }
-        serverListState.page = pageToLoad;
-        serverListState.hasMore = servers.length === PAGE_SIZE;
-        serverListState.loading = false;
+        const seen = new Set<number>();
+        serverSnapshot = servers.filter(server => {
+            if (seen.has(server.id)) return false;
+            seen.add(server.id);
+            return true;
+        });
+        serverListState.lastLoadedKey = key;
+        showPage(pageToLoad);
     } catch (e) {
-        if (controller.signal.aborted) return;
+        if (controller.signal.aborted || currentRequest !== controller) return;
 
         const message =
             e instanceof NetworkError
@@ -82,9 +91,19 @@ export async function loadPage(
                   ? 'There was an error fetching servers from the SAMonitor API. This might be a server issue, please try again in a few minutes. (https://status.markski.ar/)'
                   : 'Unexpected error.';
 
-        serverListState.loading = false;
         serverListState.error = message;
+    } finally {
+        if (currentRequest === controller) {
+            serverListState.loading = false;
+            currentRequest = null;
+        }
     }
+}
+
+function showPage(page: number): void {
+    serverListState.servers = serverSnapshot.slice(0, (page + 1) * PAGE_SIZE);
+    serverListState.page = page;
+    serverListState.hasMore = serverListState.servers.length < serverSnapshot.length;
 }
 
 /**
@@ -95,6 +114,7 @@ export async function loadPage(
 export function resetServerListState(): void {
     currentRequest?.abort();
     currentRequest = null;
+    serverSnapshot = [];
 
     serverListState.servers = [];
     serverListState.page = 0;

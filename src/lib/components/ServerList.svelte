@@ -1,5 +1,6 @@
 <script lang="ts">
     import { fade } from "svelte/transition";
+    import { untrack } from "svelte";
     import { filters } from "$lib/stores/filters";
     import {
         serverListState,
@@ -23,9 +24,9 @@
     $effect(() => {
         const f = $filters;
         const key = filtersKey(f);
-        if (key === serverListState.lastLoadedKey) return;
-        serverListState.lastLoadedKey = key;
-        loadPage(0, true, f);
+        untrack(() => {
+            if (key !== serverListState.lastLoadedKey) loadPage(0, true, f);
+        });
     });
 </script>
 

@@ -12,6 +12,6 @@ export interface ServerMetrics {
     totalReqs: number;
     missedReqs: number;
     totalPlayers: number;
-    uptimePct: number;
+    uptimePct: number | null;
     avgPlayers: number;
 }
