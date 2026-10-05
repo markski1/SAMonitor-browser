@@ -41,8 +41,8 @@
     const links: NavLink[] = [
         { href: "/", label: "servers", onClick: handleServersClick },
         { href: "/about", label: "about" },
-        { href: "/masterlist", label: "masterlist" },
         { href: "/statistics", label: "statistics" },
+        { href: "/api", label: "API" },
         { href: "/add", label: "add server" },
     ];
 </script>

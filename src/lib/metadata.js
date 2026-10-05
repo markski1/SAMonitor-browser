@@ -3,6 +3,7 @@ export const DEFAULT_SITE_URL = 'https://sam.markski.ar';
 const pages = {
     '/': ['Home', 'Browse SA-MP and open.mp servers, player activity, and server statistics.'],
     '/statistics': ['Statistics', 'Player counts, server counts, and activity trends across SA-MP and open.mp.'],
+    '/api': ['API', 'Explore the SAMonitor API, endpoint specifications, and an interactive request playground.'],
     '/add': ['Add server', 'Add your SA-MP or open.mp server to SAMonitor.'],
     '/masterlist': ['Masterlist', "Use SAMonitor as your SA-MP client's masterlist."],
     '/blacklist': ['Blacklist', 'Information about servers blacklisted from SAMonitor.'],

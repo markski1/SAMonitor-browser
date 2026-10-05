@@ -2,7 +2,7 @@ import { expect, it } from 'vitest';
 import { getMetaTags, getPageMetadata, renderPreviewMetadata } from './metadata.js';
 
 it('provides complete previews for every public page', () => {
-    for (const path of ['/', '/statistics', '/add', '/masterlist', '/blacklist', '/about', '/server/1.2.3.4:7777']) {
+    for (const path of ['/', '/statistics', '/add', '/masterlist', '/blacklist', '/about', '/api', '/server/1.2.3.4:7777']) {
         const metadata = getPageMetadata(path);
         const tags = getMetaTags(metadata);
         expect(metadata.title).toMatch(/^SAMonitor - /);

@@ -1,6 +1,5 @@
 import { browser } from '$app/environment';
-
-const DEFAULT_BASE = '/api';
+import { buildApiUrl, type ApiParams } from './urls';
 
 export class ApiError extends Error {
     constructor(
@@ -20,44 +19,15 @@ export class NetworkError extends Error {
     }
 }
 
-function resolveBase(): string {
-    const fromEnv = import.meta.env.VITE_API_BASE;
-    return (fromEnv && fromEnv.length > 0 ? fromEnv : DEFAULT_BASE).replace(/\/$/, '');
-}
-
 export interface RequestOptions {
     /** Query string parameters. Values are encoded. */
-    params?: Record<string, string | number | boolean | null | undefined>;
+    params?: ApiParams;
     signal?: AbortSignal;
     responseType?: 'json' | 'text';
 }
 
-function buildUrl(path: string, params: RequestOptions['params']): string {
-    const base = resolveBase();
-    const cleanPath = path.startsWith('/') ? path : `/${path}`;
-
-    if (base.startsWith('/')) {
-        const qs = params
-            ? Object.entries(params)
-                  .filter(([, v]) => v !== null && v !== undefined)
-                  .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(String(v))}`)
-                  .join('&')
-            : '';
-        return `${base}${cleanPath}${qs ? `?${qs}` : ''}`;
-    }
-
-    const url = new URL(`${base}${cleanPath}`);
-    if (params) {
-        for (const [key, value] of Object.entries(params)) {
-            if (value === null || value === undefined) continue;
-            url.searchParams.set(key, String(value));
-        }
-    }
-    return url.toString();
-}
-
 export async function request<T>(path: string, options: RequestOptions = {}): Promise<T> {
-    const url = buildUrl(path, options.params);
+    const url = buildApiUrl(path, options.params);
 
     let res: Response;
     try {
