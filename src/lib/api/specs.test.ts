@@ -30,3 +30,12 @@ it('quotes request URLs for a shell without executing their contents', () => {
     expect(curlCommand('https://example.com/api/Test?name=a&b=1')).toBe("curl 'https://example.com/api/Test?name=a&b=1'");
     expect(curlCommand("https://example.com/api/Test?name=O'Brien")).toBe("curl 'https://example.com/api/Test?name=O'\\''Brien'");
 });
+
+it('advertises POST for AddServer and generates a matching cURL request', () => {
+    const endpoint = apiEndpoints.find(endpoint => endpoint.name === 'AddServer')!;
+    expect(endpoint.method).toBe('POST');
+    expect(endpoint.parameterLocation).toBe('body');
+    const body = getEndpointParams(endpoint, { ipAddr: '203.0.113.10:7777' });
+    const url = buildApiUrl(endpoint.name);
+    expect(curlCommand(url, endpoint.method, body)).toBe(`curl -X POST -H 'Content-Type: application/json' -d '{"ipAddr":"203.0.113.10:7777"}' '${url}'`);
+});

@@ -98,11 +98,12 @@
                 </table>
                 <div class="server-button-row">
                     <a
+                        class="button-link"
                         href={`/server/${ipAddress}`}
                         onmouseenter={preload}
                         onfocus={preload}
                     >
-                        <button>All information</button>
+                        All information
                     </a>
                     <CopyIpButton
                         ip={ipAddress}

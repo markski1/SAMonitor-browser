@@ -23,14 +23,12 @@
     {#if error}
         <p>{error}</p>
     {:else if stats}
-        <p>
-            <b>{formatThousands(stats.serversOnline)}</b> servers online (<b
-                >{formatThousands(stats.serversTracked)}</b
-            > total)<br />
-            <b>{formatThousands(stats.serversInhabited)}</b> servers have players,
-            <b>{formatThousands(stats.serversOnlineOMP)}</b> have open.mp.<br />
-            <b>{formatThousands(stats.playersOnline)}</b> are playing right now!
-        </p>
+        <div class="stats-summary">
+            <div><span class="stat-value">{formatThousands(stats.playersOnline)}</span><span class="stat-label">Players online</span></div>
+            <div><span class="stat-value">{formatThousands(stats.serversOnline)}</span><span class="stat-label">Servers online</span></div>
+            <div><span class="stat-value">{formatThousands(stats.serversOnlineOMP)}</span><span class="stat-label">open.mp servers</span></div>
+        </div>
+        <p class="stats-caption">{formatThousands(stats.serversTracked)} tracked · {formatThousands(stats.serversInhabited)} with players</p>
     {:else}
         <p>Loading stats...</p>
     {/if}

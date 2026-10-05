@@ -6,4 +6,4 @@
     let { ip }: Props = $props();
 </script>
 
-<a href={`samp://${ip}`}><button>Connect</button></a>
+<a class="button-link primary-button" href={`samp://${ip}`}>Connect</a>

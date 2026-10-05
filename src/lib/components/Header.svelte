@@ -49,27 +49,32 @@
 
 <header>
     <div class="headerContents">
-        <div>
-            <h1>SAMonitor</h1>
-        </div>
-        <div>
-            {#each links as link, i (link.href)}
+        <h1>SAMonitor</h1>
+        <nav aria-label="Main navigation">
+            {#each links as link (link.href)}
                 <a
                     href={link.href}
                     class:active={isActive(link.href)}
+                    aria-current={isActive(link.href) ? 'page' : undefined}
                     onclick={link.onClick}>{link.label}</a
                 >
-                {#if i < links.length - 1}
-                    <span class="separator">/&nbsp;</span>
-                {/if}
             {/each}
-        </div>
+        </nav>
     </div>
 </header>
 
 <style>
-    .active {
-        color: var(--text);
-        font-weight: 600;
+    header { min-width: 0; padding-top: 1.5rem; }
+    h1 { margin: 0; font-size: 1.85rem; font-weight: 700; }
+    nav { display: flex; flex-wrap: wrap; gap: 0.25rem; margin-top: 1rem; }
+    nav a { display: block; padding: 0.6rem 0.85rem; border-radius: 10px; color: var(--text-muted); font-size: 0.95rem; text-decoration: none; }
+    nav a:hover { background: var(--surface-soft); color: var(--text); }
+    nav a.active { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+    @media (min-width: 900px) {
+        header { position: sticky; top: 3rem; align-self: start; margin-top: 3rem; padding-top: 0; }
+        nav { flex-direction: column; gap: 0.35rem; margin-top: 1.5rem; }
+    }
+    @media (max-width: 480px) {
+        nav a { padding: 0.55rem 0.65rem; font-size: 0.88rem; }
     }
 </style>

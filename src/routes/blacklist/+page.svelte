@@ -1,6 +1,6 @@
-<div>
+<div class="page-shell content-page">
     <h2>Blacklist</h2>
-    <p>Harmful activity will result in servers being blacklisted.</p>
+    <p class="page-intro">Harmful activity will result in servers being blacklisted.</p>
 
     <div class="innerContent">
         <h3>Defining harm</h3>

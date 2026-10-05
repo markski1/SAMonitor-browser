@@ -31,8 +31,8 @@
 </script>
 
 {#if serverListState.error}
-    <center>
-        <h1>Error fetching servers.</h1>
+    <div class="empty-state" role="alert">
+        <h3>Could not load servers</h3>
         <p>{serverListState.error}</p>
         <p>
             <a
@@ -41,9 +41,9 @@
                 rel="noopener noreferrer">Current status of my services</a
             >
         </p>
-    </center>
+    </div>
 {:else}
-    <ul style="list-style: none; padding: 0; margin: 0;">
+    <ul class="server-list">
         {#each serverListState.servers as server (server.id)}
             <li
                 in:fade={{
@@ -73,11 +73,3 @@
         </div>
     {/if}
 {/if}
-
-<style>
-    .list-actions {
-        margin: 1.5rem auto 0;
-        width: 95%;
-        text-align: center;
-    }
-</style>

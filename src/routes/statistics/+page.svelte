@@ -74,87 +74,77 @@
     }
 </script>
 
-<div>
+<div class="page-shell">
     <h2>Statistics</h2>
-    <p>
+    <p class="page-intro">
         SAMonitor accounts for the total amount of servers and players a few
         times every hour, of every day.
     </p>
     <div>
         <div class="innerContent">
-            <h3>
-                Global Activity -
-                <select bind:value={dataType} style="width: 6rem">
-                    <option value="players">players</option>
-                    <option value="servers">servers</option>
-                    <option value="ompServers">open.mp servers</option>
-                </select>
-                in the
-                <select bind:value={hours}>
-                    <option value={24}>last 24 hours</option>
-                    <option value={72}>last 72 hours</option>
-                    <option value={168}>last week</option>
-                    <option value={336}>last 2 weeks</option>
-                    <option value={672}>last month</option>
-                    <option value={2016}>last 3 months</option>
-                    <option value={4032}>last 6 months</option>
-                    <option value={8064}>last year</option>
-                    <option value={16128}>last 2 years</option>
-                </select>
-            </h3>
-            <div id="graph-cnt" style="max-width: 100% !important">
+            <h3>Global activity</h3>
+            <div class="control-group">
+                <label class="form-field">
+                    <span>Metric</span>
+                    <select bind:value={dataType}>
+                        <option value="players">Players</option>
+                        <option value="servers">Servers</option>
+                        <option value="ompServers">open.mp servers</option>
+                    </select>
+                </label>
+                <label class="form-field">
+                    <span>Time range</span>
+                    <select bind:value={hours}>
+                        <option value={24}>Last 24 hours</option>
+                        <option value={72}>Last 72 hours</option>
+                        <option value={168}>Last week</option>
+                        <option value={336}>Last 2 weeks</option>
+                        <option value={672}>Last month</option>
+                        <option value={2016}>Last 3 months</option>
+                        <option value={4032}>Last 6 months</option>
+                        <option value={8064}>Last year</option>
+                        <option value={16128}>Last 2 years</option>
+                    </select>
+                </label>
+            </div>
+            <div id="graph-cnt" class="activity-graph">
                 <GlobalGraphPanel {hours} {dataType} />
             </div>
-            <div style="margin-top: 1rem">
-                <input
-                    type="button"
-                    value={showTable
-                        ? "Hide weekly stats table."
-                        : "Show last week's stats in a table."}
-                    onclick={toggleTable}
-                />
+            <div class="section-actions">
+                <button type="button" onclick={toggleTable} aria-expanded={showTable} aria-controls="weekly-stats">
+                    {showTable ? 'Hide weekly table' : 'Show weekly table'}
+                </button>
             </div>
             {#if showTable}
-                {#if tableError}
-                    <p>{tableError}</p>
-                {:else if tableMetrics}
-                    <table
-                        class="compactTable statsTable"
-                        style="margin-top: 1rem;"
-                    >
-                        <thead>
-                            <tr>
-                                <th>Time</th>
-                                <th class="num-col">Players online</th>
-                                <th class="num-col">Servers online</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {#each tableMetrics as instant (instant.time)}
-                                <tr>
-                                    <td
-                                        >{formatMetricTime(
-                                            parseDatetime(instant.time),
-                                            rangeOf(168),
-                                        )}</td
-                                    >
-                                    <td class="num-col"
-                                        >{instant.players.toLocaleString(
-                                            "en-US",
-                                        )}</td
-                                    >
-                                    <td class="num-col"
-                                        >{instant.servers.toLocaleString(
-                                            "en-US",
-                                        )}</td
-                                    >
-                                </tr>
-                            {/each}
-                        </tbody>
-                    </table>
-                {:else}
-                    <p>Loading table...</p>
-                {/if}
+                <div id="weekly-stats">
+                    {#if tableError}
+                        <p>{tableError}</p>
+                    {:else if tableMetrics}
+                        <!-- svelte-ignore a11y_no_noninteractive_tabindex (Keyboard access to horizontal scrolling.) -->
+                        <div class="table-scroll" role="region" aria-label="Weekly statistics" tabindex="0">
+                            <table class="compactTable statsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Time</th>
+                                        <th class="num-col">Players online</th>
+                                        <th class="num-col">Servers online</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {#each tableMetrics as instant (instant.time)}
+                                        <tr>
+                                            <td>{formatMetricTime(parseDatetime(instant.time), rangeOf(168))}</td>
+                                            <td class="num-col">{instant.players.toLocaleString("en-US")}</td>
+                                            <td class="num-col">{instant.servers.toLocaleString("en-US")}</td>
+                                        </tr>
+                                    {/each}
+                                </tbody>
+                            </table>
+                        </div>
+                    {:else}
+                        <p>Loading table...</p>
+                    {/if}
+                </div>
             {/if}
             <p>
                 <small>Times are UTC 0.</small>
@@ -171,3 +161,9 @@
         {/if}
     </div>
 </div>
+
+<style>
+    .activity-graph { margin-top: 1.5rem; min-width: 0; }
+    #weekly-stats { margin-top: 1rem; }
+    #weekly-stats table { min-width: 24rem; }
+</style>

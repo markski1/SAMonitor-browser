@@ -37,7 +37,12 @@
                 {
                     label,
                     data: [...data],
-                    borderWidth: 1
+                    borderWidth: 2,
+                    borderColor: '#a8c7fa',
+                    backgroundColor: 'rgba(168, 199, 250, 0.06)',
+                    fill: true,
+                    pointRadius: 0,
+                    pointHitRadius: 12
                 }
             ]
         };
@@ -46,8 +51,21 @@
         chartInstance = new Chart(canvas, {
             type: 'line',
             options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
                 scales: {
-                    y: { min }
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#a7afb8', maxRotation: 0, autoSkipPadding: 20 },
+                        border: { color: 'rgba(255, 255, 255, 0.08)' }
+                    },
+                    y: {
+                        min,
+                        ticks: { color: '#a7afb8' },
+                        grid: { color: 'rgba(255, 255, 255, 0.06)' },
+                        border: { display: false }
+                    }
                 }
             },
             data: plainData
@@ -73,4 +91,10 @@
     });
 </script>
 
-<canvas id={chartId} bind:this={canvas} style="width: 60rem; max-width: 100%"></canvas>
+<div class="chart-frame">
+    <canvas id={chartId} bind:this={canvas} aria-label={label}></canvas>
+</div>
+
+<style>
+    .chart-frame { position: relative; width: 100%; min-width: 0; height: clamp(14rem, 28vw, 22rem); }
+</style>

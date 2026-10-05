@@ -2,9 +2,9 @@
     import AddServerForm from '$lib/components/AddServerForm.svelte';
 </script>
 
-<div>
+<div class="page-shell content-page add-page">
     <h2>Add server</h2>
-    <p>SAMonitor is an open server list, and as such, anyone can add a server.</p>
+    <p class="page-intro">Anyone can add a SA-MP or open.mp server.</p>
     <AddServerForm />
     <div class="innerContent">
         <h3>Announce filterscript</h3>

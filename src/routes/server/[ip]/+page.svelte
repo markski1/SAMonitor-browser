@@ -160,7 +160,7 @@
                         <option value={24}>Last 24 hours</option>
                         <option value={72}>Last 72 hours</option>
                         <option value={168}>Last week</option>
-                        <option value={672}>last month</option>
+                        <option value={672}>Last month</option>
                     </select>
                 </h3>
                 <div id="graph-cnt">

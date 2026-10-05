@@ -134,8 +134,8 @@
         min={graph.min}
     />
     <p>
-        The highest count was <span style="color: green">{graph.highest}</span> at
-        {graph.highestTime} and the lowest was <span style="color: red">{graph.lowest}</span> at
+        The highest count was <span class="metric-high">{graph.highest}</span> at
+        {graph.highestTime} and the lowest was <span class="metric-low">{graph.lowest}</span> at
         {graph.lowestTime}
     </p>
     <small>Empty spaces in the chart means the server did not respond.</small>

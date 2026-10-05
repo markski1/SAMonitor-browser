@@ -1,6 +1,6 @@
-<div>
+<div class="page-shell content-page">
     <h2>Masterlist mod</h2>
-    <p>Integrate SAMonitor's listings right in your SA-MP client.</p>
+    <p class="page-intro">Integrate SAMonitor's listings right in your SA-MP client.</p>
     <div class="innerContent">
         <h3>Information</h3>
         <p>
@@ -10,13 +10,13 @@
 
         <p>If desired, you can use any other masterlist provider.</p>
 
-        <figure style="margin: .5rem">
+        <figure>
             <img
-                style="width: 100%; max-width: 640px"
+                width="640"
                 src="/client-showcase.png"
                 alt="Screenshot of the SA-MP client with the mod."
             />
-            <figcaption style="font-size: 0.9rem">Look at all those servers!</figcaption>
+            <figcaption>Look at all those servers!</figcaption>
         </figure>
     </div>
 
@@ -51,7 +51,7 @@
         <p>
             The page above explains the installation, but if needed, here's it is:
         </p>
-        <ol type="1" style="line-height: 1.7rem">
+        <ol>
             <li>Go to the SA-MP Masterlist Fix download site, linked above.</li>
             <li>Scroll down, and download the "version.dll" file.</li>
             <li>Go to your Downloads folder, and copy the "version.dll" file.</li>
@@ -59,7 +59,7 @@
             <li>Open SA-MP, and check the Internet tab. It should be working.</li>
         </ol>
         <p>And if you really want to make sure, here's a quick video:</p>
-        <video style="width: 100%; max-width: 768px" controls>
+        <video width="768" controls>
             <source src="/tutorial.mp4" type="video/mp4" />
             Your browser does not support the video tag.
         </video>

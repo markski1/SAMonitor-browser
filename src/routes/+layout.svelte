@@ -28,15 +28,6 @@
 <style>
     .page-transition {
         width: 100%;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-
-    @media (min-width: 900px) {
-        .page-transition {
-            justify-content: flex-start;
-        }
+        min-width: 0;
     }
 </style>

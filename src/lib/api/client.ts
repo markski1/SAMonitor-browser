@@ -1,5 +1,11 @@
-import { browser } from '$app/environment';
 import { buildApiUrl, type ApiParams } from './urls';
+
+function errorMessage(body: unknown): string | undefined {
+    if (typeof body === 'string') return body || undefined;
+    if (typeof body !== 'object' || body === null) return;
+    if ('detail' in body && typeof body.detail === 'string' && body.detail) return body.detail;
+    if ('title' in body && typeof body.title === 'string') return body.title;
+}
 
 export class ApiError extends Error {
     constructor(
@@ -7,7 +13,7 @@ export class ApiError extends Error {
         public readonly body: unknown,
         message?: string
     ) {
-        super(message ?? `SAMonitor API error: ${status}`);
+        super(message ?? errorMessage(body) ?? `SAMonitor API error: ${status}`);
         this.name = 'ApiError';
     }
 }
@@ -23,6 +29,9 @@ export interface RequestOptions {
     /** Query string parameters. Values are encoded. */
     params?: ApiParams;
     signal?: AbortSignal;
+    method?: 'GET' | 'POST';
+    /** JSON request body. */
+    body?: unknown;
     responseType?: 'json' | 'text';
 }
 
@@ -31,30 +40,32 @@ export async function request<T>(path: string, options: RequestOptions = {}): Pr
 
     let res: Response;
     try {
-        res = await fetch(url, { signal: options.signal });
+        const init: RequestInit = { method: options.method ?? 'GET', signal: options.signal };
+        if (options.body !== undefined) {
+            init.headers = { 'Content-Type': 'application/json' };
+            init.body = JSON.stringify(options.body);
+        }
+        res = await fetch(url, init);
     } catch (e) {
-        // During prerender we never expect to call the API; surface a
-        // clearer message than "fetch failed".
-        if (!browser) throw new NetworkError(e);
         throw new NetworkError(e);
     }
 
     if (res.status === 204) {
-        // The API uses 204 to mean "no resource" for some endpoints
-        // (GetServerByIP, GetServerMetrics). Surface that explicitly.
+        // GetServerByIP returns 204 for an unknown address.
         throw new ApiError(204, null, 'Resource not found.');
     }
 
     if (!res.ok) {
         let body: unknown = null;
         try {
-            body = await res.json();
-        } catch {
+            const text = await res.text();
             try {
-                body = await res.text();
+                body = JSON.parse(text);
             } catch {
-                // ignore
+                body = text;
             }
+        } catch {
+            // The response body could not be read.
         }
         throw new ApiError(res.status, body);
     }

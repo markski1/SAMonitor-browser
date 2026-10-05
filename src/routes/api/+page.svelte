@@ -8,16 +8,19 @@
     let values = $state<Record<string, string>>({});
     let origin = $state(new URL(import.meta.env.VITE_SITE_URL || DEFAULT_SITE_URL).origin);
     let pending = $state(false);
-    let result = $state<{ url: string; status: string; ok: boolean; elapsed: number; contentType: string; body: string } | null>(null);
+    let result = $state<{ url: string; status: string; ok: boolean; elapsed: number; contentType: string; body: string; location: string | null; retryAfter: string | null } | null>(null);
     let error = $state('');
     let copyMessage = $state('');
     let controller: AbortController | null = null;
 
     const groups = [...new Set(apiEndpoints.map(endpoint => endpoint.group))];
-    const requestUrl = $derived(buildApiUrl(selected.name, getEndpointParams(selected, values)));
+    const parameters = $derived(getEndpointParams(selected, values));
+    const isBody = $derived(selected.parameterLocation === 'body');
+    const requestBody = $derived(isBody ? JSON.stringify(parameters, null, 2) : '');
+    const requestUrl = $derived(buildApiUrl(selected.name, isBody ? undefined : parameters));
     const absoluteUrl = $derived(new URL(requestUrl, origin).href);
     const baseUrl = $derived(new URL(`${apiBase}/`, origin).href);
-    const command = $derived(curlCommand(absoluteUrl));
+    const command = $derived(curlCommand(absoluteUrl, selected.method, isBody ? parameters : undefined));
 
     function resetParameters() {
         values = Object.fromEntries(selected.parameters.map(parameter => [parameter.name, '']));
@@ -76,20 +79,24 @@
         }, 30000);
 
         try {
-            const response = await fetch(url, { signal: activeController.signal, headers: { Accept: '*/*' } });
+            const response = await fetch(url, {
+                method: selected.method ?? 'GET', signal: activeController.signal,
+                headers: isBody ? { Accept: '*/*', 'Content-Type': 'application/json' } : { Accept: '*/*' },
+                body: requestBody || undefined
+            });
             const body = await response.text();
             if (controller !== activeController) return;
             result = {
                 url, status: `${response.status} ${response.statusText}`.trim(), ok: response.ok,
                 elapsed: Math.round(performance.now() - start),
                 contentType: response.headers.get('content-type') ?? 'Not provided',
-                body: formatResponse(body)
+                body: formatResponse(body), location: response.headers.get('location'), retryAfter: response.headers.get('retry-after')
             };
         } catch {
             if (controller !== activeController) return;
             error = activeController.signal.aborted
                 ? timedOut ? 'Request timed out after 30 seconds.' : 'Request canceled.'
-                : 'Could not reach the API. Check your connection and the API base URL. Cross-origin requests also require the API to allow this origin.';
+                : 'Could not reach the API. Check the connection and API URL.';
         } finally {
             clearTimeout(timeout);
             if (controller === activeController) {
@@ -102,13 +109,11 @@
 
 <div class="page-shell api-page">
     <h2>API</h2>
-    <p class="intro">Use SAMonitor’s server listings, player counts, and history in your own projects.</p>
+    <p class="page-intro">Server listings, statistics, and history.</p>
 
     <section class="innerContent overview" aria-label="API overview">
         <div class="base"><span>Base URL</span><code>{baseUrl}</code></div>
-        <p>No API key is required.
-            Responses are JSON unless marked as plain text. JSON field names are case-sensitive.</p>
-        <p>Invalid or missing required parameters can return <code>400</code> with a JSON problem response.</p>
+        <p>No API key required. JSON responses unless noted.</p>
     </section>
 
     <div class="api-layout">
@@ -121,7 +126,7 @@
                         <a id={endpoint.name} href={`#${endpoint.name}`} class:chosen={selected.name === endpoint.name}
                             aria-current={selected.name === endpoint.name ? 'true' : undefined}
                             onclick={() => selectEndpoint(endpoint)}>
-                            <span class="method">GET</span><span>{endpoint.name}</span>
+                            <span class="method">{endpoint.method ?? 'GET'}</span><span>{endpoint.name}</span>
                         </a>
                     {/each}
                 </div>
@@ -130,15 +135,21 @@
 
         <div class="endpoint-detail">
             <section class="innerContent specification" aria-labelledby="endpoint-title">
-                <div class="endpoint-heading"><span class="method">GET</span><h3 id="endpoint-title">{selected.name}</h3></div>
+                <div class="endpoint-heading"><span class="method">{selected.method ?? 'GET'}</span><h3 id="endpoint-title">{selected.name}</h3></div>
                 <p>{selected.description}</p>
                 <p class="response-type"><b>Response:</b> {selected.response}</p>
+                {#if selected.statuses}
+                    <table class="status-codes">
+                        <thead><tr><th>Status</th><th>Meaning</th></tr></thead>
+                        <tbody>{#each selected.statuses as status}<tr><td><code>{status.code}</code></td><td>{status.description}</td></tr>{/each}</tbody>
+                    </table>
+                {/if}
                 {#each selected.notes as note}<p class="note">{note}</p>{/each}
 
-                <h4>Query parameters</h4>
+                <h4>{isBody ? 'JSON body' : 'Query parameters'}</h4>
                 {#if selected.parameters.length}
                     <!-- svelte-ignore a11y_no_noninteractive_tabindex (Keyboard access to horizontal scrolling.) -->
-                    <div class="table-scroll" role="region" aria-label="Query parameter specifications" tabindex="0">
+                    <div class="table-scroll" role="region" aria-label="Parameter specifications" tabindex="0">
                         <table>
                             <thead><tr><th>Parameter</th><th>Type / default</th><th>Description</th></tr></thead>
                             <tbody>
@@ -152,12 +163,11 @@
                             </tbody>
                         </table>
                     </div>
-                {:else}<p class="muted">This endpoint takes no query parameters.</p>{/if}
+                {:else}<p class="muted">None.</p>{/if}
 
                 {#if selected.schema}
                     <details>
                         <summary>Response schema</summary>
-                        <p class="muted">Field types below describe the JSON structure.</p>
                         <pre><code>{selected.schema}</code></pre>
                     </details>
                 {/if}
@@ -183,6 +193,7 @@
                                             placeholder={parameter.placeholder ?? `Default: ${parameter.default}`}
                                             aria-label={`${parameter.name}${parameter.required ? ' (required)' : ''}`} />
                                     {/if}
+                                    {#if parameter.hint}<small class="muted">{parameter.hint}</small>{/if}
                                 </label>
                             {/each}
                         </div>
@@ -190,14 +201,15 @@
                     <div class="request-preview">
                         <h4>Request URL</h4>
                         <pre><code>{absoluteUrl}</code></pre>
+                        {#if isBody}<h4>JSON body</h4><pre><code>{requestBody}</code></pre>{/if}
                         <h4>cURL</h4>
                         <pre><code>{command}</code></pre>
                     </div>
                     {#if selected.mutates}
-                        <p class="mutation-note">This submits a real server for monitoring. The response text tells you whether it was added.</p>
+                        <p class="mutation-note">Adds a real server to the monitor.</p>
                     {/if}
                     <div class="actions">
-                        <button class="send" type="submit" disabled={pending}>{pending ? 'Sending…' : selected.mutates ? 'Add server' : 'Send request'}</button>
+                        <button class="primary-button" type="submit" disabled={pending}>{pending ? 'Sending…' : selected.mutates ? 'Add server' : 'Send request'}</button>
                         {#if pending}<button type="button" onclick={() => controller?.abort()}>Cancel</button>{/if}
                         <button type="button" onclick={() => copy(absoluteUrl, 'URL')}>Copy URL</button>
                         <button type="button" onclick={() => copy(command, 'cURL')}>Copy cURL</button>
@@ -216,6 +228,8 @@
                     {:else if result}
                         <div class="response-meta"><b class:error={!result.ok}>{result.status}</b><span>{result.elapsed} ms</span><span>{result.contentType}</span></div>
                         <p class="response-url muted">{result.url}</p>
+                        {#if result.location}<p class="response-url muted">Location: {result.location}</p>{/if}
+                        {#if result.retryAfter}<p class="muted">Retry-After: {result.retryAfter}</p>{/if}
                         <!-- svelte-ignore a11y_no_noninteractive_tabindex (Keyboard access to scrolling the response.) -->
                         <pre class="response-body" tabindex="0" aria-label="Response body"><code>{result.body}</code></pre>
                         <button type="button" onclick={() => copy(result?.body ?? '', 'Response')}>Copy response</button>
@@ -228,31 +242,32 @@
 
 <style>
     .api-page { min-width: 0; }
-    .intro, .muted, .note { color: var(--text-muted); }
+    .muted, .note { color: var(--text-muted); }
     .overview { margin-bottom: 1rem; }
     .base { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem 1rem; }
     .base span { color: var(--text-muted); }
     .base code { overflow-wrap: anywhere; }
     .api-layout { display: grid; grid-template-columns: 15.5rem minmax(0, 1fr); gap: 1rem; align-items: start; }
     .endpoint-list, .specification { margin-top: 0; }
-    .endpoint-list { padding: 0.9rem 0.6rem; }
+    .endpoint-list { padding: 1.2rem 0.8rem; }
     .endpoint-list h3 { padding: 0 0.4rem; }
     .endpoint-group + .endpoint-group { margin-top: 1rem; }
     .group-label { margin: 0 0 0.3rem; padding: 0 0.4rem; color: var(--text-muted); font-size: 0.82rem; }
     .endpoint-list a { display: flex; align-items: center; gap: 0.55rem; padding: 0.5rem 0.4rem; border-radius: 10px; font-size: 0.85rem; color: var(--text-muted); text-decoration: none; }
     .endpoint-list a:hover { background: var(--surface-soft); color: var(--text); }
     .endpoint-list a.chosen { background: var(--accent-soft); color: var(--text); }
+    .endpoint-list a span:last-child { min-width: 0; overflow-wrap: anywhere; }
     .method { font-size: 0.72rem; font-weight: 650; color: var(--accent); }
     .endpoint-detail { min-width: 0; }
     .endpoint-heading { display: flex; gap: 0.7rem; align-items: baseline; }
     .endpoint-heading h3 { margin-bottom: 0; overflow-wrap: anywhere; }
-    h4 { font-size: 0.95rem; font-weight: 550; margin: 1.1rem 0 0.5rem; }
     .response-type { font-size: 0.9rem; }
     .note { font-size: 0.9rem; }
     code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.88em; }
     .table-scroll { overflow-x: auto; }
     .table-scroll:focus-visible, .response-body:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
     table { min-width: 32rem; }
+    .status-codes { min-width: 0; }
     td { vertical-align: top; padding: 0.65rem 0.45rem; }
     th { padding-left: 0.45rem; }
     td:last-child { color: var(--text-muted); }
@@ -261,13 +276,12 @@
     summary { cursor: pointer; color: var(--accent); }
     pre { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 0.8rem; margin: 0.5rem 0 0.8rem; overflow: auto; line-height: 1.6; }
     .request-preview pre { white-space: pre-wrap; overflow-wrap: anywhere; }
-    .parameter-fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: 0.7rem 1rem; }
+    .parameter-fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: 1rem; }
     .parameter-field { display: grid; gap: 0.3rem; align-content: start; }
     .parameter-field > span { display: flex; align-items: baseline; gap: 0.5rem; }
     .parameter-field input, .parameter-field select { width: 100%; min-width: 0; }
     .actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; }
     .actions button { margin: 0; font-size: 0.9rem; }
-    .send { background: var(--accent-soft); border-color: var(--border-strong); }
     .mutation-note { padding: 0.8rem; background: var(--surface-accent); border-radius: 10px; }
     .feedback { font-size: 0.85rem; color: var(--accent); }
     .feedback:empty { display: none; }
@@ -276,10 +290,10 @@
     .response-meta span { color: var(--text-muted); }
     .response-url { font-size: 0.8rem; overflow-wrap: anywhere; }
     .response-body { max-height: 32rem; }
-    .error { color: #f3aaa5; }
+    .error { color: var(--error); }
     @media (max-width: 1100px) {
         .api-layout { grid-template-columns: minmax(0, 1fr); }
-        .endpoint-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 0.75rem; }
+        .endpoint-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr)); gap: 0.75rem; }
         .endpoint-list h3 { grid-column: 1 / -1; margin-bottom: 0; }
         .endpoint-group + .endpoint-group { margin-top: 0; }
     }

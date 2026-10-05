@@ -1,6 +1,6 @@
-<div>
+<div class="page-shell content-page">
     <h2>About</h2>
-    <p>SAMonitor is a SA-MP and open.mp server monitor.</p>
+    <p class="page-intro">SAMonitor is a SA-MP and open.mp server monitor.</p>
 
     <div class="innerContent">
         <h3>Project</h3>

@@ -130,10 +130,10 @@
         Average players: {graph.average.toFixed(2)}
     </p>
     <p>
-        The highest count was <span style="color: green">{graph.highest}</span>
+        The highest count was <span class="metric-high">{graph.highest}</span>
         at
         {graph.highestTime} and the lowest was
-        <span style="color: red">{graph.lowest}</span>
+        <span class="metric-low">{graph.lowest}</span>
         at
         {graph.lowestTime}
     </p>

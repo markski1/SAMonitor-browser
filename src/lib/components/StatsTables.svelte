@@ -71,61 +71,64 @@
     const otherGamemodeAmount = $derived(gamemodeStats.other.amount);
 </script>
 
-<div class="innerContent">
-    <h3>Miscellaneous stats</h3>
-    <p>Amount of servers by language</p>
-    <table class="compactTable statsTable" id="language_table">
-        <thead>
-            <tr>
-                <th>Language</th>
-                <th class="num-col">Servers</th>
-                <th class="num-col">Players</th>
-            </tr>
-        </thead>
-        <tbody>
-            {#each languageRows as row (row.name)}
+<div class="stats-grid">
+    <section class="innerContent">
+        <h3>Servers by language</h3>
+        <table class="compactTable statsTable" id="language_table">
+            <thead>
                 <tr>
-                    <td>{row.name}</td>
-                    <td class="num-col">{row.servers}</td>
-                    <td class="num-col">{formatThousands(row.players)}</td>
+                    <th>Language</th>
+                    <th class="num-col">Servers</th>
+                    <th class="num-col">Players</th>
                 </tr>
-            {/each}
-        </tbody>
-    </table>
-    <p>
-        <small
-            >The other {otherLanguageAmount} servers don't have a defined language.</small
-        >
-    </p>
+            </thead>
+            <tbody>
+                {#each languageRows as row (row.name)}
+                    <tr>
+                        <td>{row.name}</td>
+                        <td class="num-col">{row.servers}</td>
+                        <td class="num-col">{formatThousands(row.players)}</td>
+                    </tr>
+                {/each}
+            </tbody>
+        </table>
+        <p>
+            <small
+                >The other {otherLanguageAmount} servers don't have a defined language.</small
+            >
+        </p>
 
-    <p>Amount of servers by gamemode</p>
-    <table class="compactTable statsTable" id="gamemode_table">
-        <thead>
-            <tr>
-                <th>Gamemode</th>
-                <th class="num-col">Servers</th>
-                <th class="num-col">Players</th>
-            </tr>
-        </thead>
-        <tbody>
-            {#each gamemodeRows as row (row.name)}
+    </section>
+    <section class="innerContent">
+        <h3>Servers by gamemode</h3>
+        <table class="compactTable statsTable" id="gamemode_table">
+            <thead>
                 <tr>
-                    <td>{row.name}</td>
-                    <td class="num-col">{row.servers}</td>
-                    <td class="num-col">{formatThousands(row.players)}</td>
+                    <th>Gamemode</th>
+                    <th class="num-col">Servers</th>
+                    <th class="num-col">Players</th>
                 </tr>
-            {/each}
-        </tbody>
-    </table>
-    <p>
-        <small
-            >The other {otherGamemodeAmount} servers don't have a defined gamemode.</small
-        >
-    </p>
+            </thead>
+            <tbody>
+                {#each gamemodeRows as row (row.name)}
+                    <tr>
+                        <td>{row.name}</td>
+                        <td class="num-col">{row.servers}</td>
+                        <td class="num-col">{formatThousands(row.players)}</td>
+                    </tr>
+                {/each}
+            </tbody>
+        </table>
+        <p>
+            <small
+                >The other {otherGamemodeAmount} servers don't have a defined gamemode.</small
+            >
+        </p>
 
-    <p style="margin-top: 1rem">
-        There seems to be a practice to use the 'Language' or 'Gamemode' fields
-        for the name of the server rather than what they actually are. Server
-        owners, please, this makes it harder for people to find your server.
-    </p>
+    </section>
 </div>
+<p class="section-note">
+    There seems to be a practice to use the 'Language' or 'Gamemode' fields
+    for the name of the server rather than what they actually are. Server
+    owners, please, this makes it harder for people to find your server.
+</p>
