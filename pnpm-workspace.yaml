@@ -1,3 +1,5 @@
 minimumReleaseAge: 4320
+overrides:
+  rolldown: 1.2.14
 allowBuilds:
   esbuild: true
